@@ -28,7 +28,7 @@ body{
 	margin:0px;
 	padding:2px;
 }
-img#menu{
+img#menubutton{
 	position:fixed;
 	z-index:6;
 	bottom:0;
