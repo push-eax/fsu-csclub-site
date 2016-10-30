@@ -1,0 +1,37 @@
+body{
+	font-family:sans;
+	background-color:#868686;
+	background:linear-gradient(to bottom,#868686,#BFBFBF);
+	height:100%;
+}
+.window{
+	background-color:white;
+	position:fixed;
+	z-index:4;
+}
+.window_disabled{
+	position:fixed;
+	background-color:
+	z-index:3;
+	background-color:#F0F0F0;
+}
+#panel{
+	width:100%;
+	position:fixed;
+	z-index:5;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	height:24px;
+	background-color:black;
+	background: linear-gradient(to bottom, #000000,#404040);
+	margin:0px;
+	padding:2px;
+}
+img#menu{
+	position:fixed;
+	z-index:6;
+	bottom:0;
+	left:0;
+	height:35px;
+}
