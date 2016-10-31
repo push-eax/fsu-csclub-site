@@ -5,10 +5,5 @@ body{
 	background-repeat:no-repeat;
 }
 #menubutton{
-	transform:rotate(180deg);
 	transition:transform 1s;
-}
-#menubutton:hover{
-	transform:rotate(0deg);
-	transition: transform 1s;
 }

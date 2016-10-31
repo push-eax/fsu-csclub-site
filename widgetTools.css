@@ -50,9 +50,12 @@ img#menubutton{
 	z-index:6;
 	bottom:28px;
 	left:0px;
-	height:80%;
+	height:0px;
 	width:300px;
 	background-color:white;
+	box-shadow:0px 0px 10px black;
+	overflow:hidden;
+	transition:height 1s;
 }
 #menubackground{
 	position:fixed;
