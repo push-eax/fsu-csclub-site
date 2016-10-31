@@ -6,16 +6,21 @@ function onmenubout(){
 }
 var menuopen = false;
 function openmenu(){
+	dom_menu = document.getElementById("menu")
+	dom_mbackground = document.getElementById("menubackground");
+	dom_mbutton = document.getElementById("menubutton")
 	if(menuopen == false){
-		document.getElementById("menubackground").style.display='block';
-		document.getElementById("menu").style.height='80%';
+		dom_mbackground.style.display='block';
+		dom_menu.style.height='500px';
+		dom_menu.style.padding='5px';
 		menuopen = true
-		document.getElementById("menubutton").style.transform='rotate(180deg)';
+		dom_mbutton.style.transform='rotate(180deg)';
 	}
 	else{
-		document.getElementById("menubackground").style.display='none';
+		dom_mbackground.style.display='none';
 		menuopen = false
-		document.getElementById("menu").style.height='0px';
-		document.getElementById("menubutton").style.transform='rotate(0deg)';
+		dom_menu.style.height='0px';
+		dom_menu.style.padding='0px';
+		dom_mbutton.style.transform='rotate(0deg)';
 	}
 }

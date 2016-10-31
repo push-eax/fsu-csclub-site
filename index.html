@@ -8,10 +8,16 @@
 		<div id=panel></div>
 		<img onmouseover=onmenubover() onmouseout=onmenubout() onclick=openmenu() id=menubutton src=beta-start-button.png></img>
 		<div id=menu>
-			<h2>Computer Science Club</h2>
-			<h3>Main Menu</h3>
-			<button class=menubutton id=firstitem>Item</button><br>
-			<button class=menubutton id=seconditem>Another</button>
+			<div class=mheader>
+				Computer Science Club<br>
+				Main Menu
+			</div>
+			<table>
+				<tr>
+					<td><button class=menubutton id=firstitem>Item</button></td>
+					<td><button class=menubutton id=seconditem>Another</button></td>
+				</tr>
+			</table>
 		</div>
 		<div id=menubackground onclick=openmenu() style='display:none;'></div>
 		<script src=index.js></script>
