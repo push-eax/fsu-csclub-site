@@ -7,6 +7,13 @@
 	<body>
 		<div id=panel></div>
 		<img onmouseover=onmenubover() onmouseout=onmenubout() onclick=openmenu() id=menubutton src=beta-start-button.png></img>
+		<div id=menu style="display:none;">
+			<h2>Computer Science Club</h2>
+			<h3>Main Menu</h3>
+			<button class=menubutton id=firstitem>Item</button><br>
+			<button class=menubutton id=seconditem>Another</button>
+		</div>
+		<div id=menubackground onclick=openmenu() style='display:none;'></div>
 		<script src=index.js></script>
 	</body>
 </html>

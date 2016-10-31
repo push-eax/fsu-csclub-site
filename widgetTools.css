@@ -7,7 +7,7 @@ body{
 .window{
 	background-color:white;
 	position:fixed;
-	z-index:4;
+	z-index:3;
 }
 .window_disabled{
 	position:fixed;
@@ -18,7 +18,7 @@ body{
 #panel{
 	width:100%;
 	position:fixed;
-	z-index:5;
+	z-index:4;
 	bottom:0px;
 	left:0px;
 	right:0px;
@@ -30,8 +30,35 @@ body{
 }
 img#menubutton{
 	position:fixed;
-	z-index:6;
+	z-index:7;
 	bottom:0;
 	left:0;
 	height:35px;
+}
+.menubutton{
+	width:290px;
+	margin:5px;
+	background:linear-gradient(to bottom, #d0d0d0, white);
+	border:1px solid white;
+	box-shadow:0px 0px 3px #d0d0d0;
+}
+.menubutton:hover{
+	box-shadow:0px 0px 3px #e0e0e0;
+}
+#menu{
+	position:fixed;
+	z-index:6;
+	bottom:28px;
+	left:0px;
+	height:80%;
+	width:300px;
+	background-color:white;
+}
+#menubackground{
+	position:fixed;
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	z-index:5;
 }
