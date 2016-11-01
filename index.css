@@ -5,5 +5,5 @@ body{
 	background-repeat:no-repeat;
 }
 #menubutton{
-	transition:transform 1s;
+	transition:transform 0.2s;
 }
