@@ -8,12 +8,18 @@ body{
 	background-color:white;
 	position:fixed;
 	z-index:3;
+	left:50px;
+	top:50px;
 }
 .window_disabled{
 	position:fixed;
 	background-color:#231f20;
 	z-index:3;
 	background-color:#F0F0F0;
+}
+#testwindow{
+	width:200px;
+	height:200px;
 }
 #panel{
 	width:100%;
