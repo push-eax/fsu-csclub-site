@@ -5,11 +5,13 @@ body{
 	height:100%;
 }
 .window{
-	background-color:white;
+	background-color:black;
+	background:linear-gradient(to bottom, black, #868686);
 	position:fixed;
 	z-index:3;
 	left:50px;
 	top:50px;
+	opacity:1;
     border-radius:2px;
 }
 .window_disabled{
@@ -17,6 +19,38 @@ body{
 	background-color:#231f20;
 	z-index:3;
 	background-color:#F0F0F0;
+}
+.windowtitle{
+	width:100%;
+	text-align:center;
+	height:20px;
+	color:white;
+	display:block;
+	position:relative;
+	top:0px;
+	left:0px;
+	right:0px;
+	padding:3px;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.windowbody{
+	position:absolute;
+	left:1px;
+	right:1px;
+	background-color:white;
+	opacity:1.5;
+	padding:8px;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 #panel{
 	width:100%;
