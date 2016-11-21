@@ -57,17 +57,12 @@ function movewindow(currentwindow, increasex, increasey){
 	scbounds = document.body.getBoundingClientRect();
 	newx = cwbounds.left + increasex;
 	newy = cwbounds.top + increasey;
-<<<<<<< HEAD
 	if(newx>0 && cwbounds.right+increasex < scbounds.right){
 		currentwindow.style.left = newx + "px";
 	}
 	if(newy>0 && cwbounds.bottom + increasey < scbounds.bottom){
 		currentwindow.style.top = newy + "px";
 	}
-=======
-	currentwindow.style.left = newx + "px";
-	currentwindow.style.top = newy + "px";
->>>>>>> master
 }
 
 /*
