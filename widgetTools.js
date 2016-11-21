@@ -31,6 +31,7 @@ var positionupy;
 var wtomove;
 var justmoved = false;
 var moveinterval;
+var windowmovetransparancy=0.75;
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -53,11 +54,15 @@ Arguments:
 */
 function movewindow(currentwindow, increasex, increasey){
 	cwbounds = currentwindow.getBoundingClientRect();
+	scbounds = document.body.getBoundingClientRect();
 	newx = cwbounds.left + increasex;
 	newy = cwbounds.top + increasey;
-	console.log(newx, newy, cwbounds.left, cwbounds.top);
-	currentwindow.style.left = newx + "px";
-	currentwindow.style.top = newy + "px";
+	if(newx>0 && cwbounds.right+increasex < scbounds.right){
+		currentwindow.style.left = newx + "px";
+	}
+	if(newy>0 && cwbounds.bottom + increasey < scbounds.bottom){
+		currentwindow.style.top = newy + "px";
+	}
 }
 
 /*
@@ -80,6 +85,7 @@ function updatepos(ev){
 		positiondownx = ev.pageX
 		positiondowny = ev.pageY
 		movewindow(wtomove, pmovex, pmovey);
+		wtomove.style.opacity=windowmovetransparancy;
 	}
 }
 
@@ -133,6 +139,7 @@ function clickup(ev){
 	if(justmoved == true){
 		//clearInterval(moveinterval);
 		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
+		wtomove.style.opacity=1;
 		justmoved = false;
 	}
 	console.log("mouseup at ", positionupx, positionupy, positiondownx, positiondowny);
