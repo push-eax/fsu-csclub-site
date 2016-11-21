@@ -17,10 +17,6 @@ body{
 	z-index:3;
 	background-color:#F0F0F0;
 }
-#testwindow{
-	width:200px;
-	height:200px;
-}
 #panel{
 	width:100%;
 	position:fixed;
