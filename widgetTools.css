@@ -10,6 +10,7 @@ body{
 	z-index:3;
 	left:50px;
 	top:50px;
+    border-radius:2px;
 }
 .window_disabled{
 	position:fixed;
