@@ -55,7 +55,6 @@ function movewindow(currentwindow, increasex, increasey){
 	cwbounds = currentwindow.getBoundingClientRect();
 	newx = cwbounds.left + increasex;
 	newy = cwbounds.top + increasey;
-	console.log(newx, newy, cwbounds.left, cwbounds.top);
 	currentwindow.style.left = newx + "px";
 	currentwindow.style.top = newy + "px";
 }
@@ -108,8 +107,6 @@ function clickdown(ev,element){
 	positiondowny = ev.pageY;
 	wtomove = element;
 	justmoved = true;
-	//moveinterval = setInterval(function(){updatepos(ev)}, 150);
-	console.log ("Click registered with coords: ", positiondownx, positiondowny);
 }
 
 /*
@@ -135,7 +132,6 @@ function clickup(ev){
 		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
 		justmoved = false;
 	}
-	console.log("mouseup at ", positionupx, positionupy, positiondownx, positiondowny);
 }
 
 /*
@@ -162,13 +158,24 @@ Arguments:
 	id
 		Text string for the id of the window.
 */
-function addwindow(id){
+function addwindow(id,title,height,width){
 	newwindow = document.createElement("div");
 	newwindow.setAttribute("class", "window")
 	newwindow.setAttribute("id", id)
+	newwindow.style.width = width;
+	newwindow.style.height= height;
 	addWindowListeners(newwindow)
 	document.body.appendChild(newwindow);
-	return newwindow;
+	windowtitle = document.createElement("div");
+	windowtitle.setAttribute("class", "windowtitle");
+	windowtitle.setAttribute("id",    id+"_title");
+	windowtitle.innerHTML=title;
+	newwindow.appendChild(windowtitle);
+	windowbody = document.createElement("div");
+	windowbody.setAttribute("class", "windowbody");
+	windowbody.setAttribute("id", id+"_body");
+	newwindow.appendChild(windowbody);
+	return windowbody;
 }
 
 /*

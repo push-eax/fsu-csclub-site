@@ -5,11 +5,12 @@ body{
 	height:100%;
 }
 .window{
-	background-color:white;
+	background-color:black;
 	position:fixed;
 	z-index:3;
 	left:50px;
 	top:50px;
+	opacity:0.5;
     border-radius:2px;
 }
 .window_disabled{
@@ -17,6 +18,26 @@ body{
 	background-color:#231f20;
 	z-index:3;
 	background-color:#F0F0F0;
+}
+.windowtitle{
+	width:100%;
+	text-align:center;
+	height:20px;
+	color:white;
+	display:block;
+	position:relative;
+	top:0px;
+	left:0px;
+	right:0px;
+}
+.windowbody{
+	position:relative;
+	top:21px;
+	left:2px;
+	bottom:5px;
+	right:2px;
+	background-color:white;
+	opacity:1;
 }
 #panel{
 	width:100%;
