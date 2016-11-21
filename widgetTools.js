@@ -30,7 +30,7 @@ var positionupx;
 var positionupy;
 var wtomove;
 var justmoved = false;
-
+var moveinterval;
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -61,6 +61,14 @@ function movewindow(currentwindow, increasex, increasey){
 	currentwindow.style.top = newy + "px";
 }
 
+function updatepos(ev){
+	if(justmoved == true){
+		positionupx = ev.pageX;
+		positionupy = ev.pageY;
+		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
+	}
+}
+
 /*
 clickdown(ev, element)
 
@@ -86,6 +94,7 @@ function clickdown(ev,element){
 	positiondowny = ev.pageY;
 	wtomove = element;
 	justmoved = true;
+	//moveinterval = setInterval(function(){updatepos(ev)}, 150);
 	console.log ("Click registered with coords: ", positiondownx, positiondowny);
 }
 
@@ -108,6 +117,7 @@ function clickup(ev){
 	positionupx = ev.pageX;
 	positionupy = ev.pageY;
 	if(justmoved == true){
+		//clearInterval(moveinterval);
 		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
 		justmoved = false;
 	}
@@ -155,5 +165,5 @@ onmouseup
 	allowing any ongoing move operations to finish.
 */
 document.onmouseup   = function(event){clickup  (event)};
-
+document.onmousemove = function(e)    {updatepos(e)    };
 
