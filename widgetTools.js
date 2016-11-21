@@ -52,7 +52,6 @@ Arguments:
 		See increasex for more details.
 */
 function movewindow(currentwindow, increasex, increasey){
-	//currentwindow = document.getElementById(windowid);
 	cwbounds = currentwindow.getBoundingClientRect();
 	newx = cwbounds.left + increasex;
 	newy = cwbounds.top + increasey;
@@ -61,11 +60,26 @@ function movewindow(currentwindow, increasex, increasey){
 	currentwindow.style.top = newy + "px";
 }
 
+/*
+updatepos(ev)
+
+Used to update a window position as it's being dragged
+
+Arguments:
+	ev
+		Event which triggered this state update
+		note this is not meant to be invoked, only used as
+		an event handler.
+*/
 function updatepos(ev){
+	var pmovex
+	var pmovey
 	if(justmoved == true){
-		positionupx = ev.pageX;
-		positionupy = ev.pageY;
-		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
+		pmovex = ev.pageX - positiondownx
+		pmovey = ev.pageY - positiondowny
+		positiondownx = ev.pageX
+		positiondowny = ev.pageY
+		movewindow(wtomove, pmovex, pmovey);
 	}
 }
 
@@ -166,4 +180,3 @@ onmouseup
 */
 document.onmouseup   = function(event){clickup  (event)};
 document.onmousemove = function(e)    {updatepos(e)    };
-
