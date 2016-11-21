@@ -158,12 +158,11 @@ Arguments:
 	id
 		Text string for the id of the window.
 */
-function addwindow(id,title,height,width){
+function addwindow(id,title,width){
 	newwindow = document.createElement("div");
 	newwindow.setAttribute("class", "window")
 	newwindow.setAttribute("id", id)
 	newwindow.style.width = width;
-	newwindow.style.height= height;
 	addWindowListeners(newwindow)
 	document.body.appendChild(newwindow);
 	windowtitle = document.createElement("div");
