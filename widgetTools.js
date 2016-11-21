@@ -130,6 +130,24 @@ function addWindowListeners(currentwindow){
 }
 
 /*
+addwindow(id)
+
+Nice, fluffy way to get basic window creation macros out of the way.
+
+Arguments:
+	id
+		Text string for the id of the window.
+*/
+function addwindow(id){
+	newwindow = document.createElement("div");
+	newwindow.setAttribute("class", "window")
+	newwindow.setAttribute("id", id)
+	addWindowListeners(newwindow)
+	document.body.appendChild(newwindow);
+	return newwindow;
+}
+
+/*
 Final event handlers
 
 onmouseup

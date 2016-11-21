@@ -9,11 +9,7 @@
 		<div id=panel></div>
 		<script>
 			//Put windows here
-			var testwindow = document.createElement("div");
-			testwindow.setAttribute("class", "window")
-			testwindow.setAttribute("id", "testwindow")
-			addWindowListeners(testwindow)
-			document.body.appendChild(testwindow);
+			var testwindow = addwindow("testwindow")
 		</script>
 		<img onmouseover=onmenubover() onmouseout=onmenubout() onclick=openmenu() id=menubutton src=beta-start-button.png></img>
 		<div id=menu>
