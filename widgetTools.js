@@ -158,6 +158,22 @@ function addWindowListeners(currentwindow){
 }
 
 /*
+closeWindow(window)
+
+Closes the window based on its window object.
+
+Arguments:
+	window
+		A window object as returned by addWindow()
+*/
+function closeWindow(window){
+	window[0].removeChild(window[1]);
+	window[0].removeChild(window[2]);
+	window[0].removeChild(window[3]);
+	document.body.removeChild(window[0]);
+}
+
+/*
 addWindow(id)
 
 Nice, fluffy way to get basic window creation macros out of the way.
@@ -173,6 +189,7 @@ Returns:
 		[1] = the titlebar text
 		[2] = the body of the window. This is the only one that should be used directly.
 		      it still should not be if possible.
+		[3] = the close button
 */
 function addWindow(id,title,width){
 	newwindow = document.createElement("div");
@@ -190,22 +207,14 @@ function addWindow(id,title,width){
 	windowbody.setAttribute("class", "windowbody");
 	windowbody.setAttribute("id", id+"_body");
 	newwindow.appendChild(windowbody);
-	return [newwindow, windowtitle, windowbody];
-}
-
-/*
-closeWindow(window)
-
-Closes the window based on its window object.
-
-Arguments:
-	window
-		A window object as returned by addWindow()
-*/
-function closeWindow(window){
-	window[0].removeChild(window[1]);
-	window[0].removeChild(window[2]);
-	document.body.removeChild(window[0]);
+	windowclose = document.createElement("button")
+	windowclose.setAttribute("class", "closebutton");
+	windowclose.setAttribute("id", id+"_close");
+	windowclose.innerHTML="X";
+	newwindow.appendChild(windowclose);
+	windowobject = [newwindow, windowtitle, windowbody, windowclose];
+	windowclose.onclick=function(){closeWindow(windowobject)};
+	return windowobject;
 }
 
 /*

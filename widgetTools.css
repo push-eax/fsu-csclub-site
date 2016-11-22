@@ -52,6 +52,11 @@ body{
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
+.closebutton{
+	position:absolute;
+	right:0px;
+	top:0px;
+}
 #panel{
 	width:100%;
 	position:fixed;
