@@ -259,7 +259,7 @@ function addWindow(id,title,width){
 	windowclose.setAttribute("id", id+"_close");
 	//For now we give it a stylish but uninspired X in lieu of a
 	//fancier close button
-	windowclose.innerHTML="X";
+	windowclose.innerHTML="<img class=closebutton_icon src=CloseButton.png></img>";
 	newwindow.appendChild(windowclose);
 	
 	//And define a window object. This then gets used to connect
