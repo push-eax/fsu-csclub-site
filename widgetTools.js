@@ -167,10 +167,19 @@ Arguments:
 		A window object as returned by addWindow()
 */
 function closeWindow(window){
-	window[0].removeChild(window[1]);
-	window[0].removeChild(window[2]);
-	window[0].removeChild(window[3]);
-	document.body.removeChild(window[0]);
+	//remove the title
+	window.toplevel.removeChild(window.title);
+	delete window.title;
+	//then the body
+	window.toplevel.removeChild(window.body);
+	delete window.body;
+	//then the close button
+	window.toplevel.removeChild(window.closebutton);
+	delete window.closebutton;
+	//then the toplevel parent which they were rendered under.
+	//May only need to do this, but I'm thorough.
+	document.body.removeChild(window.toplevel);
+	delete window.toplevel;
 }
 
 /*
@@ -192,29 +201,56 @@ Returns:
 		[3] = the close button
 */
 function addWindow(id,title,width){
+	//We define the toplevel element as newwindow
 	newwindow = document.createElement("div");
+	//set its class to window
 	newwindow.setAttribute("class", "window")
+	//set its id to whatever the user entered.
 	newwindow.setAttribute("id", id)
+	//And its width as well...
 	newwindow.style.width = width;
+	//connect our listeners,
 	addWindowListeners(newwindow)
+	//and add it to the document body.
 	document.body.appendChild(newwindow);
+	
+	//Similar deal for the title, only now we also set the contents
+	//right away
 	windowtitle = document.createElement("div");
 	windowtitle.setAttribute("class", "windowtitle");
 	windowtitle.setAttribute("id",    id+"_title");
+	//here be content setting
 	windowtitle.innerHTML=title;
+	//and we append it to the window element instead of the body
 	newwindow.appendChild(windowtitle);
+	
+	//Now we create the window body element
+	//where all the user's stuff is
 	windowbody = document.createElement("div");
 	windowbody.setAttribute("class", "windowbody");
 	windowbody.setAttribute("id", id+"_body");
 	newwindow.appendChild(windowbody);
+	
+	//And add a close button. This is tricky, because the close
+	//button needs to be aware of what window we want to close
+	//ahead of time.
 	windowclose = document.createElement("button")
 	windowclose.setAttribute("class", "closebutton");
 	windowclose.setAttribute("id", id+"_close");
+	//For now we give it a stylish but uninspired X in lieu of a
+	//fancier close button
 	windowclose.innerHTML="X";
 	newwindow.appendChild(windowclose);
-	windowobject = [newwindow, windowtitle, windowbody, windowclose];
+	
+	//And define a window object. This then gets used to connect
+	//the close button's signal, so we know which elements to
+	//destroy.
+	windowobject = {toplevel: newwindow, title: windowtitle, body: windowbody, closebutton: windowclose};
 	windowclose.onclick=function(){closeWindow(windowobject)};
+	
+	//Then return our windowobject to the user, like they requested.
 	return windowobject;
+	//We are now rendering a functional window.
 }
 
 /*
