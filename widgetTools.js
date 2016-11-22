@@ -169,17 +169,18 @@ Arguments:
 function closeWindow(window){
 	//remove the title
 	window.toplevel.removeChild(window.title);
-	//delete window.title;
+	delete window.title;
 	//then the body
 	window.toplevel.removeChild(window.body);
-	//delete window.body;
+	delete window.body;
 	//then the close button
 	window.toplevel.removeChild(window.closebutton);
-	//delete window.closebutton;
+	delete window.closebutton;
 	//then the toplevel parent which they were rendered under.
 	//May only need to do this, but I'm thorough.
 	document.body.removeChild(window.toplevel);
-	//delete window.toplevel;
+	delete window.toplevel;
+	delete window;
 }
 
 /*
