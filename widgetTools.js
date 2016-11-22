@@ -183,6 +183,25 @@ function closeWindow(window){
 }
 
 /*
+setWindowContents(window, stuff)
+
+Sets the window's body contents.
+
+Arguments:
+	window
+		a window object
+	
+	stuff
+		what to put in the body
+
+Note that for now this is a convienience class. It may be more important
+if an issue with just throwing stuff inside arises.
+*/
+function setWindowContents(window, stuff){
+	window.body.innerHTML=stuff;
+}
+
+/*
 addWindow(id)
 
 Nice, fluffy way to get basic window creation macros out of the way.
