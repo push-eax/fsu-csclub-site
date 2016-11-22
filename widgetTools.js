@@ -158,15 +158,23 @@ function addWindowListeners(currentwindow){
 }
 
 /*
-addwindow(id)
+addWindow(id)
 
 Nice, fluffy way to get basic window creation macros out of the way.
 
 Arguments:
 	id
 		Text string for the id of the window.
+
+Returns:
+	window
+		Array of three objects:
+		[0] = the toplevel window element, including the titlebar
+		[1] = the titlebar text
+		[2] = the body of the window. This is the only one that should be used directly.
+		      it still should not be if possible.
 */
-function addwindow(id,title,width){
+function addWindow(id,title,width){
 	newwindow = document.createElement("div");
 	newwindow.setAttribute("class", "window")
 	newwindow.setAttribute("id", id)
@@ -182,7 +190,22 @@ function addwindow(id,title,width){
 	windowbody.setAttribute("class", "windowbody");
 	windowbody.setAttribute("id", id+"_body");
 	newwindow.appendChild(windowbody);
-	return windowbody;
+	return [newwindow, windowtitle, windowbody];
+}
+
+/*
+closeWindow(window)
+
+Closes the window based on its window object.
+
+Arguments:
+	window
+		A window object as returned by addWindow()
+*/
+function closeWindow(window){
+	window[0].removeChild(window[1]);
+	window[0].removeChild(window[2]);
+	document.body.removeChild(window[0]);
 }
 
 /*
