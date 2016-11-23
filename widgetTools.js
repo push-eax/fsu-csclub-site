@@ -23,6 +23,17 @@ justmoved
 	A more accurate name might be currentlymovingwindow, but
 	that's pretty verbose and I'm too lazy to either come up 
 	with a better name or change this one now that it works.
+
+moveinterval
+	an old variable, not used.
+
+windowmovetransparancy
+	opacity value of the windows as they are moved.
+
+windowregister
+	An array containing all active windows, added to every
+	time windowAdd() is created. It is used to push all 
+	windows back a z-index when one is selected.
 */
 var positiondownx;
 var positiondowny;
@@ -32,6 +43,7 @@ var wtomove;
 var justmoved = false;
 var moveinterval;
 var windowmovetransparancy=0.75;
+var windowregister = [];
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -114,6 +126,8 @@ function clickdown(ev,element){
 	positiondowny = ev.pageY;
 	wtomove = element;
 	justmoved = true;
+	lowerAll()
+	element.style.zIndex=3;
 }
 
 /*
@@ -167,6 +181,11 @@ Arguments:
 		A window object as returned by addWindow()
 */
 function closeWindow(window){
+	for (var i = 0; i<windowregister.length; i++){
+		if(windowregister[i] == window){
+			delete windowregister[i];
+		}
+	}
 	//remove the title
 	window.toplevel.removeChild(window.title);
 	delete window.title;
@@ -200,6 +219,17 @@ if an issue with just throwing stuff inside arises.
 */
 function setWindowContents(window, stuff){
 	window.body.innerHTML=stuff;
+}
+
+/*
+lowerAll()
+
+Lowers all windows to z-index 2 from 3.
+*/
+function lowerAll(){
+	for(var i = 0; i<windowregister.length; i++){
+		windowregister[i].toplevel.style.zIndex=2;
+	}
 }
 
 /*
@@ -267,6 +297,9 @@ function addWindow(id,title,width){
 	//destroy.
 	var windowobject = {toplevel: newwindow, title: windowtitle, body: windowbody, closebutton: windowclose};
 	windowclose.onclick=function(){closeWindow(windowobject)};
+	windowregister.push(windowobject);
+	lowerAll()
+	windowobject.toplevel.style.zIndex = 3;
 	
 	//Then return our windowobject to the user, like they requested.
 	return windowobject;
