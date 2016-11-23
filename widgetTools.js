@@ -154,11 +154,16 @@ Arguments:
 		Assumes mouse event.
 */
 function clickup(ev){
+	//records the mouseup position
 	positionupx = ev.pageX;
 	positionupy = ev.pageY;
+	//does some stuff if we clicked a window.
 	if(justmoved == true){
+		//move the window by any difference in position
 		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
+		//make the window opaque whether or not it already is
 		wtomove.style.opacity=1;
+		//and tell the program no window is being moved.
 		justmoved = false;
 	}
 }
