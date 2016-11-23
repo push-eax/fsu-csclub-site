@@ -257,13 +257,13 @@ Returns:
 		      it still should not be if possible.
 		[3] = the close button
 */
-function addWindow(id,title,width){
+function addWindow(title,width){
 	//We define the toplevel element as newwindow
 	var newwindow = document.createElement("div");
 	//set its class to window
 	newwindow.setAttribute("class", "window")
 	//set its id to whatever the user entered.
-	newwindow.setAttribute("id", id)
+	//newwindow.setAttribute("id", id)
 	//And its width as well...
 	newwindow.style.width = width;
 	//connect our listeners,
@@ -275,7 +275,7 @@ function addWindow(id,title,width){
 	//right away
 	var windowtitle = document.createElement("div");
 	windowtitle.setAttribute("class", "windowtitle");
-	windowtitle.setAttribute("id",    id+"_title");
+	//windowtitle.setAttribute("id",    id+"_title");
 	//here be content setting
 	windowtitle.innerHTML=title;
 	//and we append it to the window element instead of the body
@@ -285,7 +285,7 @@ function addWindow(id,title,width){
 	//where all the user's stuff is
 	var windowbody = document.createElement("div");
 	windowbody.setAttribute("class", "windowbody");
-	windowbody.setAttribute("id", id+"_body");
+	//windowbody.setAttribute("id", id+"_body");
 	newwindow.appendChild(windowbody);
 	
 	//And add a close button. This is tricky, because the close
@@ -293,7 +293,7 @@ function addWindow(id,title,width){
 	//ahead of time.
 	var windowclose = document.createElement("button")
 	windowclose.setAttribute("class", "closebutton");
-	windowclose.setAttribute("id", id+"_close");
+	//windowclose.setAttribute("id", id+"_close");
 	//For now we give it a stylish but uninspired X in lieu of a
 	//fancier close button
 	windowclose.innerHTML="<img class=closebutton_icon src=CloseButton.png></img>";

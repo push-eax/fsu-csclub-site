@@ -9,12 +9,12 @@
 		<div id=panel></div>
 		<script>
 			function maketestwindow(){
-				var testwindow = addWindow("testwindow", "Test Window",400)
+				var testwindow = addWindow("Test Window",400)
 				setWindowContents(testwindow,"This is a test window.<br>It contains test contents.<br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>");
 				openmenu();
 			}
 			function makeblankwindow(){
-				addWindow('another','blank',200)
+				addWindow('blank',200)
 				openmenu();
 			}
 			function makeWidgetWindow(){
@@ -26,7 +26,7 @@
 				widgets+= "<select class=combo><option value=combobox>GTK calls these comboboxes</option><option value=select>HTML calls these \"selects\"</option></select>";
 				widgets+= "</form>";
 				widgets+= "<div class=section><p>Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.</p></div>";
-				var anotherwindow = addWindow('another','Widget Toolkit Test Window',400)
+				var anotherwindow = addWindow('Widget Toolkit Test Window',400)
 				setWindowContents(anotherwindow, widgets);
 				openmenu();
 			}
