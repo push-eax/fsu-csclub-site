@@ -24,9 +24,6 @@ justmoved
 	that's pretty verbose and I'm too lazy to either come up 
 	with a better name or change this one now that it works.
 
-moveinterval
-	an old variable, not used.
-
 windowmovetransparancy
 	opacity value of the windows as they are moved.
 
@@ -41,7 +38,6 @@ var positionupx;
 var positionupy;
 var wtomove;
 var justmoved = false;
-var moveinterval;
 var windowmovetransparancy=0.75;
 var windowregister = [];
 
@@ -89,14 +85,22 @@ Arguments:
 		an event handler.
 */
 function updatepos(ev){
+	//Variables to move in each direction
 	var pmovex
 	var pmovey
+	//if we're actually moving a window
 	if(justmoved == true){
+		//Find out by how much
 		pmovex = ev.pageX - positiondownx
 		pmovey = ev.pageY - positiondowny
+		//Then take new values for mousedown so we're not
+		//flying off into space by constantly adding to
+		//the increase amount
 		positiondownx = ev.pageX
 		positiondowny = ev.pageY
+		//and move the window.
 		movewindow(wtomove, pmovex, pmovey);
+		//since the window has actually moved, make it translucent
 		wtomove.style.opacity=windowmovetransparancy;
 	}
 }
@@ -122,10 +126,14 @@ Arguments:
 		other than the default. Works with class=window.
 */
 function clickdown(ev,element){
+	//record our pointer position for moving
 	positiondownx = ev.pageX;
 	positiondowny = ev.pageY;
+	//and record the window element we are about to move
 	wtomove = element;
+	//and tell the program we might move a window here
 	justmoved = true;
+	//lower all the windows and raise just this one
 	lowerAll()
 	element.style.zIndex=3;
 }
@@ -149,7 +157,6 @@ function clickup(ev){
 	positionupx = ev.pageX;
 	positionupy = ev.pageY;
 	if(justmoved == true){
-		//clearInterval(moveinterval);
 		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
 		wtomove.style.opacity=1;
 		justmoved = false;
