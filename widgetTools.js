@@ -190,7 +190,13 @@ Arguments:
 function closeWindow(window){
 	for (var i = 0; i<windowregister.length; i++){
 		if(windowregister[i] == window){
-			delete windowregister[i];
+			windowregister[i]={type: "closed"};
+			if(typeof windowregister[i+1] != 'undefined'){
+				windowregister[i] = windowregister[i+1]
+			}
+			if(typeof windowregister == 'undefined'){
+				windowregister = []
+			}
 		}
 	}
 	//remove the title
@@ -235,7 +241,9 @@ Lowers all windows to z-index 2 from 3.
 */
 function lowerAll(){
 	for(var i = 0; i<windowregister.length; i++){
-		windowregister[i].toplevel.style.zIndex=2;
+		if(typeof windowregister[i].toplevel !='undefined'){
+			windowregister[i].toplevel.style.zIndex=2;
+		}
 	}
 }
 
@@ -305,7 +313,9 @@ function addWindow(title,width){
 	var windowobject = {toplevel: newwindow, title: windowtitle, body: windowbody, closebutton: windowclose};
 	windowclose.onclick=function(){closeWindow(windowobject)};
 	windowregister.push(windowobject);
-	lowerAll()
+	if(typeof windowregister != 'undefined'){
+		lowerAll()
+	}
 	windowobject.toplevel.style.zIndex = 3;
 	
 	//Then return our windowobject to the user, like they requested.
