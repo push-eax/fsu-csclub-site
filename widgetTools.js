@@ -24,6 +24,11 @@ justmoved
 	that's pretty verbose and I'm too lazy to either come up 
 	with a better name or change this one now that it works.
 
+justresize
+	tells the program we are looking to resize a window, so
+	all events should send their diffrences of position to 
+	adjust the size and not the position of a window.
+
 windowmovetransparancy
 	opacity value of the windows as they are moved.
 
@@ -38,6 +43,7 @@ var positionupx;
 var positionupy;
 var wtomove;
 var justmoved = false;
+var justresize = false;
 var windowmovetransparancy=0.75;
 var windowregister = [];
 
@@ -93,15 +99,11 @@ function changeWindowSize(currentwindow, increasex, increasey){
 	var cobounds = currentwindow.body.getBoundingClientRect();
 	var scbounds = document.body.getBoundingClientRect();
 	var newx = cwbounds.right - cwbounds.left;
-	var newy = cobounds.bottom - cobounds.top;
+	var newy = currentwindow.body.clientHeight-(16); //Vertical padding *2, no clean way to do this automatically yet
 	newx += increasex;
 	newy += increasey;
-	if(newx>0 && cwbounds.right+increasex < scbounds.right){
-		currentwindow.toplevel.style.width = newx + "px";
-	}
-	if(newy>0 && cwbounds.bottom + increasey < scbounds.bottom){
-		currentwindow.body.style.height = newy + "px";
-	}
+	currentwindow.toplevel.style.width = newx + "px";
+	currentwindow.body.style.height = newy;
 }
 
 /*
@@ -131,6 +133,21 @@ function updatepos(ev){
 		positiondowny = ev.pageY
 		//and move the window.
 		movewindow(wtomove, pmovex, pmovey);
+		//since the window has actually moved, make it translucent
+		wtomove.toplevel.style.opacity=windowmovetransparancy;
+	}
+	if(justresize == true){
+		justmoved = false;
+		//Find out by how much
+		pmovex = ev.pageX - positiondownx
+		pmovey = ev.pageY - positiondowny
+		//Then take new values for mousedown so we're not
+		//flying off into space by constantly adding to
+		//the increase amount
+		positiondownx = ev.pageX
+		positiondowny = ev.pageY
+		//and move the window.
+		changeWindowSize(wtomove, pmovex, pmovey);
 		//since the window has actually moved, make it translucent
 		wtomove.toplevel.style.opacity=windowmovetransparancy;
 	}
@@ -197,6 +214,28 @@ function clickup(ev){
 		//and tell the program no window is being moved.
 		justmoved = false;
 	}
+	if(justresize == true){
+		//move the window by any difference in position
+		changeWindowSize(wtomove, positionupx - positiondownx, positionupy - positiondowny);
+		//make the window opaque whether or not it already is
+		wtomove.toplevel.style.opacity=1;
+		//and tell the program no window is being moved.
+		justresize = false;
+	}
+}
+
+function dragResize(ev, element){
+	//record our pointer position for moving
+	positiondownx = ev.pageX;
+	positiondowny = ev.pageY;
+	//and record the window element we are about to move
+	wtomove = element;
+	//and tell the program we might move a window here
+	justmoved = false;
+	//lower all the windows and raise just this one
+	lowerAll()
+	element.toplevel.style.zIndex=3;
+	justresize = true;
 }
 
 /*
@@ -212,6 +251,7 @@ Arguments:
 */
 function addWindowListeners(currentwindow){
 	currentwindow.toplevel.onmousedown = function(event){clickdown(event, currentwindow)};
+	currentwindow.grabhandle.onmousedown = function(event){dragResize(event, currentwindow)};
 }
 
 /*
