@@ -48,8 +48,7 @@ Used to move a window by a certain offset X and Y.
 
 Arguments:
 	currentwindow
-		Document object of the current window.
-		Use document.getElement... to get this object.
+		window object to move
 	
 	increasex
 		X-increase. Number value, no text included.
@@ -66,10 +65,10 @@ function movewindow(currentwindow, increasex, increasey){
 	var newx = cwbounds.left + increasex;
 	var newy = cwbounds.top + increasey;
 	if(newx>0 && cwbounds.right+increasex < scbounds.right){
-		currentwindow.style.left = newx + "px";
+		currentwindow.toplevel.style.left = newx + "px";
 	}
 	if(newy>0 && cwbounds.bottom + increasey < scbounds.bottom){
-		currentwindow.style.top = newy + "px";
+		currentwindow.toplevel.style.top = newy + "px";
 	}
 }
 
@@ -133,7 +132,7 @@ function updatepos(ev){
 		//and move the window.
 		movewindow(wtomove, pmovex, pmovey);
 		//since the window has actually moved, make it translucent
-		wtomove.style.opacity=windowmovetransparancy;
+		wtomove.toplevel.style.opacity=windowmovetransparancy;
 	}
 }
 
@@ -167,7 +166,7 @@ function clickdown(ev,element){
 	justmoved = true;
 	//lower all the windows and raise just this one
 	lowerAll()
-	element.style.zIndex=3;
+	element.toplevel.style.zIndex=3;
 }
 
 /*
@@ -194,7 +193,7 @@ function clickup(ev){
 		//move the window by any difference in position
 		movewindow(wtomove, positionupx - positiondownx, positionupy - positiondowny);
 		//make the window opaque whether or not it already is
-		wtomove.style.opacity=1;
+		wtomove.toplevel.style.opacity=1;
 		//and tell the program no window is being moved.
 		justmoved = false;
 	}
@@ -212,7 +211,7 @@ Arguments:
 		can be gotten with document.getElementById()
 */
 function addWindowListeners(currentwindow){
-	currentwindow.onmousedown = function(event){clickdown(event, currentwindow)};
+	currentwindow.toplevel.onmousedown = function(event){clickdown(event, currentwindow)};
 }
 
 /*
@@ -312,8 +311,6 @@ function addWindow(title,width){
 	//newwindow.setAttribute("id", id)
 	//And its width as well...
 	newwindow.style.width = width;
-	//connect our listeners,
-	addWindowListeners(newwindow)
 	//and add it to the document body.
 	document.body.appendChild(newwindow);
 	
@@ -362,6 +359,8 @@ function addWindow(title,width){
 	var windowobject = {toplevel: newwindow, title: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles};
 	windowclose.onclick=function(){closeWindow(windowobject)};
 	windowregister.push(windowobject);
+	//connect our listeners,
+	addWindowListeners(windowobject)
 	if(typeof windowregister != 'undefined'){
 		lowerAll()
 	}
