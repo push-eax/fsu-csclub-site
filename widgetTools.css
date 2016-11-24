@@ -76,6 +76,7 @@ body{
 	bottom:0px;
 	right:0px;
 	position:absolute;
+	cursor:se-resize;
 }
 .ghimage{
 	width:100%;
