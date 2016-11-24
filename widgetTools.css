@@ -69,6 +69,17 @@ body{
 	height:100%;
 	width:20px;
 }
+.grabhandle{
+	width:10px;
+	height:10px;
+	bottom:0px;
+	right:0px;
+	position:absolute;
+}
+.ghimage{
+	width:100%;
+	height:100%;
+}
 #panel{
 	width:100%;
 	position:fixed;

@@ -237,6 +237,7 @@ if an issue with just throwing stuff inside arises.
 */
 function setWindowContents(window, stuff){
 	window.body.innerHTML=stuff;
+	window.body.appendChild(window.grabhandle);
 }
 
 /*
@@ -312,10 +313,21 @@ function addWindow(title,width){
 	windowclose.innerHTML="<img class=closebutton_icon src=CloseButton.png></img>";
 	newwindow.appendChild(windowclose);
 	
+	var grabhandles = document.createElement("div")
+	grabhandles.setAttribute("class","grabhandle");
+	windowbody.appendChild(grabhandles);
+	
+	var grabhandleimage = document.createElement("img");
+	grabhandleimage.setAttribute("class", "ghimage");
+	grabhandleimage.setAttribute("src", "Grabhandle.png");
+	grabhandleimage.setAttribute("draggable", "false");
+	grabhandleimage.setAttribute("onmousedown", "return false");
+	grabhandles.appendChild(grabhandleimage);
+	
 	//And define a window object. This then gets used to connect
 	//the close button's signal, so we know which elements to
 	//destroy.
-	var windowobject = {toplevel: newwindow, title: windowtitle, body: windowbody, closebutton: windowclose};
+	var windowobject = {toplevel: newwindow, title: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles};
 	windowclose.onclick=function(){closeWindow(windowobject)};
 	windowregister.push(windowobject);
 	if(typeof windowregister != 'undefined'){
