@@ -54,6 +54,7 @@ body{
 	-moz-user-select: none;
 	-ms-user-select: none;
 	box-shadow: 0px 0px 5px black;
+	overflow:hidden;
 }
 .closebutton{
 	position:absolute;
