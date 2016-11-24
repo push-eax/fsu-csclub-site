@@ -61,15 +61,47 @@ Arguments:
 		See increasex for more details.
 */
 function movewindow(currentwindow, increasex, increasey){
-	cwbounds = currentwindow.getBoundingClientRect();
-	scbounds = document.body.getBoundingClientRect();
-	newx = cwbounds.left + increasex;
-	newy = cwbounds.top + increasey;
+	var cwbounds = currentwindow.toplevel.getBoundingClientRect();
+	var scbounds = document.body.getBoundingClientRect();
+	var newx = cwbounds.left + increasex;
+	var newy = cwbounds.top + increasey;
 	if(newx>0 && cwbounds.right+increasex < scbounds.right){
 		currentwindow.style.left = newx + "px";
 	}
 	if(newy>0 && cwbounds.bottom + increasey < scbounds.bottom){
 		currentwindow.style.top = newy + "px";
+	}
+}
+
+/*
+changeWindowSize(currentwindow, increasex, increasey)
+
+Changes the size of a window by increments of increasex
+and increasey.
+
+Arguments:
+	currentwindow
+		window object to resize
+	
+	increasex
+		amount of width to add
+	
+	increasey
+		amount of height to add
+*/
+function changeWindowSize(currentwindow, increasex, increasey){
+	var cwbounds = currentwindow.toplevel.getBoundingClientRect();
+	var cobounds = currentwindow.body.getBoundingClientRect();
+	var scbounds = document.body.getBoundingClientRect();
+	var newx = cwbounds.right - cwbounds.left;
+	var newy = cobounds.bottom - cobounds.top;
+	newx += increasex;
+	newy += increasey;
+	if(newx>0 && cwbounds.right+increasex < scbounds.right){
+		currentwindow.toplevel.style.width = newx + "px";
+	}
+	if(newy>0 && cwbounds.bottom + increasey < scbounds.bottom){
+		currentwindow.body.style.height = newy + "px";
 	}
 }
 
