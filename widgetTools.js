@@ -67,13 +67,20 @@ Arguments:
 		See increasex for more details.
 */
 function movewindow(currentwindow, increasex, increasey){
+	//client window bounaries: get the current dimensions of a window
 	var cwbounds = currentwindow.toplevel.getBoundingClientRect();
+	//screen boundaries: get the current dimensions of the screen
 	var scbounds = document.body.getBoundingClientRect();
+	//new X position (from top left corner)
 	var newx = cwbounds.left + increasex;
+	//new Y position (from top left corner)
 	var newy = cwbounds.top + increasey;
+	//now we make sure we're not running off the screen in the horizontal direction
 	if(newx>0 && cwbounds.right+increasex < scbounds.right){
 		currentwindow.toplevel.style.left = newx + "px";
 	}
+	//and try to make sure we don't run off the screen in the vertical direction
+	//though the code for the bottom doesn't work right, not sure why.
 	if(newy>0 && cwbounds.bottom + increasey < scbounds.bottom){
 		currentwindow.toplevel.style.top = newy + "px";
 	}
@@ -96,15 +103,21 @@ Arguments:
 		amount of height to add
 */
 function changeWindowSize(currentwindow, increasex, increasey){
+	//client window bounaries: get the current dimensions of a window
 	var cwbounds = currentwindow.toplevel.getBoundingClientRect();
+	//but the body defines vertical, not the toplevel so get that too
 	var cobounds = currentwindow.body.getBoundingClientRect();
+	//screen boundaries: get the current dimensions of the screen
 	var scbounds = document.body.getBoundingClientRect();
+	//then get our actual width and height
 	var newx = cwbounds.right - cwbounds.left;
 	var newy = currentwindow.body.clientHeight-(16); //Vertical padding *2, no clean way to do this automatically yet
+	//add our increment
 	newx += increasex;
 	newy += increasey;
+	//then set this in the stylesheet.
 	currentwindow.toplevel.style.width = newx + "px";
-	currentwindow.body.style.height = newy;
+	currentwindow.body.style.height = newy + "px";
 }
 
 /*
@@ -249,7 +262,10 @@ Arguments:
 		can be gotten with document.getElementById()
 */
 function addWindowListeners(currentwindow){
+	//we need to handle when the window is clicked to move it
+	//what's more important here is defning which window is clicked
 	currentwindow.toplevel.onmousedown = function(event){clickdown(event, currentwindow)};
+	//and when the grabhandle is clicked so we can resize the window
 	currentwindow.grabhandle.onmousedown = function(event){dragResize(event, currentwindow)};
 }
 
@@ -263,12 +279,19 @@ Arguments:
 		A window object as returned by addWindow()
 */
 function closeWindow(window){
+	//We need to search the window register for this window to
+	//tell it that we've closed it.
 	for (var i = 0; i<windowregister.length; i++){
 		if(windowregister[i] == window){
 			windowregister[i]={type: "closed"};
 			if(typeof windowregister[i+1] != 'undefined'){
 				windowregister[i] = windowregister[i+1]
 			}
+			//in old variants, this would break the window register.
+			//now that we're not dealing with deleting the object
+			//directly, it's unlikely to happen, but it's still good
+			//to make sure the windowregister is still an array
+			//instead of something stupid like a nullptr
 			if(typeof windowregister == 'undefined'){
 				windowregister = []
 			}
@@ -306,8 +329,10 @@ Arguments:
 	stuff
 		what to put in the body
 
-Note that for now this is a convienience class. It may be more important
-if an issue with just throwing stuff inside arises.
+This is a required step because setting innerHTML directly causes
+problems with window resizing. If you try to set it on its own, the
+grabhandle for corner resizing disappears making it impossible to
+resize the window.
 */
 function setWindowContents(window, stuff){
 	window.body.innerHTML=stuff;
@@ -317,7 +342,7 @@ function setWindowContents(window, stuff){
 /*
 lowerAll()
 
-Lowers all windows to z-index 2 from 3.
+Lowers all windows to z-index 2.
 */
 function lowerAll(){
 	for(var i = 0; i<windowregister.length; i++){
@@ -437,7 +462,7 @@ function addWindow(title,width){
 	//And define a window object. This then gets used to connect
 	//the close button's signal, so we know which elements to
 	//destroy.
-	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null};
+	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active"};
 	windowclose.onclick=function(){closeWindow(windowobject)};
 	//Then add a panel button to the window object
 	windowobject.panelButton=addPanelButton(windowobject);
