@@ -94,6 +94,32 @@ body{
 	background: linear-gradient(to bottom, #000000,#404040);
 	margin:0px;
 	padding:2px;
+	padding-left:40px;
+}
+.windowButton{
+	background-color:white;
+	display: inline;
+	width:200px;
+	height:20px;
+	margin:2px;
+/* 	padding:2px; */
+	background:linear-gradient(to top, #febe10, #daa00d);
+	border:1px solid #daa00d;
+	border-radius:3px;
+	overflow:hidden;
+}
+.windowButtonDeactivated{
+	background-color:black;
+	color:white;
+	display: inline;
+	width:200px;
+	height:20px;
+	margin:2px;
+/* 	padding:2px; */
+/* 	background:linear-gradient(to top, #febe10, #daa00d); */
+	border:1px solid #daa00d;
+	border-radius:3px;
+	overflow:hidden;
 }
 img#menubutton{
 	position:fixed;

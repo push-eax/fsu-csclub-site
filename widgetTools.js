@@ -46,6 +46,7 @@ var justmoved = false;
 var justresize = false;
 var windowmovetransparancy=0.75;
 var windowregister = [];
+var panel;
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -182,8 +183,7 @@ function clickdown(ev,element){
 	//and tell the program we might move a window here
 	justmoved = true;
 	//lower all the windows and raise just this one
-	lowerAll()
-	element.toplevel.style.zIndex=3;
+	raiseWindow(element)
 }
 
 /*
@@ -233,8 +233,7 @@ function dragResize(ev, element){
 	//and tell the program we might move a window here
 	justmoved = false;
 	//lower all the windows and raise just this one
-	lowerAll()
-	element.toplevel.style.zIndex=3;
+	raiseWindow(element);
 	justresize = true;
 }
 
@@ -276,8 +275,8 @@ function closeWindow(window){
 		}
 	}
 	//remove the title
-	window.toplevel.removeChild(window.title);
-	delete window.title;
+	window.toplevel.removeChild(window.titleWidget);
+	delete window.titleWidget;
 	//then the body
 	window.toplevel.removeChild(window.body);
 	delete window.body;
@@ -288,6 +287,10 @@ function closeWindow(window){
 	//May only need to do this, but I'm thorough.
 	document.body.removeChild(window.toplevel);
 	delete window.toplevel;
+	//Last step:
+	//remove the panel button
+	panel.removeChild(window.panelButton)
+	delete window.panelButton
 	delete window;
 }
 
@@ -322,6 +325,38 @@ function lowerAll(){
 			windowregister[i].toplevel.style.zIndex=2;
 		}
 	}
+}
+
+/*
+raiseWindow(window)
+
+lowers all windows and raises the one selected
+
+Arguments:
+	window
+		which window should be raised
+*/
+function raiseWindow(window){
+	lowerAll();
+	window.toplevel.style.zIndex = 3;
+}
+
+/*
+addPanelButton(window)
+
+Adds a button to the panel corresponding to the window.
+
+Arguments:
+	window
+		the window object we are adding
+*/
+function addPanelButton(window){
+	var newbutton = document.createElement("button");
+	newbutton.innerHTML = window.titleText;
+	newbutton.setAttribute("class", "windowButton");
+	newbutton.onclick=function(){raiseWindow(window)};
+	panel.appendChild(newbutton);
+	return newbutton;
 }
 
 /*
@@ -396,9 +431,10 @@ function addWindow(title,width){
 	//And define a window object. This then gets used to connect
 	//the close button's signal, so we know which elements to
 	//destroy.
-	var windowobject = {toplevel: newwindow, title: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles};
+	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null};
 	windowclose.onclick=function(){closeWindow(windowobject)};
 	windowregister.push(windowobject);
+	windowobject.panelButton=addPanelButton(windowobject);
 	//connect our listeners,
 	addWindowListeners(windowobject)
 	if(typeof windowregister != 'undefined'){
@@ -420,3 +456,14 @@ onmouseup
 */
 document.onmouseup   = function(event){clickup  (event)};
 document.onmousemove = function(e)    {updatepos(e)    };
+
+/*
+ * to initialize variables, we should have a function dedicated
+ * to stuff that happens when the window has finished loading,
+ * similar to $("document").ready(...) in JQuery. The difference
+ * is we're not using any libraries to do this stuff, so it's JS
+ * only.
+ */
+document.onreadystatechange = function(){
+	panel = document.getElementById("panel");
+};
