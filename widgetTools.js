@@ -417,13 +417,19 @@ function addWindow(title,width){
 	windowclose.innerHTML="<img class=closebutton_icon src=CloseButton.png></img>";
 	newwindow.appendChild(windowclose);
 	
+	//grabhandles are the little corner buttons used to resize a
+	//window cleanly.
 	var grabhandles = document.createElement("div")
 	grabhandles.setAttribute("class","grabhandle");
 	windowbody.appendChild(grabhandles);
 	
+	//but they're useless if there's no image to show that.
 	var grabhandleimage = document.createElement("img");
 	grabhandleimage.setAttribute("class", "ghimage");
 	grabhandleimage.setAttribute("src", "Grabhandle.png");
+	//There have been some problems with the program thinking
+	//that we want to drag-and-drop so add a few lines of code
+	//to prevent that from happening.
 	grabhandleimage.setAttribute("draggable", "false");
 	grabhandleimage.setAttribute("onmousedown", "return false");
 	grabhandles.appendChild(grabhandleimage);
@@ -433,7 +439,7 @@ function addWindow(title,width){
 	//destroy.
 	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null};
 	windowclose.onclick=function(){closeWindow(windowobject)};
-	windowregister.push(windowobject);
+	//Then add a panel button to the window object
 	windowobject.panelButton=addPanelButton(windowobject);
 	//connect our listeners,
 	addWindowListeners(windowobject)
@@ -443,6 +449,9 @@ function addWindow(title,width){
 	windowobject.toplevel.style.zIndex = 3;
 	
 	//Then return our windowobject to the user, like they requested.
+	//While we're at it, register the window with the program so we
+	//can get to it randomly later in a list.
+	windowregister.push(windowobject);
 	return windowobject;
 	//We are now rendering a functional window.
 }
