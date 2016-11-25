@@ -39,6 +39,7 @@ body{
 	-moz-user-select: none;
 	-ms-user-select: none;
 	cursor: default;
+	overflow:hidden;
 }
 .windowbody{
 	position:absolute;
@@ -107,6 +108,7 @@ body{
 	border:1px solid #daa00d;
 	border-radius:3px;
 	overflow:hidden;
+	vertical-align:top;
 }
 .windowButtonDeactivated{
 	background-color:black;
@@ -120,6 +122,7 @@ body{
 	border:1px solid #daa00d;
 	border-radius:3px;
 	overflow:hidden;
+	vertical-align:top;
 }
 img#menubutton{
 	position:fixed;
