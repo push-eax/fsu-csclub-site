@@ -350,6 +350,8 @@ function lowerAll(){
 			windowregister[i].toplevel.setAttribute("class", "window_disabled");
 			windowregister[i].toplevel.style.zIndex=2;
 			windowregister[i].toplevel.style.backgroundColor='black';
+			windowregister[i].panelButton.style.background='#daa00d';
+			windowregister[i].type='inactive';
 		}
 	}
 }
@@ -367,6 +369,8 @@ function raiseWindow(window){
 	lowerAll();
 	window.toplevel.setAttribute("class", "window");
 	window.toplevel.style.zIndex=3;
+	window.type='active';
+	window.panelButton.style.background='linear-gradient(to top, #febe10, #daa00d)';
 }
 
 /*
