@@ -347,7 +347,9 @@ Lowers all windows to z-index 2.
 function lowerAll(){
 	for(var i = 0; i<windowregister.length; i++){
 		if(typeof windowregister[i].toplevel !='undefined'){
+			windowregister[i].toplevel.setAttribute("class", "window_disabled");
 			windowregister[i].toplevel.style.zIndex=2;
+			windowregister[i].toplevel.style.backgroundColor='black';
 		}
 	}
 }
@@ -363,7 +365,8 @@ Arguments:
 */
 function raiseWindow(window){
 	lowerAll();
-	window.toplevel.style.zIndex = 3;
+	window.toplevel.setAttribute("class", "window");
+	window.toplevel.style.zIndex=3;
 }
 
 /*
