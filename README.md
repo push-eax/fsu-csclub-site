@@ -21,6 +21,7 @@ While this is not a complete feature set, it is most of the superficial ones whi
 
 All that being said, there's no mobile site yet so please use a desktop browser for the time being.
 
+##Internal Information
 On a more internal level, the widget toolkit operates in the following way:
 - HTML code contains start menu, panel, background
 - CSS defines all stlying through central widgetTools.css file. This can be extended through other stylesheets loaded later, but the widgetTools.css page defines the basics.
