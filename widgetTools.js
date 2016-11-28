@@ -36,6 +36,11 @@ windowregister
 	An array containing all active windows, added to every
 	time windowAdd() is created. It is used to push all 
 	windows back a z-index when one is selected.
+
+panel
+	Variable which will represent our panel when we're done,
+	allowing us to add to and manipulate it without re-
+	fetching its DOM node.
 */
 var positiondownx;
 var positiondowny;
@@ -237,6 +242,18 @@ function clickup(ev){
 	}
 }
 
+/*
+dragResize(ev, element)
+
+function run when dragging an element on mouse move
+
+Arguments:
+	ev
+		Event used to trigger the function
+	
+	element
+		the window object we're moving
+*/
 function dragResize(ev, element){
 	//record our pointer position for moving
 	positiondownx = ev.pageX;
@@ -347,11 +364,13 @@ Lowers all windows to z-index 2.
 function lowerAll(){
 	for(var i = 0; i<windowregister.length; i++){
 		if(typeof windowregister[i].toplevel !='undefined'){
-			windowregister[i].toplevel.setAttribute("class", "window_disabled");
-			windowregister[i].toplevel.style.zIndex=2;
-			windowregister[i].toplevel.style.backgroundColor='black';
-			windowregister[i].panelButton.style.background='#daa00d';
-			windowregister[i].type='inactive';
+			if(windowregister[i].type == 'active'){
+				windowregister[i].toplevel.setAttribute("class", "window_disabled");
+				windowregister[i].toplevel.style.zIndex=2;
+				windowregister[i].toplevel.style.backgroundColor='black';
+				windowregister[i].panelButton.style.background='#daa00d';
+				windowregister[i].type='inactive';
+			}
 		}
 	}
 }
@@ -374,6 +393,31 @@ function raiseWindow(window){
 }
 
 /*
+clickpanelbutton(window)
+
+helper function to determine what to do when the panel button
+is clicked for a window. Checks the window state and executes
+the appropriate action.
+
+Arguments:
+	window
+		window object to manipulate
+*/
+function clickPanelButton(window){
+	if(window.type=='active'){
+		minimize(window);
+	} else {
+		if(window.type == 'inactive'){
+			raiseWindow(window);
+		} else {
+			if(window.type == 'minimized'){
+				restoreSize(window);
+			}
+		}
+	}
+}
+
+/*
 addPanelButton(window)
 
 Adds a button to the panel corresponding to the window.
@@ -386,9 +430,51 @@ function addPanelButton(window){
 	var newbutton = document.createElement("button");
 	newbutton.innerHTML = window.titleText;
 	newbutton.setAttribute("class", "windowButton");
-	newbutton.onclick=function(){raiseWindow(window)};
+	newbutton.onclick=function(){clickPanelButton(window)};
 	panel.appendChild(newbutton);
 	return newbutton;
+}
+
+/*
+minimize(window)
+
+hides a window by moving it to the bottom of the screen and
+storing its coordinates so we can restore it later
+
+Arguments:
+	window
+		window object to minimize
+*/
+function minimize(window){
+	var panbounds               = window.panelButton.getBoundingClientRect();
+	var winbounds               = window.toplevel.getBoundingClientRect();
+	window.mintop               = winbounds.top;
+	window.minright             = winbounds.right;
+	window.minleft              = winbounds.left;
+	window.toplevel.style.left  = panbounds.left;
+	window.toplevel.style.right = panbounds.right;
+	window.toplevel.style.top   = panbounds.top;
+	window.minwidth             = window.toplevel.style.width;
+	window.toplevel.style.width = window.panelButton.style.width;
+	window.type                 = 'minimized'
+	window.panelButton.style.background = 'grey';
+}
+
+/*
+restoreSize(window)
+
+restores a minimized window to its original coordinates
+
+Arguments:
+	window
+		window object to restore
+*/
+function restoreSize(window){
+	window.toplevel.style.top   = window.mintop;
+	window.toplevel.style.right = window.minright;
+	window.toplevel.style.left  = window.minleft;
+	window.toplevel.style.width = window.minwidth;
+	raiseWindow(window)
 }
 
 /*
@@ -469,7 +555,7 @@ function addWindow(title,width){
 	//And define a window object. This then gets used to connect
 	//the close button's signal, so we know which elements to
 	//destroy.
-	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active"};
+	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0};
 	windowclose.onclick=function(){closeWindow(windowobject)};
 	//Then add a panel button to the window object
 	windowobject.panelButton=addPanelButton(windowobject);
