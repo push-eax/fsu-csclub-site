@@ -116,7 +116,7 @@ function changeWindowSize(currentwindow, increasex, increasey){
 	var scbounds = document.body.getBoundingClientRect();
 	//then get our actual width and height
 	var newx = cwbounds.right - cwbounds.left;
-	var newy = currentwindow.body.clientHeight-(16); //Vertical padding *2, no clean way to do this automatically yet
+	var newy = currentwindow.body.clientHeight-16; //Vertical padding *2, no clean way to do this automatically yet
 	//add our increment
 	newx += increasex;
 	newy += increasey;
