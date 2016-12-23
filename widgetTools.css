@@ -19,7 +19,7 @@ button.tbutton{
 button.tbutton:active{
 	background: #b5b5b5;
 }
-button.button{
+button.button, input.button{
 	background-color: white;
 	background: linear-gradient(to bottom, #d5d5d5, #c5c5c5);
 	border: 1px solid #a5a5a5;
@@ -28,7 +28,7 @@ button.button{
 	box-shadow: -1px -1px 0px grey inset;
 	text-shadow: 1px 1px 0px white;
 }
-button.button:active{
+button.button:active, input.button:active{
 	background: #a5a5a5;
 }
 img.stock{
@@ -41,5 +41,15 @@ textarea.filltext{
 	background-color: white;
 	background: linear-gradient(to bottom, white, #d5d5d5);
 	box-shadow: 0px 0px 4px #b5b5b5 inset;
-	margin:2px;
+	margin:3px;
+}
+input.text{
+	background-color: #c5c5c5;
+	border: 1px solid #a5a5a5;
+	border-radius:3px;
+	padding:2px;
+}
+input.text:focus{
+	border:2px solid #febe10;
+	padding:0px;
 }
