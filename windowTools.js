@@ -281,7 +281,7 @@ Arguments:
 function addWindowListeners(currentwindow){
 	//we need to handle when the window is clicked to move it
 	//what's more important here is defning which window is clicked
-	currentwindow.toplevel.onmousedown = function(event){clickdown(event, currentwindow)};
+	currentwindow.titleWidget.onmousedown = function(event){clickdown(event, currentwindow)};
 	//and when the grabhandle is clicked so we can resize the window
 	currentwindow.grabhandle.onmousedown = function(event){dragResize(event, currentwindow)};
 }
@@ -511,6 +511,8 @@ function addWindow(title,width){
 	//right away
 	var windowtitle = document.createElement("div");
 	windowtitle.setAttribute("class", "windowtitle");
+	windowtitle.setAttribute("draggable", "false");
+	windowtitle.setAttribute("onmousedown", "return false");
 	//windowtitle.setAttribute("id",    id+"_title");
 	//here be content setting
 	windowtitle.innerHTML=title;
