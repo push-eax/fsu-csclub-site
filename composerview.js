@@ -2,18 +2,12 @@ var bold = false;
 function addComposerWindow(){
 	cpsr = addWindow("Composer", 480)
 	wsp  = makeWidgetSpace()
+	tbr  = makeToolbar(wsp)
 	setWindowSpace(cpsr, wsp);
-	saveButton = makeButton(wsp, "button", "Save");
+	saveButton = makeButton(tbr, "tbutton", "Save");
+	boldButton = makeButton(tbr, "tbutton", "<b>B</b>");
+	italButton = makeButton(tbr, "tbutton", "<i>i</i>");
+	udlnButton = makeButton(tbr, "tbutton", "<u>U</u>");
+	composer   = makeTextArea(wsp);
 }
 
-
-function makebold(){
-	if(bold == false){
-		document.getElementById("bold").setAttribute("class", "toggled");
-		bold = true;
-	}
-	else {
-		document.getElementById("bold").setAttribute("class", "tbutton");
-		bold = false;
-	}
-}

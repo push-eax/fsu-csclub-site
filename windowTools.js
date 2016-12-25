@@ -165,10 +165,11 @@ function updatepos(ev){
 		//the increase amount
 		positiondownx = ev.pageX
 		positiondowny = ev.pageY
-		//and move the window.
-		changeWindowSize(wtomove, pmovex, pmovey);
 		//since the window has actually moved, make it translucent
 		wtomove.toplevel.style.opacity=windowmovetransparancy;
+		for (var iii = 0; iii < wtomove.resizeEvent.length; iii++){
+			wtomove.resizeEvent[iii](wtomove, pmovex, pmovey);
+		}
 	}
 }
 
@@ -561,7 +562,8 @@ function addWindow(title,width){
 	//And define a window object. This then gets used to connect
 	//the close button's signal, so we know which elements to
 	//destroy.
-	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0};
+	var resizeActions = [changeWindowSize];
+	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0, resizeEvent:resizeActions};
 	windowclose.onclick=function(){closeWindow(windowobject)};
 	//Then add a panel button to the window object
 	windowobject.panelButton=addPanelButton(windowobject);
@@ -578,6 +580,10 @@ function addWindow(title,width){
 	windowregister.push(windowobject);
 	return windowobject;
 	//We are now rendering a functional window.
+}
+
+function addResizeEventHandler(window, revhandle){
+	window.resizeEvent.append(revhandle);
 }
 
 /*
