@@ -356,6 +356,10 @@ function setWindowContents(window, stuff){
 	window.body.appendChild(window.grabhandle);
 }
 
+function setWindowSpace(window, wspace){
+	window.body.appendChild(wspace);
+}
+
 /*
 lowerAll()
 

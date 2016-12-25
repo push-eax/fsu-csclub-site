@@ -1,8 +1,14 @@
-function makeWidgetSpace(parent){
+function makeWidgetSpace(){
 	var widgetSpace = document.createElement("div");
 	widgetSpace.setAttribute("class", "widgetSpace");
-	parent.appendChild(widgetSpace);
 	return widgetSpace;
+}
+
+function makeToolbar(widgetSpace){
+	var newToolbar = document.createElement("div");
+	newToolbar.setAttribute("class", "toolbar");
+	widgetSpace.appendChild(newToolbar);
+	return newToolbar;
 }
 
 function makeButton(parent, type, text){
@@ -11,6 +17,13 @@ function makeButton(parent, type, text){
 	newButton.innerHTML = text;
 	parent.appendChild(newButton);
 	var buttonObject = { button:newButton, type:type, parent:parent, state:"normal" };
+}
+
+function makeTextArea(parent){
+	var newTextArea = document.createElement("div");
+	newTextArea.setAttribute("class", "filltext");
+	newTextArea.setAttribute("contenteditable", "")
+	parent.appendChild(newTextArea);
 }
 
 function setWidgetText(parent, text){
