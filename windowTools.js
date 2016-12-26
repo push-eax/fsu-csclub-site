@@ -193,7 +193,7 @@ Arguments:
 		style parameters work, meaning a position mode is set
 		other than the default. Works with class=window.
 */
-function clickdown(ev,element){
+function clicktbar(ev,element){
 	//record our pointer position for moving
 	positiondownx = ev.pageX;
 	positiondowny = ev.pageY;
@@ -201,6 +201,8 @@ function clickdown(ev,element){
 	wtomove = element;
 	//and tell the program we might move a window here
 	justmoved = true;
+}
+function clickdown(ev,element){
 	//lower all the windows and raise just this one
 	raiseWindow(element)
 }
@@ -282,7 +284,8 @@ Arguments:
 function addWindowListeners(currentwindow){
 	//we need to handle when the window is clicked to move it
 	//what's more important here is defning which window is clicked
-	currentwindow.titleWidget.onmousedown = function(event){clickdown(event, currentwindow)};
+	currentwindow.titleWidget.onmousedown = function(event){clicktbar(event, currentwindow)};
+	currentwindow.toplevel.onmousedown    = function(event){clickdown(event, currentwindow)}
 	//and when the grabhandle is clicked so we can resize the window
 	currentwindow.grabhandle.onmousedown = function(event){dragResize(event, currentwindow)};
 }
