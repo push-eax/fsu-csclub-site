@@ -17,6 +17,7 @@ function makeButton(parent, type, text){
 	newButton.innerHTML = text;
 	parent.appendChild(newButton);
 	var buttonObject = { button:newButton, type:type, parent:parent, state:"normal" };
+	return buttonObject;
 }
 
 function makeTextArea(parent){
@@ -38,5 +39,9 @@ function setButtonToggled(button){
 function setButtonUntoggled(button){
 	button.button.setAttribute("class", button.type);
 	button.state="normal"
+}
+
+function setClickAction(widget, funct){
+	widget.onmousedown = function(){funct()}
 }
 
