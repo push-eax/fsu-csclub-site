@@ -23,8 +23,9 @@ function makeButton(parent, type, text){
 function makeTextArea(parent){
 	var newTextArea = document.createElement("div");
 	newTextArea.setAttribute("class", "filltext");
-	newTextArea.setAttribute("contenteditable", "")
+	newTextArea.setAttribute("contenteditable", "true")
 	parent.appendChild(newTextArea);
+	return newTextArea;
 }
 
 function setWidgetText(parent, text){
