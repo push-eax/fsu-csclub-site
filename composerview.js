@@ -15,29 +15,14 @@ function addComposerWindow(){
 }
 
 function clickBold(button, composer){
-	if (button.state == "normal"){
-		setButtonToggled(button)
-	}
-	else {
-		setButtonUntoggled(button)
-	}
+	document.execCommand('bold', false, null);
 }
 
 function clickItal(button, composer){
-	if (button.state == "normal"){
-		setButtonToggled(button)
-	}
-	else {
-		setButtonUntoggled(button)
-	}
+	document.execCommand('italic', false, null);
 }
 
 function clickUdln(button, composer){
-	if (button.state == "normal"){
-		setButtonToggled(button)
-	}
-	else {
-		setButtonUntoggled(button)
-	}
+	document.execCommand('underline', false, null);
 }
 
