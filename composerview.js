@@ -8,7 +8,7 @@ function addComposerWindow(){
 	var italButton = makeButton(tbr, "tbutton", "<i>i</i>");
 	var udlnButton = makeButton(tbr, "tbutton", "<u>U</u>");
 	var composer   = makeTextArea(wsp);
-    setWindowSpace ( cpsr, wsp );
+    setWidgetSpace ( cpsr, wsp );
 	setClickAction ( boldButton.button, function() { clickBold( boldButton, composer ) } );
 	setClickAction ( italButton.button, function() { clickItal( italButton, composer ) } );
 	setClickAction ( udlnButton.button, function() { clickUdln( udlnButton, composer ) } );
