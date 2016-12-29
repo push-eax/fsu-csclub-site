@@ -174,7 +174,7 @@ function updatepos(ev){
 }
 
 /*
-clickdown(ev, element)
+clicktbar(ev, element)
 
 Used as an event handling function for when someone clicks
 the title bar of a window expecting to be able to move it.
@@ -202,7 +202,24 @@ function clicktbar(ev,element){
 	//and tell the program we might move a window here
 	justmoved = true;
 }
-function clickdown(ev,element){
+
+/*
+clickdown(ev, element)
+
+Used as an event handling function for when someone clicks
+a window for any reason. This does nothing but raise that
+window.
+
+Arguments:
+	element
+		element object, usually a div but not picky
+		Supplied by the addWindowListeners(element) function,
+		this defines what should be moved. It is currently
+		designed around the assumption that the left and top
+		style parameters work, meaning a position mode is set
+		other than the default. Works with class=window.
+*/
+function clickdown(element){
 	//lower all the windows and raise just this one
 	raiseWindow(element)
 }
@@ -285,7 +302,7 @@ function addWindowListeners(currentwindow){
 	//we need to handle when the window is clicked to move it
 	//what's more important here is defning which window is clicked
 	currentwindow.titleWidget.onmousedown = function(event){clicktbar(event, currentwindow)};
-	currentwindow.toplevel.onmousedown    = function(event){clickdown(event, currentwindow)}
+	currentwindow.toplevel.onmousedown    = function(event){clickdown(currentwindow)}
 	//and when the grabhandle is clicked so we can resize the window
 	currentwindow.grabhandle.onmousedown = function(event){dragResize(event, currentwindow)};
 }
@@ -360,7 +377,26 @@ function setWindowContents(window, stuff){
 	window.body.appendChild(window.grabhandle);
 }
 
-function setWindowSpace(window, wspace){
+/*
+setWidgetSpace(window, wspace)
+
+Adds a child object to the window's body space. Built primarily
+to accomodate JS-based widget toolkits. The widgetTools.js toolkit
+uses an object called the widget space which acts as the parent for
+all widgets in an area. They then add themselves to the widget
+space. This encapsulation works because it runs in a contained
+space that doesn't actually need access to any higher-level tag,
+and therefore can't screw with things it shouldn't like the window
+body object.
+
+Arguments:
+	window
+		the current window object.
+
+	wspace
+		the object to add to the window
+*/
+function setWidgetSpace(window, wspace){
 	window.body.appendChild(wspace);
 }
 
@@ -585,6 +621,27 @@ function addWindow(title,width){
 	//We are now rendering a functional window.
 }
 
+/*
+addResizeEventHandler(window, revhandle)
+
+As part of making the window toolkit work with a widget toolkit, the
+code required to make a window resize needs to allow for subfunctions.
+This is the result of CSS's 100% property not taking other elements
+into account and simply filling the window on resize. This causes odd
+behavior when a window is resized. To combat this, a function needed
+to be inserted into the resize function. Instead of making one function
+which would work only with widgetTools.js, however, it made more sense
+to add an interface to insert random code into the resize event.
+
+Arguments:
+	window
+		The window to attach the resize event handler to.
+
+	revhandle
+		The resize event handling function. This function
+		needs to accept two arguments: the current window, the
+		delta X, and the delta Y in that order.
+*/
 function addResizeEventHandler(window, revhandle){
 	window.resizeEvent.append(revhandle);
 }
