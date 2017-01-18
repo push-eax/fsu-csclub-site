@@ -52,6 +52,27 @@ function makeToolbar(widgetSpace){
 }
 
 /*
+makeSection(widgetSpace)
+
+Creates a new section area, which can be used to add other
+widgets into a bordered area, so that parts of a ui page can
+be separated cleanly.
+
+Arguments:
+	widgetSpace
+		the DOM element to place the section in.
+		This can conceptually be any DOM element, but
+		it is reccommended that this be restricted
+		to just a widgetSpace or other section.
+*/
+function makeSection(widgetSpace){
+	var newSection = document.createElement("div");
+	newSection.setAttribute("class", "section");
+	widgetSpace.appendChild(newSection);
+	return newSection;
+}
+
+/*
 makeButton(parent, type, text)
 
 Creates a button in the specified parent.
