@@ -131,6 +131,28 @@ function makeTextArea(parent){
 }
 
 /*
+makeLabel(parent)
+
+Makes a label widget similar to Gtk::Label or QLabel
+
+Arguments:
+	parent
+		Parent DOM object or widget space.
+
+Returns:
+	newLabel
+		The new label div DOM object.
+*/
+function makeLabel(parent,text){
+	var newLabel = document.createElement("div");
+	newLabel.setAttribute("class", "labelText");
+	newLabel.innerHTML=text;
+	parent.appendChild(newLabel);
+	return newLabel;
+}
+
+
+/*
 setWidgetText(parent, text)
 
 sets the inner HTML content of an element. Could potentially
