@@ -1,0 +1,219 @@
+body{
+	font-family:sans;
+	background-color:#868686;
+	background:linear-gradient(to bottom,#868686,#BFBFBF);
+	height:100%;
+}
+.window{
+	background-color:black;
+	background:linear-gradient(to bottom, black, #868686);
+	position:fixed;
+	z-index:3;
+	opacity:1;
+    border-radius:2px;
+	box-shadow: 0px 0px 5px black;
+}
+.window_disabled{
+	position:fixed;
+	background-color: black;
+	background: black;
+	z-index:2;
+	border-radius:2px;
+	box-shadow: 0px 0px 2px black;
+	background-color:#F0F0F0;
+}
+.windowtitle{
+	width:100%;
+	text-align:center;
+	height:20px;
+	color:white;
+	display:block;
+	position:relative;
+	top:0px;
+	left:0px;
+	right:0px;
+	padding:3px;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	cursor: default;
+	overflow:hidden;
+}
+.windowbody{
+	position:absolute;
+	left:1px;
+	right:1px;
+	background-color:white;
+	opacity:1.5;
+	padding-bottom:16px;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	box-shadow: 0px 0px 5px black;
+	overflow:hidden;
+}
+.closebutton{
+	position:absolute;
+	right:0px;
+	top:0px;
+	border:1px solid black;
+	box-shadow: 0px 0px 2px black;
+	background-color:black;
+	color:white;
+	height:100%;
+}
+.minimizebutton{
+	position:absolute;
+	right:40px;
+	top:0px;
+	border:1px solid black;
+	box-shadow: 0px 0px 2px black;
+	background-color:black;
+	color:white;
+	height:100%;
+}
+.closebutton_icon, .minimizebutton_icon{
+	height:100%;
+	width:20px;
+}
+.grabhandle{
+	width:10px;
+	height:10px;
+	bottom:0px;
+	right:0px;
+	position:absolute;
+	cursor:se-resize;
+}
+.ghimage{
+	width:100%;
+	height:100%;
+}
+#panel{
+	width:100%;
+	position:fixed;
+	z-index:4;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	height:24px;
+	background-color:#231f20;
+	background: linear-gradient(to bottom, #000000,#404040);
+	margin:0px;
+	padding:2px;
+	padding-left:40px;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.windowButton{
+	background-color:white;
+	display: inline;
+	width:200px;
+	height:20px;
+	margin:2px;
+/* 	padding:2px; */
+	background:linear-gradient(to top, #febe10, #daa00d);
+	border:1px solid #daa00d;
+	border-radius:3px;
+	overflow:hidden;
+	vertical-align:top;
+	color: black;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.windowButtonDeactivated{
+	background-color:black;
+	color:white;
+	display: inline;
+	width:200px;
+	height:20px;
+	margin:2px;
+/* 	padding:2px; */
+/* 	background:linear-gradient(to top, #febe10, #daa00d); */
+	border:1px solid #daa00d;
+	border-radius:3px;
+	overflow:hidden;
+	vertical-align:top;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+img#menubutton{
+	position:fixed;
+	z-index:7;
+	bottom:0;
+	left:0;
+	height:35px;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.menubutton{
+	width:158px;
+	margin:5px;
+	background:linear-gradient(to top, #febe10, #daa00d);
+	border:1px solid #daa00d;
+	box-shadow:0px 0px 3px #febe10;
+	color:black;
+	user-select:none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.menubutton:hover{
+	box-shadow:0px 0px 3px #e0e0e0;
+}
+#menu{
+	position:fixed;
+	z-index:6;
+	bottom:28px;
+	left:0px;
+	height:0px;
+	width:350px;
+	background-color:black;
+	box-shadow:0px 0px 10px black;
+	overflow:hidden;
+	transition:height 0.2s, padding 0.2s;
+	color:white;
+	padding:0px;
+	background:linear-gradient(to top, black, #1e1e01);
+}
+.mheader{
+	font-family:serif;
+	padding:3px;
+	border:3px solid black;
+	border-radius:10px;
+	background-color:#febe10;
+	background:linear-gradient(to bottom, #febe10, #daa00d);
+	font-weight:bold;
+	color:#231f20;
+}
+#menubackground{
+	position:fixed;
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	z-index:5;
+}
