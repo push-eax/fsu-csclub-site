@@ -10,7 +10,7 @@ function addComposerWindow(){
 }
 
 
-function addComposerWindow-authenticated(){
+function addComposerWindow_authenticated(){
 	var cpsr       = addWindow("Composer", 480)
 	var wsp        = makeWidgetSpace()
 	var tbr        = makeToolbar(wsp)

@@ -34,7 +34,12 @@
 				widgets+= "</form>";
 				widgets+= "<div class=section><p>Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.</p></div>";
 				var anotherwindow = addWindow('Widget Toolkit Test Window',400)
-				setWindowContents(anotherwindow, widgets);
+				
+				var widgetSpace = makeWidgetSpace();
+				var button = makeButton(widgetSpace, "button", "Buttons");
+				//var table = makeTable(widgetSpace); //TODO: 
+				//setWindowContents(anotherwindow, widgetSpace);
+				setWidgetSpace(anotherwindow, widgetSpace);
 			}
 		</script>
 		<img onmouseover=onmenubover() onmouseout=onmenubout() onclick=openmenu() id=menubutton src=beta-start-button.png></img>
