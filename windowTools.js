@@ -42,6 +42,11 @@ panel
 	allowing us to add to and manipulate it without re-
 	fetching its DOM node.
 
+minimizetime
+	The longest amount of time the minimize or unminimze
+	transition would take. Should never be any longer, since
+	these animatiions interfere with moving windows.
+
 minimizetransitiontime
 	variable to define the minimize animation. When the minimize
 	request is sent this becomes the value of window.toplevel.
@@ -62,6 +67,7 @@ var justresize = false;
 var windowmovetransparancy=0.75;
 var windowregister = [];
 var panel;
+var minimizetime = 250;
 var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s";
 var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s";
 
@@ -532,7 +538,7 @@ function restoreSize(window){
 	window.toplevel.style.right      = window.minright;
 	window.toplevel.style.left       = window.minleft;
 	window.toplevel.style.width      = window.minwidth;
-	setTimeout(function(){window.toplevel.style.transition = minimizetransitionreset;}, 250);
+	setTimeout(function(){window.toplevel.style.transition = minimizetransitionreset;}, minimizetime);
 	raiseWindow(window)
 }
 

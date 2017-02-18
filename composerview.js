@@ -6,7 +6,9 @@ function addComposerWindow(){
 	var toolbar = makeToolbar(widgets);
 	var message = "Please enter your username and password:";
 	var messagl = makeLabel(widgets, message);
-
+	var loginbx = makeSection(widgets);
+	var apology = makeLabel(loginbx, "We have no form element support yet in the widget toolkit, therefore this window is disabled. Sorry for the inconvienience!");
+	setWidgetSpace(cpsrwin, widgets);
 }
 
 
