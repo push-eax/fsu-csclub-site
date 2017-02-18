@@ -581,6 +581,15 @@ function addWindow(title,width){
 	windowclose.innerHTML="<img class=closebutton_icon src=CloseButton.png></img>";
 	newwindow.appendChild(windowclose);
 	
+	//And now that minimization works, we may as well add a minimize button.
+	//The button needs to be aware of the same stuff as close
+	var windowminimize = document.createElement("button");
+	windowminimize.setAttribute("class", "minimizebutton");
+	//And this one uses an uninspired - in lieu of a fancier
+	//icon to take its place
+	windowminimize.innerHTML="<img class=minimizebutton_icon src=MinimizeButton.png></img>";
+	newwindow.appendChild(windowminimize);
+	
 	//grabhandles are the little corner buttons used to resize a
 	//window cleanly.
 	var grabhandles = document.createElement("div")
@@ -602,8 +611,9 @@ function addWindow(title,width){
 	//the close button's signal, so we know which elements to
 	//destroy.
 	var resizeActions = [changeWindowSize];
-	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0, resizeEvent:resizeActions};
+	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, minimizebutton: windowminimize, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0, resizeEvent:resizeActions};
 	windowclose.onclick=function(){closeWindow(windowobject)};
+	windowminimize.onclick=function(){minimize(windowobject)};
 	//Then add a panel button to the window object
 	windowobject.panelButton=addPanelButton(windowobject);
 	//connect our listeners,

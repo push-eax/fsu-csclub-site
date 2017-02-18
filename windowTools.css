@@ -68,7 +68,17 @@ body{
 	color:white;
 	height:100%;
 }
-.closebutton_icon{
+.minimizebutton{
+	position:absolute;
+	right:40px;
+	top:0px;
+	border:1px solid black;
+	box-shadow: 0px 0px 2px black;
+	background-color:black;
+	color:white;
+	height:100%;
+}
+.closebutton_icon, .minimizebutton_icon{
 	height:100%;
 	width:20px;
 }
