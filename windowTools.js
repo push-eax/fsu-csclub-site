@@ -490,17 +490,18 @@ Arguments:
 		window object to minimize
 */
 function minimize(window){
-	var panbounds               = window.panelButton.getBoundingClientRect();
-	var winbounds               = window.toplevel.getBoundingClientRect();
-	window.mintop               = winbounds.top;
-	window.minright             = winbounds.right;
-	window.minleft              = winbounds.left;
-	window.toplevel.style.left  = panbounds.left;
-	window.toplevel.style.right = panbounds.right;
-	window.toplevel.style.top   = panbounds.top;
-	window.minwidth             = window.toplevel.style.width;
-	window.toplevel.style.width = window.panelButton.style.width;
-	window.type                 = 'minimized'
+	var panbounds                       = window.panelButton.getBoundingClientRect();
+	var winbounds                       = window.toplevel.getBoundingClientRect();
+	window.toplevel.style.transition    = "top 1s, right 1s, left 1s, width 0.5s";
+	window.mintop                       = winbounds.top;
+	window.minright                     = winbounds.right;
+	window.minleft                      = winbounds.left;
+	window.toplevel.style.left          = panbounds.left;
+	window.toplevel.style.right         = panbounds.right;
+	window.toplevel.style.top           = panbounds.top;
+	window.minwidth                     = window.toplevel.style.width;
+ 	window.toplevel.style.width         = 200;
+	window.type                         = 'minimized'
 	window.panelButton.style.background = 'grey';
 }
 
@@ -514,10 +515,12 @@ Arguments:
 		window object to restore
 */
 function restoreSize(window){
-	window.toplevel.style.top   = window.mintop;
-	window.toplevel.style.right = window.minright;
-	window.toplevel.style.left  = window.minleft;
-	window.toplevel.style.width = window.minwidth;
+	window.toplevel.style.transition = "top 1s, right 1s, left 1s, width 0.5s";
+	window.toplevel.style.top        = window.mintop;
+	window.toplevel.style.right      = window.minright;
+	window.toplevel.style.left       = window.minleft;
+	window.toplevel.style.width      = window.minwidth;
+	window.toplevel.style.transition = "top 0s, right 0s, left 0s, width 0s";
 	raiseWindow(window)
 }
 
@@ -548,6 +551,8 @@ function addWindow(title,width){
 	//newwindow.setAttribute("id", id)
 	//And its width as well...
 	newwindow.style.width = width;
+	//Minimize only works if we have a transition property ready to go
+	newwindow.style.transition = "top 0s, right 0s, left 0s, width 0s";
 	//and add it to the document body.
 	document.body.appendChild(newwindow);
 	
