@@ -37,8 +37,21 @@
 				
 				var widgetSpace = makeWidgetSpace();
 				var button = makeButton(widgetSpace, "button", "Buttons");
-				//var table = makeTable(widgetSpace); //TODO: 
-				//setWindowContents(anotherwindow, widgetSpace);
+				//var table = makeTable(widgetSpace); //TODO: finish table code in the widget toolkit
+				//var row1 = makeTableRow(table);
+				//row1.addelement("table");
+				//row1.addelement("headers");
+				//var row2 = makeTableRow(table);
+				//row2.addelement("table");
+				//row2.addelement("content");
+				//var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit
+				//var inputfield = makeEntry(form);
+				//var submitbutton = makeButton(form, "input", "form elements");
+				//var selectoptions = [{"combobox", "GTK+ calls these comboboxes"}, {"select", "HTML calls these \"selects\""}];
+				//var selectbox = makeSelect(form, selectoptions);
+				var section = makeSection(widgetSpace);
+				setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
+				//setWindowContents(anotherwindow, widgets);
 				setWidgetSpace(anotherwindow, widgetSpace);
 			}
 		</script>
