@@ -1,9 +1,0 @@
-body{
-	background-color:grey;
-	background-image:url('fsulogo.png');
-	background-position:center;
-	background-repeat:no-repeat;
-}
-#menubutton{
-	transition:transform 0.2s;
-}
