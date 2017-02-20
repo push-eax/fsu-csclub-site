@@ -451,6 +451,7 @@ function raiseWindow(window){
 	window.toplevel.setAttribute("class", "window");
 	window.toplevel.style.zIndex=3;
 	window.type='active';
+	window.toplevel.animationName="openBounce";
 	window.panelButton.style.background='linear-gradient(to top, #febe10, #daa00d)';
 }
 
