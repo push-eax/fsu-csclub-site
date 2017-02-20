@@ -1,8 +1,8 @@
 function onmenubover(){
-	document.getElementById("menubutton").src="beta-start-button-hover.png";
+	document.getElementById("menubutton").src="img/beta-start-button-hover.png";
 }
 function onmenubout(){
-	document.getElementById("menubutton").src="beta-start-button.png";
+	document.getElementById("menubutton").src="img/beta-start-button.png";
 }
 var menuopen = false;
 function openmenu(){
