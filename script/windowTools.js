@@ -335,6 +335,8 @@ Arguments:
 		A window object as returned by addWindow()
 */
 function closeWindow(window){
+	window.toplevel.setAttribute("class", "window_close");
+	setTimeout(function(){
 	//We need to search the window register for this window to
 	//tell it that we've closed it.
 	for (var i = 0; i<windowregister.length; i++){
@@ -370,7 +372,8 @@ function closeWindow(window){
 	//remove the panel button
 	panel.removeChild(window.panelButton)
 	delete window.panelButton
-	delete window;
+	//delete window;
+	}, 256);
 }
 
 /*
@@ -451,7 +454,6 @@ function raiseWindow(window){
 	window.toplevel.setAttribute("class", "window");
 	window.toplevel.style.zIndex=3;
 	window.type='active';
-	//window.toplevel.animationName="openBounce";
 	window.panelButton.style.background='linear-gradient(to top, #febe10, #daa00d)';
 }
 

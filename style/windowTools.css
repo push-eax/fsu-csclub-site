@@ -26,7 +26,7 @@ body{
 	position:fixed;
 	z-index:3;
 	opacity:1;
-	animation-name: open;
+/* 	animation-name: open; */
 	animation-duration: .125s;
     border-radius:2px;
 	box-shadow: 0px 0px 5px black;
@@ -40,6 +40,17 @@ body{
 	box-shadow: 0px 0px 2px black;
 	background-color:#F0F0F0;
 }
+.window_close{
+	animation-name:fadeOut;
+	background-color:black;
+	background:linear-gradient(to bottom, black, #868686);
+	position:fixed;
+	z-index:3;
+	opacity:0;
+	animation-duration: .125s;
+    border-radius:2px;
+	box-shadow: 0px 0px 5px black;
+}
 .windowtitle{
 	width:100%;
 	text-align:left;
@@ -51,7 +62,7 @@ body{
 	left:0px;
 	right:80px;
 	padding:3px;
-	animation-name: open;
+	animation-name: fade;
 	animation-duration: 0.256s;
 	user-select:none;
 	-webkit-touch-callout: none;
