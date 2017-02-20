@@ -41,6 +41,21 @@ panel
 	Variable which will represent our panel when we're done,
 	allowing us to add to and manipulate it without re-
 	fetching its DOM node.
+
+minimizetime
+	The longest amount of time the minimize or unminimze
+	transition would take. Should never be any longer, since
+	these animatiions interfere with moving windows.
+
+minimizetransitiontime
+	variable to define the minimize animation. When the minimize
+	request is sent this becomes the value of window.toplevel.
+	style.transition
+
+minimizetransitionreset
+	variable containing all the transition rules modified by the
+	minimize transition, except with time set to 0 so as not to
+	break window moving
 */
 var positiondownx;
 var positiondowny;
@@ -52,6 +67,9 @@ var justresize = false;
 var windowmovetransparancy=0.75;
 var windowregister = [];
 var panel;
+var minimizetime = 250;
+var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s";
+var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s";
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -490,17 +508,18 @@ Arguments:
 		window object to minimize
 */
 function minimize(window){
-	var panbounds               = window.panelButton.getBoundingClientRect();
-	var winbounds               = window.toplevel.getBoundingClientRect();
-	window.mintop               = winbounds.top;
-	window.minright             = winbounds.right;
-	window.minleft              = winbounds.left;
-	window.toplevel.style.left  = panbounds.left;
-	window.toplevel.style.right = panbounds.right;
-	window.toplevel.style.top   = panbounds.top;
-	window.minwidth             = window.toplevel.style.width;
-	window.toplevel.style.width = window.panelButton.style.width;
-	window.type                 = 'minimized'
+	var panbounds                       = window.panelButton.getBoundingClientRect();
+	var winbounds                       = window.toplevel.getBoundingClientRect();
+	window.toplevel.style.transition    = minimizetransitiontime;
+	window.mintop                       = winbounds.top;
+	window.minright                     = winbounds.right;
+	window.minleft                      = winbounds.left;
+	window.toplevel.style.left          = panbounds.left;
+	window.toplevel.style.right         = panbounds.right;
+	window.toplevel.style.top           = panbounds.top;
+	window.minwidth                     = window.toplevel.style.width;
+ 	window.toplevel.style.width         = 200;
+	window.type                         = 'minimized'
 	window.panelButton.style.background = 'grey';
 }
 
@@ -514,10 +533,12 @@ Arguments:
 		window object to restore
 */
 function restoreSize(window){
-	window.toplevel.style.top   = window.mintop;
-	window.toplevel.style.right = window.minright;
-	window.toplevel.style.left  = window.minleft;
-	window.toplevel.style.width = window.minwidth;
+	window.toplevel.style.transition = minimizetransitiontime;
+	window.toplevel.style.top        = window.mintop;
+	window.toplevel.style.right      = window.minright;
+	window.toplevel.style.left       = window.minleft;
+	window.toplevel.style.width      = window.minwidth;
+	setTimeout(function(){window.toplevel.style.transition = minimizetransitionreset;}, minimizetime);
 	raiseWindow(window)
 }
 
@@ -548,6 +569,8 @@ function addWindow(title,width){
 	//newwindow.setAttribute("id", id)
 	//And its width as well...
 	newwindow.style.width = width;
+	//Minimize only works if we have a transition property ready to go
+	newwindow.style.transition = minimizetransitionreset;
 	//and add it to the document body.
 	document.body.appendChild(newwindow);
 	
