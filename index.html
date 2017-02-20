@@ -27,7 +27,9 @@
 			function makeWidgetWindow(){
 				var anotherwindow = addWindow('Widget Toolkit Test Window',400)
 				var widgetSpace = makeWidgetSpace();
-				var button = makeButton(widgetSpace, "button", "Buttons");
+				var toolBar = makeToolbar(widgetSpace);
+				var button = makeButton(toolBar, "tbutton", "Buttons");
+				var button2 = makeButton(toolBar, "tbutton", "In a toolbar");
 				var table = makeTable(widgetSpace);
 				var row1 = makeTableRow(table);
 				makeTableData(row1,"table", true);
@@ -35,6 +37,7 @@
 				var row2 = makeTableRow(table);
 				makeTableData(row2,"table");
 				makeTableData(row2,"content", true);
+				var rule = makeRule(widgetSpace);
 				var tabledata = [["Tables", "created", "quickly"],["using", "makeTableWithData","()"]];
 				var tablewithdata = makeTableWithData(widgetSpace, true, tabledata);
 				var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit

@@ -251,6 +251,24 @@ function makeTableData(parent, tdata, borderless=false){
 }
 
 /*
+makeRule(parent)
+
+Makes a horizontal rule
+
+Arguments:
+	parent
+		Where to put the HR
+
+Returns
+	HTML DOM HR object
+*/
+function makeRule(parent){
+	var newrule = document.createElement("hr");
+	parent.appendChild(newrule);
+	return newrule;
+}
+
+/*
 makeForm(parent [, action])
 
 makes an HTML form
@@ -296,6 +314,7 @@ Returns:
 function makeInput(parent, type, value = "", name = ""){
 	var input = document.createElement("input");
 	input.setAttribute("type", type);
+	if(type == "text") input.setAttribute("class", "text");
 	if(value != "") input.setAttribute("value", value);
 	if(name != "") input.setAttribute("name", name);
 	parent.appendChild(input);
