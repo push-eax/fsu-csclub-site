@@ -264,6 +264,37 @@ function makeInput(parent, type, value = "", name = ""){
 	return input;
 }
 
+/*
+makeSelect(parent, options)
+
+Creates a select object, similar to a GTK+ combobox
+
+Arguments:
+	parent
+		Parent object to add the combobox to
+	
+	options
+		Select value/text pairs, stored in a two-dimensional
+		array. The first is the value= tag, the second is the
+		text displayed on the option. (example:
+		[["keyboard", "Desktop Keyboards"], ["mc", "Desktop Mice"]]
+		...value="keyboard">Desktop Keyboards</option>...
+
+Returns:
+	HTML DOM select object
+*/
+function makeSelect(parent, options){
+	var select = document.createElement("select");
+	for(var i = 0; i < options.length; i++){
+		var newoption = document.createElement("option");
+		newoption.setAttribute("value", options[i][0]);
+		newoption.innerHTML=options[i][1];
+		select.appendChild(newoption);
+	}
+	select.setAttribute("class", "combo");
+	parent.appendChild(select);
+	return select;
+}
 
 /*
 setWidgetText(parent, text)
