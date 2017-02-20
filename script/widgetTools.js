@@ -184,7 +184,7 @@ function makeTableRow(parent){
 }
 
 /*
-makeTableData(parent)
+makeTableData(parent, tdata[, borderless])
 
 makes an HTML table data element
 
@@ -194,6 +194,9 @@ Arguments:
 	
 	tdata
 		Contents of the cell
+	
+	borderless
+		whether the cell should have borders
 
 returns:
 	newtabledata
@@ -207,6 +210,58 @@ function makeTableData(parent, tdata, borderless=false){
 	}
 	parent.appendChild(newtabledata);
 	return newtabledata;
+}
+
+/*
+makeForm(parent [, action])
+
+makes an HTML form
+
+Arguments:
+	parent
+		object to add the form to
+	
+	action
+		submit action
+
+Returns:
+	new HTML DOM form object
+*/
+function makeForm(parent, action = ""){
+	var newform = document.createElement("form");
+	newform.setAttribute("action", action);
+	parent.appendChild(newform);
+	return newform;
+}
+
+/*
+makeInput(parent, type[, value[, name]])
+
+Creates an input object, such as a text field or submit button
+
+Arguments:
+	parent
+		object to add the input to
+	
+	type
+		type of input (text, number, date, etc..)
+	
+	value
+		the value of the input
+	
+	name
+		name of the input
+
+Returns:
+	HTML DOM input object
+*/
+function makeInput(parent, type, value = "", name = ""){
+	var input = document.createElement("input");
+	input.setAttribute("type", type);
+	if(value != "") input.setAttribute("value", value);
+	if(name != "") input.setAttribute("name", name);
+	parent.appendChild(input);
+	return input;
 }
 
 

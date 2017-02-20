@@ -44,9 +44,9 @@
 				var row2 = makeTableRow(table);
 				makeTableData(row2,"table");
 				makeTableData(row2,"content", true);
-				//var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit
-				//var inputfield = makeEntry(form);
-				//var submitbutton = makeButton(form, "input", "form elements");
+				var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit
+				var inputfield = makeInput(form, "text");
+				var submitbutton = makeButton(form, "button", "form elements");
 				//var selectoptions = [{"combobox", "GTK+ calls these comboboxes"}, {"select", "HTML calls these \"selects\""}];
 				//var selectbox = makeSelect(form, selectoptions);
 				var section = makeSection(widgetSpace);
