@@ -37,13 +37,13 @@
 				
 				var widgetSpace = makeWidgetSpace();
 				var button = makeButton(widgetSpace, "button", "Buttons");
-				//var table = makeTable(widgetSpace); //TODO: finish table code in the widget toolkit
-				//var row1 = makeTableRow(table);
-				//row1.addelement("table");
-				//row1.addelement("headers");
-				//var row2 = makeTableRow(table);
-				//row2.addelement("table");
-				//row2.addelement("content");
+				var table = makeTable(widgetSpace);
+				var row1 = makeTableRow(table);
+				makeTableData(row1,"table", true);
+				makeTableData(row1,"headers");
+				var row2 = makeTableRow(table);
+				makeTableData(row2,"table");
+				makeTableData(row2,"content", true);
 				//var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit
 				//var inputfield = makeEntry(form);
 				//var submitbutton = makeButton(form, "input", "form elements");

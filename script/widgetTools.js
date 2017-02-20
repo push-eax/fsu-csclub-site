@@ -151,6 +151,64 @@ function makeLabel(parent,text){
 	return newLabel;
 }
 
+/*
+makeTable(parent)
+
+Makes an HTML table.
+
+Returns:
+	newtable
+		new HTML DOM table
+*/
+function makeTable(parent){
+	var newtable = document.createElement("table");
+	newtable.setAttribute("class", "table");
+	parent.appendChild(newtable);
+	return newtable;
+}
+
+/*
+makeTableRow(parent)
+
+Makes an HTML table row
+
+Returns:
+	newtablerow
+		new HTML DOM tr
+*/
+function makeTableRow(parent){
+	var newtablerow = document.createElement("tr");
+	newtablerow.setAttribute("class", "tablerow");
+	parent.appendChild(newtablerow);
+	return newtablerow;
+}
+
+/*
+makeTableData(parent)
+
+makes an HTML table data element
+
+Arguments:
+	parent
+		object to add td to
+	
+	tdata
+		Contents of the cell
+
+returns:
+	newtabledata
+		new HTML DOM td
+*/
+function makeTableData(parent, tdata, borderless=false){
+	var newtabledata = document.createElement("td");
+	newtabledata.innerHTML=tdata;
+	if(borderless == false){
+		newtabledata.setAttribute("class", "tabledata");
+	}
+	parent.appendChild(newtabledata);
+	return newtabledata;
+}
+
 
 /*
 setWidgetText(parent, text)
