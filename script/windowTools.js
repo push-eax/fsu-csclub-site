@@ -68,8 +68,8 @@ var windowmovetransparancy=0.75;
 var windowregister = [];
 var panel;
 var minimizetime = 250;
-var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s";
-var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s";
+var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s, opacity 0.25s";
+var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.125s";
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -451,6 +451,7 @@ Arguments:
 */
 function raiseWindow(window){
 	lowerAll();
+	window.toplevel.style.opacity=1;
 	window.toplevel.setAttribute("class", "window");
 	window.toplevel.style.zIndex=3;
 	window.type='active';
@@ -522,6 +523,7 @@ function minimize(window){
 	window.toplevel.style.top           = panbounds.top;
 	window.minwidth                     = window.toplevel.style.width;
  	window.toplevel.style.width         = 200;
+ 	window.toplevel.style.opacity       = 0;
 	window.type                         = 'minimized'
 	window.panelButton.style.background = 'grey';
 }

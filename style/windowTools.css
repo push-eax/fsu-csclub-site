@@ -27,8 +27,7 @@ body{
 	z-index:3;
 	opacity:1;
 /* 	animation-name: open; */
-	animation-duration: .125s;
-    border-radius:2px;
+	animation-duration: .125s;    border-radius:2px;
 	box-shadow: 0px 0px 5px black;
 }
 .window_disabled{
@@ -46,6 +45,7 @@ body{
 	background:linear-gradient(to bottom, black, #868686);
 	position:fixed;
 	z-index:3;
+	transition: opacity 0s;
 	opacity:0;
 	animation-duration: .125s;
     border-radius:2px;
