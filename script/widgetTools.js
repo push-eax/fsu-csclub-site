@@ -168,6 +168,44 @@ function makeTable(parent){
 }
 
 /*
+makeTableWithData(parent, borders, values)
+
+Makes an HTML table, complete with contents
+
+Arguments:
+	parent
+		Object to add table do
+	
+	borders
+		Whether table data elements should have borders
+	
+	content
+		Two-dimensional array representing table rows, and
+		the second dimension for table datas
+
+Returns:
+	newtable
+		new HTML DOM table
+*/
+function makeTableWithData(parent, borders, values){
+	var newtable = document.createElement("table");
+	newtable.setAttribute("class", "table");
+	for(var i = 0; i<values.length; i++){
+		var newtr = document.createElement("tr");
+		for(var j = 0; j<values[i].length; j++){
+			var newtd = document.createElement("td");
+			newtd.innerHTML = values[i][j];
+			if(borders) newtd.setAttribute("class", "tabledata");
+			newtr.appendChild(newtd);
+		}
+		newtr.setAttribute("class", "tablerow");
+		newtable.appendChild(newtr);
+	}
+	parent.appendChild(newtable);
+	return newtable;
+}
+
+/*
 makeTableRow(parent)
 
 Makes an HTML table row

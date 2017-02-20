@@ -25,16 +25,7 @@
 				addWindow('blank',200)
 			}
 			function makeWidgetWindow(){
-				var widgets;
-				widgets = "<button class=button>Buttons</button><br>";
-				widgets+= "<table><tr><td class=header>Table</td><td class=header>Headers</td></tr>";
-				widgets+= "<tr><td class=content>Table</td><td class=content>Content</td></tr></table>";
-				widgets+= "<form><input class=text></input><input class=button type=submit value=\"form elements\"></input>";
-				widgets+= "<select class=combo><option value=combobox>GTK calls these comboboxes</option><option value=select>HTML calls these \"selects\"</option></select>";
-				widgets+= "</form>";
-				widgets+= "<div class=section><p>Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.</p></div>";
 				var anotherwindow = addWindow('Widget Toolkit Test Window',400)
-				
 				var widgetSpace = makeWidgetSpace();
 				var button = makeButton(widgetSpace, "button", "Buttons");
 				var table = makeTable(widgetSpace);
@@ -44,6 +35,8 @@
 				var row2 = makeTableRow(table);
 				makeTableData(row2,"table");
 				makeTableData(row2,"content", true);
+				var tabledata = [["Tables", "created", "quickly"],["using", "makeTableWithData","()"]];
+				var tablewithdata = makeTableWithData(widgetSpace, true, tabledata);
 				var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit
 				var inputfield = makeInput(form, "text");
 				var submitbutton = makeButton(form, "button", "form elements");
@@ -51,7 +44,6 @@
 				var selectbox = makeSelect(form, selectoptions);
 				var section = makeSection(widgetSpace);
 				setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
-				//setWindowContents(anotherwindow, widgets);
 				setWidgetSpace(anotherwindow, widgetSpace);
 			}
 		</script>
