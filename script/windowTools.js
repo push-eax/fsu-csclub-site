@@ -650,6 +650,8 @@ function addWindow(title,width){
 	//While we're at it, register the window with the program so we
 	//can get to it randomly later in a list.
 	windowregister.push(windowobject);
+	minimize(windowobject);
+	restoreSize(windowobject);
 	return windowobject;
 	//We are now rendering a functional window.
 }
