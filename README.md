@@ -12,10 +12,10 @@ Implemented features include:
 - windowing model
 - two-layer stacking
 - start-like menu (Kickoff may be a better parallel, but no search)
-- taskbar with single-function buttons (raise that window)
+- taskbar with window buttons which can raise, minimize, and restore
 - window move opacity
-- window resize
-- basic animations (in some paces)
+- window resize with opacity
+- minimize/restore animations, menu animations
 
 While this is not a complete feature set, it is most of the superficial ones which are easy to spot. Being as lightweight as it is, it executes very fast, even on older hardware.
 
