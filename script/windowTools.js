@@ -569,6 +569,9 @@ function addWindow(title,width){
 	//newwindow.setAttribute("id", id)
 	//And its width as well...
 	newwindow.style.width = width;
+	newwindow.style.left = "10px";
+	newwindow.style.right = (10+width)+"px";
+	newwindow.style.top = "10px";
 	//Minimize only works if we have a transition property ready to go
 	newwindow.style.transition = minimizetransitionreset;
 	//and add it to the document body.
@@ -650,8 +653,6 @@ function addWindow(title,width){
 	//While we're at it, register the window with the program so we
 	//can get to it randomly later in a list.
 	windowregister.push(windowobject);
-	minimize(windowobject);
-	restoreSize(windowobject);
 	return windowobject;
 	//We are now rendering a functional window.
 }
