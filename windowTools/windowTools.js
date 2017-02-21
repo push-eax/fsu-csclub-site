@@ -56,6 +56,9 @@ minimizetransitionreset
 	variable containing all the transition rules modified by the
 	minimize transition, except with time set to 0 so as not to
 	break window moving
+	
+winminwidth
+	Minimum window width
 */
 var positiondownx;
 var positiondowny;
@@ -70,6 +73,7 @@ var panel;
 var minimizetime = 250;
 var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s, opacity 0.25s";
 var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.125s";
+var winminwidth = 160;
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -138,6 +142,7 @@ function changeWindowSize(currentwindow, increasex, increasey){
 	//add our increment
 	newx += increasex;
 	newy += increasey;
+	if(newx <= winminwidth) newx = winminwidth;
 	//then set this in the stylesheet.
 	currentwindow.toplevel.style.width = newx + "px";
 	currentwindow.body.style.height = newy + "px";
