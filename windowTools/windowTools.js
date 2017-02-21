@@ -609,7 +609,7 @@ function addWindow(title,width){
 	//windowclose.setAttribute("id", id+"_close");
 	//For now we give it a stylish but uninspired X in lieu of a
 	//fancier close button
-	windowclose.innerHTML="<img class=closebutton_icon src=img/CloseButton.png></img>";
+	windowclose.innerHTML="<img class=closebutton_icon src=windowTools/CloseButton.png></img>";
 	newwindow.appendChild(windowclose);
 	
 	//And now that minimization works, we may as well add a minimize button.
@@ -618,7 +618,7 @@ function addWindow(title,width){
 	windowminimize.setAttribute("class", "minimizebutton");
 	//And this one uses an uninspired - in lieu of a fancier
 	//icon to take its place
-	windowminimize.innerHTML="<img class=minimizebutton_icon src=img/MinimizeButton.png></img>";
+	windowminimize.innerHTML="<img class=minimizebutton_icon src=windowTools/MinimizeButton.png></img>";
 	newwindow.appendChild(windowminimize);
 	
 	//grabhandles are the little corner buttons used to resize a
@@ -630,7 +630,7 @@ function addWindow(title,width){
 	//but they're useless if there's no image to show that.
 	var grabhandleimage = document.createElement("img");
 	grabhandleimage.setAttribute("class", "ghimage");
-	grabhandleimage.setAttribute("src", "img/Grabhandle.png");
+	grabhandleimage.setAttribute("src", "windowTools/Grabhandle.png");
 	//There have been some problems with the program thinking
 	//that we want to drag-and-drop so add a few lines of code
 	//to prevent that from happening.
