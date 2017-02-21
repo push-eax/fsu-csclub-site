@@ -47,7 +47,8 @@ body{
 	z-index:3;
 	transition: opacity 0s;
 	opacity:0;
-	animation-duration: .125s;
+	animation-duration: .256s;
+	animation-iteration-count: 1;
     border-radius:2px;
 	box-shadow: 0px 0px 5px black;
 }
