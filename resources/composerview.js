@@ -1,6 +1,6 @@
 var bold = false;
 
-function addComposerWindow(){
+function addComposerWindow_authenticated(){
 	var cpsrwin = addWindow("Composer: Authentication Required", 480);
 	var widgets = makeWidgetSpace();
 	var toolbar = makeToolbar(widgets);
@@ -12,7 +12,7 @@ function addComposerWindow(){
 }
 
 
-function addComposerWindow_authenticated(){
+function addComposerWindow(){
 	var cpsr       = addWindow("Composer", 480)
 	var wsp        = makeWidgetSpace()
 	var tbr        = makeToolbar(wsp)
