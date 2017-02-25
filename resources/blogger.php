@@ -16,3 +16,10 @@ TODO
     (optional)
     think of a way to edit existing blogs
 */
+<?php
+
+
+$blog = $_POST['body'];
+$file = "testblog.ini"
+echo fwrite($file, $blog);
+fclose($file);
