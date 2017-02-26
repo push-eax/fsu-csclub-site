@@ -30,6 +30,6 @@ class BlogPost
 	
 	public function __toString()
 	{
-		return "[post]\ntitle = " . $this->title . "\nbody = " . $this->post;
+		return "[post]\ntitle = " . $this->title . "\nbody = " . $this->post . "\n";
 	}
 }
