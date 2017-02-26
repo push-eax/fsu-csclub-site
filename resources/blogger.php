@@ -1,15 +1,13 @@
+<?php
 /*
-This object will be used for saving information written 
-in the composer view and turning into a blog.cfg file. This
-blog.cfg file will contain a title, post tile, and a post
-body. 
+This will ba an object to contain all of the information in
+a typical blog post. This file handles only the post, the blog
+as a whole is handles through a different file
 
 Right now this file only contains a class with a blog title 
 and a blog post. This file will likely contain more metadata 
 that will be stored within a database.
 */
-
-<?php
 //Global variables
 
 
@@ -22,16 +20,16 @@ class BlogPost
 	function __construct($titleIn, $postIn)
 	{
 		$this->title = $titleIn;
-		$this->post = $postIn;
+		$this->post = addcslashes($postIn);
 	}
+
+	/*
+	returns object as a string formatted as a post
+	in the blog.cfg file.
+	*/
 	
-	function saveBlog()
+	public function __toString()
 	{
-		
-	}
-	
-	function makeForm()//TODO implement to generate a readable form from an object
-	{
-		
+		return "[post]\ntitle = " . $this->title . "\nbody = " . $this->post;
 	}
 }
