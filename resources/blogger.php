@@ -1,25 +1,37 @@
 /*
-This script will be used for saving information written 
+This object will be used for saving information written 
 in the composer view and turning into a blog.cfg file. This
 blog.cfg file will contain a title, post tile, and a post
 body. 
 
+Right now this file only contains a class with a blog title 
+and a blog post. This file will likely contain more metadata 
+that will be stored within a database.
 */
 
-/*
-TODO 
-    parse string(s) passed from the composer view
-    convert special whitespace chracters and markers
-        (IE Bold Italics and Underline) into escape 
-        sequences
-    dump output into blog.cfg file
-    (optional)
-    think of a way to edit existing blogs
-*/
 <?php
+//Global variables
 
 
-$blog = $_POST['body'];
-$file = "testblog.ini"
-echo fwrite($file, $blog);
-fclose($file);
+
+class BlogPost
+{
+	var $title;
+	var $post;
+	
+	function __construct($titleIn, $postIn)
+	{
+		$this->title = $titleIn;
+		$this->post = $postIn;
+	}
+	
+	function saveBlog()
+	{
+		
+	}
+	
+	function makeForm()//TODO implement to generate a readable form from an object
+	{
+		
+	}
+}
