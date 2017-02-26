@@ -6,7 +6,7 @@ them into a single blog. It does this by handling an array
 of BlogPosts
 */
 
-require 'blogger.php';
+require 'BlogPost.php';
 
 class Blog
 {
