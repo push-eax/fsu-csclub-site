@@ -25,7 +25,7 @@ function addComposerWindow(){
 	setClickAction ( boldButton.button, function() { clickBold( boldButton, composer ) } );
 	setClickAction ( italButton.button, function() { clickItal( italButton, composer ) } );
 	setClickAction ( udlnButton.button, function() { clickUdln( udlnButton, composer ) } );
-	setClickAction ( saveButton.button, function() { post( "resources/blogger.php", composer ) } );
+	//setClickAction ( saveButton.button, function() { post( "resources/blogger.php", composer ) } );
 }
 
 function clickBold(button, composer){
