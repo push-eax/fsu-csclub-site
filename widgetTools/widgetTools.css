@@ -17,6 +17,14 @@ button.tbutton{
 	padding:4px;
 	margin:3px;
 }
+div.tabbar{
+	background-color:white;
+	background: linear-gradient(to top, grey, white);
+	width:100%;
+	padding:3px;
+	position:relative;
+
+}
 button.tbutton:active{
 	background: linear-gradient(to top, #dadada, #c5c5c5);
 }

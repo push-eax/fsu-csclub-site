@@ -152,6 +152,29 @@ function makePlainTextArea(parent){
 }
 
 /*
+makeNotebook(parent)
+
+Makes a tabbed area, similar to Gtk Notebook, or tabs in a browser.
+
+Arguments:
+	parent
+		Parent widgetspace or DOM element
+	
+	returns
+		notebook special object
+		Note that this is NOT a DOM object and should not be treated like one.
+*/
+function makeNotebook(parent){
+	var container = document.createElement("div");
+	var newTabbar = document.createElement("div");
+	newTabbar.setAttribute("class", "toolbar");
+	container.appendChild(newTabbar);
+	parent.appendChild(container);
+	var notebook = {tabbar: newTabbar, toplevel: container, tablist: []};
+	return notebook;
+}
+
+/*
 makeLabel(parent)
 
 Makes a label widget similar to Gtk::Label or QLabel
