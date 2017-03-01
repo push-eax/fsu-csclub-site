@@ -8,8 +8,6 @@ Right now this file only contains a class with a blog title
 and a blog post. This file will likely contain more metadata 
 that will be stored within a database.
 */
-//Global variables
-
 
 
 class BlogPost
@@ -17,7 +15,7 @@ class BlogPost
 	var $title;
 	var $post;
 	
-	function __construct($titleIn, $postIn)
+	function __construct($titleIn = null, $postIn = null)
 	{
 		$this->title = $titleIn;
 		$this->post = addcslashes($postIn);
