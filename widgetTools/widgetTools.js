@@ -131,6 +131,27 @@ function makeTextArea(parent){
 }
 
 /*
+makePlainTextArea(parent)
+
+Makes an HTML textarea element, for plain-text editing (unformatted)
+
+Arguments:
+	parent
+		Parent DOM object, widgetSpace, etc.
+	
+Returns
+	newTextArea
+		HTML DOM textarea, form-ready but unnamed.
+*/
+
+function makePlainTextArea(parent){
+	var newTextArea = document.createElement("textarea");
+	newTextArea.setAttribute("class", "filltext");
+	parent.appendChild(newTextArea);
+	return newTextArea;
+}
+
+/*
 makeLabel(parent)
 
 Makes a label widget similar to Gtk::Label or QLabel
