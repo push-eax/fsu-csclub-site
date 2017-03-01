@@ -52,6 +52,29 @@ function makeToolbar(widgetSpace){
 }
 
 /*
+makeSubToolbar(widgetSpace)
+
+Creates a toolbar. Designed to be placed at the top of a
+tab. Note that this toolkit intentionally does not mess
+with the idea of a menubar since those actions would produce
+too much unneccesary complexity, at the detriment of ease-
+of-use and bandwidth
+
+Arguments:
+	widgetSpace
+		the DOM element to place the toolbar in.
+		This can conceptually be any DOM element, but
+		it is reccommended that this be restricted
+		to just a widgetSpace.
+*/
+function makeSubToolbar(widgetSpace){
+	var newToolbar = document.createElement("div");
+	newToolbar.setAttribute("class", "subtoolbar");
+	widgetSpace.appendChild(newToolbar);
+	return newToolbar;
+}
+
+/*
 makeSection(widgetSpace)
 
 Creates a new section area, which can be used to add other
@@ -189,12 +212,11 @@ Arguments:
 No returns.
 */
 function selectTab(notebook, tab){
-	console.log(notebook.tablist.length);
 	for(var i = 0; i<notebook.tablist.length; i++){
 		notebook.tablist[i].widgetSpace.setAttribute("class", "hidden");
 		notebook.tablist[i].button.button.setAttribute("class", "tabbutton");
 	}
-	tab.widgetSpace.setAttribute("class", "widgetSpace");
+	tab.widgetSpace.setAttribute("class", "tab");
 	tab.button.button.setAttribute("class", "tabbtnsel");
 	tab.button.type="tabbtnsel";
 	notebook.currenttab = tab;
@@ -219,6 +241,7 @@ Returns:
 function addTab(notebook, title){
 	var newbutton = makeButton(notebook.tabbar, "tabbtnsel", title);
 	var widgetSpace = makeWidgetSpace();
+	widgetSpace.setAttribute("class", "tab");
 	if(notebook.currenttab != null){
 		widgetSpace.setAttribute("class", "hidden");
 		newbutton.button.setAttribute("class", "tabbutton");

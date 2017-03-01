@@ -4,7 +4,13 @@ div.toolbar{
 	width:100%;
 	padding:3px;
 	position:relative;
-
+}
+div.subtoolbar{
+	background-color:white;
+	background: linear-gradient(to top, white, #c5c5c5);
+	width:100%;
+	padding:3px;
+	position:relative;
 }
 button.tbutton{
 	background-color: white;
@@ -17,24 +23,24 @@ button.tbutton{
 	padding:4px;
 	margin:3px;
 }
-button.tabbutton{
-	background-color: white;
-	background: linear-gradient(to top, #dadada, #c5c5c5);
-	border: 1px solid #a5a5a5;
+button.tabbtnsel{
+	background-color: #c5c5c5;
+	border: 1px solid grey;
+	border-style: solid solid none solid;
 	color: black;
-	border-radius: 3px;
+	border-radius: 3px 3px 0px 0px;
 	text-shadow: 1px 1px 0px white;
 	vertical-align: center;
 	padding:4px;
 	margin:3px;
 	margin-bottom:0px;
 }
-button.tabbtnsel{
+button.tabbutton{
 	background-color: white;
 	background: linear-gradient(to top, grey, #c5c5c5);
 	border: 1px solid grey;
 	color: black;
-	border-radius: 3px;
+	border-radius: 3px 3px 0px 0px;
 	text-shadow: 1px 1px 0px white;
 	vertical-align: center;
 	padding:4px;
@@ -43,15 +49,16 @@ button.tabbtnsel{
 }
 div.tabbar{
 	background-color:white;
-	background: linear-gradient(to top, grey,white, white);
+	background: linear-gradient(to top, grey,white,white, white);
 	width:100%;
 	padding:3px;
+	padding-bottom:0px;
 	position:relative;
 
 }
 div.tab{
-	background-color:grey;
-	border-radius: 3px;
+	background-color:#c5c5c5;
+	border-radius: 0px 0px 3px 3px;
 }
 button.tbutton:active{
 	background: linear-gradient(to top, #dadada, #c5c5c5);
@@ -90,7 +97,7 @@ img.stock{
 }
 .filltext{
 	width:100%;
-	/*height:100%;*/
+	height:256px;
 	background-color: #c5c5c5;
 	border: 1px solid #a5a5a5;
 	border-radius:3px;
