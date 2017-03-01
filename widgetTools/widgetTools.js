@@ -101,7 +101,7 @@ function makeButton(parent, type, text){
 	newButton.setAttribute("class", type);
 	newButton.innerHTML = text;
 	parent.appendChild(newButton);
-	var buttonObject = { button:newButton, type:type, parent:parent, state:"normal" };
+	var buttonObject = { button:newButton, type:type, state:"normal" };
 	return buttonObject;
 }
 
@@ -167,11 +167,70 @@ Arguments:
 function makeNotebook(parent){
 	var container = document.createElement("div");
 	var newTabbar = document.createElement("div");
-	newTabbar.setAttribute("class", "toolbar");
+	newTabbar.setAttribute("class", "tabbar");
 	container.appendChild(newTabbar);
 	parent.appendChild(container);
-	var notebook = {tabbar: newTabbar, toplevel: container, tablist: []};
+	var notebook = {tabbar: newTabbar, toplevel: container, tablist: [], currenttab: null};
 	return notebook;
+}
+
+/*
+selectTab(notebook, tab)
+
+Selects a tab
+
+Arguments:
+	notebook
+		notebook special object
+	
+	tab
+		tab special object
+
+No returns.
+*/
+function selectTab(notebook, tab){
+	console.log(notebook.tablist.length);
+	for(var i = 0; i<notebook.tablist.length; i++){
+		notebook.tablist[i].widgetSpace.setAttribute("class", "hidden");
+		notebook.tablist[i].button.button.setAttribute("class", "tabbutton");
+	}
+	tab.widgetSpace.setAttribute("class", "widgetSpace");
+	tab.button.button.setAttribute("class", "tabbtnsel");
+	tab.button.type="tabbtnsel";
+	notebook.currenttab = tab;
+}
+
+/*
+addTab(notebook, title)
+
+Adds a tab to a notebook
+
+Arguments:
+	notebook
+		special notebook object
+	
+	title
+		Tab button title
+
+Returns:
+	newtab
+		special tab object, use newtab.widgetSpace to add elements
+*/
+function addTab(notebook, title){
+	var newbutton = makeButton(notebook.tabbar, "tabbtnsel", title);
+	var widgetSpace = makeWidgetSpace();
+	if(notebook.currenttab != null){
+		widgetSpace.setAttribute("class", "hidden");
+		newbutton.button.setAttribute("class", "tabbutton");
+		newbutton.type = "tabbutton";
+	}
+	var newtab = {button: newbutton, widgetSpace: widgetSpace};
+	newbutton.button.onclick = function(){selectTab(notebook, newtab);};
+	notebook.toplevel.appendChild(widgetSpace);
+	notebook.tablist.push(newtab);
+	if(notebook.currenttab == null)
+		notebook.currenttab = newtab;
+	return newtab;
 }
 
 /*
