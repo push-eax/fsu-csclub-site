@@ -7,24 +7,24 @@ of BlogPosts. This is useful for allowing us to easily edit,
 add, or remove blogpposts once everything is set up. 
 */
 
-require 'BlogPost.php';
+require('BlogPost.php');
 
 class Blog
 {
-	public $title
-	public $blogPosts
+	public $title;
+	public $blogPosts;
 	
-	function __construct($titleIn)
+	function __construct($titleIn = null)
 	{
 		$this->title = $titleIn;
-		$this->blogPosts = array();
+		$blogPosts = array();
 	}
 	
 	/*
 	This adds a blogPost object to the array. 
 	*/
 	
-	function addBlogPost($postTitle, $postBody)
+	public function addBlogPost($postTitle = null, $postBody = null)
 	{
 		$blogPosts[] = new BlogPost(postTitle, postBody);
 	}
@@ -32,14 +32,14 @@ class Blog
 	/*
 	Dumps info into ini file
 	*/
-	function writeToFile()
+	public function writeToFile()
 	{
 		$filename = "../blog/" . $title . ".ini";
 		$blogFile = fopen($filename);
 		
-		fwrite($blogFile, "[blog]\ntitle = " . $title . "\n";
+		fwrite($blogFile, "[blog]\ntitle = " . $title . "\n");
 		
-		foreach ($blogPosts as $post)
+		foreach ($blogPosts as &$post)
 		{
 			fwrite($blogFile, $post);
 		}
@@ -47,3 +47,7 @@ class Blog
 		fclose($blogFile);
 	}
 }
+
+$myFirstBlog = new Blog("My Fist Blog");
+$myFirstBlog->addBlogPost("This is a test", "Hello World");
+$myFirstBlog->writeToFile();
