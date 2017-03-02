@@ -39,6 +39,7 @@ button.tabbutton{
 	background-color: white;
 	background: linear-gradient(to top, grey, #c5c5c5);
 	border: 1px solid grey;
+	border-style: solid solid none solid;
 	color: black;
 	border-radius: 3px 3px 0px 0px;
 	text-shadow: 1px 1px 0px white;
