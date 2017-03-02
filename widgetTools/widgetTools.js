@@ -175,6 +175,25 @@ function makePlainTextArea(parent){
 }
 
 /*
+syncTextAreas(tPlain, tDiv)
+
+Sets a plain text field with a div content editable or plain div
+
+Arugments
+	tPlain
+		textArea DOM object
+	
+	tDiv
+		div contentEditable object
+
+No returns.
+*/
+function syncTextAreas(tPlain, tDiv){
+	tPlain.onkeypress=function(){tDiv.innerHTML=tPlain.value;}
+	tDiv.onkeypress=function(){tPlain.value=tDiv.innerHTML;}
+}
+
+/*
 makeNotebook(parent)
 
 Makes a tabbed area, similar to Gtk Notebook, or tabs in a browser.

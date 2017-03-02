@@ -32,6 +32,7 @@ function addComposerWindow(){
 	setClickAction  ( udlnButton.button, function() { clickUdln( udlnButton, composer ) } );
 	//First tab
 	var textSpace   = makePlainTextArea(tab_one.widgetSpace);
+	syncTextAreas(textSpace, composer);
 	setWidgetSpace  (composerwin, widgetSpace);
 }
 /*
