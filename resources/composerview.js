@@ -16,6 +16,8 @@ function addComposerWindow(){
 	var widgetSpace = makeWidgetSpace();
 	var toolbar     = makeToolbar(widgetSpace);
 	var saveButton  = makeButton(toolbar, "tbutton", "Save");
+	//var titlelabel  = makeLabel(toolbar, "Title: ");
+	var titleInput  = makeInput(toolbar, "text", "Untitled", "title");
 	var tabs        = makeNotebook(widgetSpace);
 	var tab_one     = addTab(tabs, "HTML Editor");
 	var tab_two     = addTab(tabs, "WYSIWYG Editor");
