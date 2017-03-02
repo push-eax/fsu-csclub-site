@@ -27,12 +27,13 @@ function addComposerWindow(){
 	var udlnButton  = makeButton(tbr, "tbutton", "<u>U</u>");
 	var tabs        = makeNotebook(wsp);
 	var composer    = makeTextArea(wsp);
-	setClickAction  ( boldButton.button, function() { clickBold( boldButton, composer ) } );
-	setClickAction  ( italButton.button, function() { clickItal( italButton, composer ) } );
-	setClickAction  ( udlnButton.button, function() { clickUdln( udlnButton, composer ) } );
 	//First tab
 	var textSpace   = makePlainTextArea(tab_one.widgetSpace);
 	syncTextAreas(textSpace, composer);
+	//Second tab events
+	setClickAction  ( boldButton.button, function() { clickBold( boldButton, composer ); textSpace.value = composer.innerHTML; } );
+	setClickAction  ( italButton.button, function() { clickItal( italButton, composer ); textSpace.value = composer.innerHTML; } );
+	setClickAction  ( udlnButton.button, function() { clickUdln( udlnButton, composer ); textSpace.value = composer.innerHTML; } );
 	setWidgetSpace  (composerwin, widgetSpace);
 }
 /*

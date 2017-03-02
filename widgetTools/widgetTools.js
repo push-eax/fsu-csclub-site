@@ -189,8 +189,8 @@ Arugments
 No returns.
 */
 function syncTextAreas(tPlain, tDiv){
-	tPlain.onkeypress=function(){tDiv.innerHTML=tPlain.value;}
-	tDiv.onkeypress=function(){tPlain.value=tDiv.innerHTML;}
+	tPlain.onkeyup=function(){tDiv.innerHTML=tPlain.value;}
+	tDiv.onkeyup=function(){tPlain.value=tDiv.innerHTML;}
 }
 
 /*
