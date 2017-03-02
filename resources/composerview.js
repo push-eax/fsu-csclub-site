@@ -19,6 +19,7 @@ function addComposerWindow(){
 	var tabs        = makeNotebook(widgetSpace);
 	var tab_one     = addTab(tabs, "HTML Editor");
 	var tab_two     = addTab(tabs, "WYSIWYG Editor");
+	//Second tab
 	var wsp         = tab_two.widgetSpace;
 	var tbr         = makeSubToolbar(wsp)
 	var boldButton  = makeButton(tbr, "tbutton", "<b>B</b>");
@@ -29,6 +30,8 @@ function addComposerWindow(){
 	setClickAction  ( boldButton.button, function() { clickBold( boldButton, composer ) } );
 	setClickAction  ( italButton.button, function() { clickItal( italButton, composer ) } );
 	setClickAction  ( udlnButton.button, function() { clickUdln( udlnButton, composer ) } );
+	//First tab
+	var textSpace   = makePlainTextArea(tab_one.widgetSpace);
 	setWidgetSpace  (composerwin, widgetSpace);
 }
 /*
