@@ -22,7 +22,6 @@ body{
 }
 .window{
 	background-color:black;
-	background:linear-gradient(to bottom, black, #868686);
 	position:fixed;
 	z-index:3;
 	opacity:1;

@@ -12,57 +12,57 @@ div.subtoolbar{
 	padding:3px;
 	position:relative;
 }
-button.tbutton{
-	background-color: white;
-	background: linear-gradient(to bottom, #dadada, #c5c5c5);
+button.tbutton{ /* Widget Toolkit */
+	background-color: black;
+	/*background: linear-gradient(to bottom, black, #ffd700);*/
 	border: 1px solid #a5a5a5;
-	color: black;
+	color: #febe10;
 	border-radius: 3px;
-	text-shadow: 1px 1px 0px white;
+	text-shadow: 1px 1px 0px black;
 	vertical-align: center;
 	padding:4px;
 	margin:3px;
 }
-button.tabbtnsel{
-	background-color: #c5c5c5;
+button.tabbtnsel{ /*Composer Tab (Selected button)*/
+	background-color: black;
+	background: linear-gradient(to top, #c5c5c5, black);
 	border: 1px solid grey;
 	border-style: solid solid none solid;
-	color: black;
+	color: #febe10;
 	border-radius: 3px 3px 0px 0px;
-	text-shadow: 1px 1px 0px white;
+	text-shadow: 1px 1px 0px black;
 	vertical-align: center;
 	padding:4px;
 	margin:3px;
 	margin-bottom:0px;
 }
-button.tabbutton{
-	background-color: white;
-	background: linear-gradient(to top, grey, #c5c5c5);
+button.tabbutton{ /*Composer Tab (Unselected button) */
+	background-color: black;
 	border: 1px solid grey;
 	border-style: solid solid none solid;
-	color: black;
+	color: #febe10;
 	border-radius: 3px 3px 0px 0px;
-	text-shadow: 1px 1px 0px white;
+	text-shadow: 1px 1px 0px black;
 	vertical-align: center;
 	padding:4px;
 	margin:3px;
 	margin-bottom: 0px;
 }
-div.tabbar{
-	background-color:white;
-	background: linear-gradient(to top, grey,white,white, white);
+div.tabbar{ /* Composer Tab Top Section */
+	background-color: black;
+	background: linear-gradient(to top, black,white);
 	width:100%;
 	padding:3px;
 	padding-bottom:0px;
 	position:relative;
 
 }
-div.tab{
-	background-color:#c5c5c5;
+div.tab{ /* Composer Tab Text Wrap */
+	background-color:#dadada;
 	border-radius: 0px 0px 3px 3px;
 }
-button.tbutton:active{
-	background: linear-gradient(to top, #dadada, #c5c5c5);
+button.tbutton:active{ /* Composer Tab Button Hold/Selected */
+	background: linear-gradient(to top, black, white);
 }
 button.tbutton:focus, button.button:focus, button.toggled:focus, input.button:focus{
 	padding: 3px;
@@ -72,7 +72,7 @@ button.toggled{
 	background-color: white;
 	background: linear-gradient(to top, white, #c5c5c5);
 	border: 1px solid #a5a5a5;
-	color: black;
+	color: #febe10;
 	border-radius: 3px;
 	text-shadow: 1px 1px 0px white;
 	vertical-align: center;
