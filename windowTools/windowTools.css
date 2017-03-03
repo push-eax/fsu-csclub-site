@@ -1,34 +1,72 @@
+/*
+ * Defines some global best-practices and some basics about the default background. The
+ * default background color is an unassuming grey, with a linear gradient override for
+ * more advanced browsers.
+ */
 body{
 	font-family:sans;
 	background-color:#868686;
 	background:linear-gradient(to bottom,#868686,#BFBFBF);
 	height:100%;
 }
+
+/*
+ * Animations. These are used in various places, such as opening and closing windows.
+ * The open animation is built to do the old titlebar-slide effect, making the windows
+ * slide open. It does, unfortunately, only apply to the titlebar.
+ */
 @keyframes open{
 	0% { height:0px; }
 	100% { height:20px; }
 }
+
+/*
+ * openBounce was built to make the window titlebar expand hilariously and then animate
+ * back down to its proper size. This implementation may be useful in the future, but it
+ * did not work as expected in the regular UI. Kept as an eventually-user-choice type
+ * thing.
+ */
 @keyframes openBounce{
 	0% { height:40px; }
 	100% { height:20px; }
 }
+
+/*
+ * The main fadein animation, currently used when windows open. It is very standard, and
+ * does nothing but fade opacity from 0 to 1.
+ */
 @keyframes fade{
 	0% { opacity:0; }
 	100% { opacity:1; }
 }
+
+/*
+ * Similar to fadein, but goes from 1 to 0, so fade out.
+ */
 @keyframes fadeOut{
 	1% { opacity:1; }
 	100% { opacity:0; }
 }
+
+/*
+ * the window object in and of itself acts as a toplevel for which all other elements can
+ * be moved. The coloration and styling of the background, however, is what makes up the
+ * titlebar. There is no titlebar object, but instead there is simply the toplevel. Its
+ * style extends only as far as its direct contents, so text, images, etc. fall under that
+ * category.
+ */
 .window{
 	background-color:black;
 	position:fixed;
 	z-index:3;
 	opacity:1;
-/* 	animation-name: open; */
 	animation-duration: .125s;    border-radius:2px;
 	box-shadow: 0px 0px 5px black;
 }
+
+/*
+ * Defines the style of a window when it's not in the center of attention.
+ */
 .window_disabled{
 	position:fixed;
 	background-color: black;
@@ -38,6 +76,12 @@ body{
 	box-shadow: 0px 0px 2px black;
 	background-color:#F0F0F0;
 }
+
+/*
+ * window_close is a class created to facilitate the close animation. It assumes certain
+ * things about how windows should behave before and after the close animation starts.
+ * This was needed in order to fix major glitching in browsers like Chrome.
+ */
 .window_close{
 	animation-name:fadeOut;
 	background-color:black;
@@ -51,6 +95,11 @@ body{
     border-radius:2px;
 	box-shadow: 0px 0px 5px black;
 }
+
+/*
+ * This is just the text part of the titlebar for a window, needed to prevent the text
+ * from being selected when the window is dragged.
+ */
 .windowtitle{
 	width:100%;
 	text-align:left;
@@ -73,6 +122,11 @@ body{
 	cursor: default;
 	overflow:hidden;
 }
+
+/*
+ * The window body is the part of the window that is white and opaque. It is designed to
+ * hold the content, and thus should contain minimal gradiation and other fancy "effects"
+ */
 .windowbody{
 	position:absolute;
 	animation-name: fade;
@@ -91,6 +145,11 @@ body{
 	box-shadow: 0px 0px 5px black;
 	overflow:hidden;
 }
+
+/*
+ * This is the close button. It needs absolute positioning and width in order to fit with
+ * the titlebar. If it exceeds about 40px, that causes problems for later buttons.
+ */
 .closebutton{
 	position:absolute;
 	right:0px;
@@ -100,21 +159,36 @@ body{
 	background-color:black;
 	color:white;
 	height:100%;
+	width:40px;
 }
+
+/*
+ * minimizebutton is another button in the same vein as the closebutton, but this time it
+ * is built to perform minimization and appears 40px left of the right bound of close.
+ */
 .minimizebutton{
 	position:absolute;
 	right:40px;
 	top:0px;
+	width:40px;
 	border:1px solid black;
 	box-shadow: 0px 0px 2px black;
 	background-color:black;
 	color:white;
 	height:100%;
 }
+
+/*
+ * Icon dimensions for close and minimize buttons
+ */
 .closebutton_icon, .minimizebutton_icon{
 	height:100%;
 	width:20px;
 }
+
+/*
+ * The resize grab handle
+ */
 .grabhandle{
 	width:10px;
 	height:10px;
@@ -123,10 +197,21 @@ body{
 	position:absolute;
 	cursor:se-resize;
 }
+
+/*
+ * The resize grab handle uses an image in order to appear as it does. This is the style
+ * rule to decide where it ends up.
+ */
 .ghimage{
 	width:100%;
 	height:100%;
 }
+
+/*
+ * This is the bottom panel. It is designed to show panel buttons, one per window. These
+ * allow for minimization and selection of windows. They may, in the future, also include
+ * a window menu.
+ */
 #panel{
 	width:100%;
 	position:fixed;
@@ -147,13 +232,18 @@ body{
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
+
+/*
+ * windowbutton is the element used to actually style the buttons in the panel. They
+ * should appear visually different from widgetTools buttons since they exist in a
+ * different operational and programmatic layer from the rest of the interface.
+ */
 .windowButton{
 	background-color:white;
 	display: inline;
 	width:200px;
 	height:20px;
 	margin:2px;
-/* 	padding:2px; */
 	background:linear-gradient(to top, #febe10, #daa00d);
 	border:1px solid #daa00d;
 	border-radius:3px;
@@ -167,6 +257,10 @@ body{
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
+
+/*
+ * Same as above, but for minimized windows.
+ */
 .windowButtonDeactivated{
 	background-color:black;
 	color:white;
@@ -174,8 +268,6 @@ body{
 	width:200px;
 	height:20px;
 	margin:2px;
-/* 	padding:2px; */
-/* 	background:linear-gradient(to top, #febe10, #daa00d); */
 	border:1px solid #daa00d;
 	border-radius:3px;
 	overflow:hidden;
@@ -187,6 +279,10 @@ body{
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
+
+/*
+ * Styling for the menu button's image element
+ */
 img#menubutton{
 	position:fixed;
 	z-index:7;
@@ -200,6 +296,10 @@ img#menubutton{
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
+
+/*
+ * Styling for the menu button itself.
+ */
 .menubutton{
 	width:158px;
 	margin:5px;
@@ -214,9 +314,18 @@ img#menubutton{
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
+
+/*
+ * Determines what happens when the user hovers over the menu button.
+ */
 .menubutton:hover{
 	box-shadow:0px 0px 3px #e0e0e0;
 }
+
+/*
+ * Determines how the menu will react when closed. Also defines style for when JavaScript
+ * modifies the height parameter to open the window.
+ */
 #menu{
 	position:fixed;
 	z-index:6;
@@ -232,6 +341,11 @@ img#menubutton{
 	padding:0px;
 	background:linear-gradient(to top, black, #1e1e01);
 }
+
+/*
+ * Menu header text and background styling. This is to add the kickoff-style menu head
+ * with the CS Club Site main menu branding.
+ */
 .mheader{
 	font-family:serif;
 	padding:3px;
@@ -242,6 +356,10 @@ img#menubutton{
 	font-weight:bold;
 	color:#231f20;
 }
+
+/*
+ * Determines the gradiation of the main menu, and its z-index, etc.
+ */
 #menubackground{
 	position:fixed;
 	left:0px;
