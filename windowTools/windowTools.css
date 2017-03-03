@@ -358,7 +358,8 @@ img#menubutton{
 }
 
 /*
- * Determines the gradiation of the main menu, and its z-index, etc.
+ * Determines the background of the menu. This element allows the user to click outside
+ * the menu itself to close it.
  */
 #menubackground{
 	position:fixed;
