@@ -35,7 +35,7 @@ class Blog
 	public function writeToFile()
 	{
 		$filename = "../blog/" . $title . ".ini";
-		$blogFile = fopen($filename);
+		$blogFile = fopen($filename, 'w');
 		
 		fwrite($blogFile, "[blog]\ntitle = " . $title . "\n");
 		
