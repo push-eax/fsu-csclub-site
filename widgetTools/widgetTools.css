@@ -32,13 +32,13 @@ div.subtoolbar{
  * generic button. This is a workaround for how the eye percieves contrasting colors for
  * the most part.
  */
-button.tbutton{ /* Widget Toolkit */
-	background-color: black;
-	/*background: linear-gradient(to bottom, black, #ffd700);*/
+button.tbutton{
+	background-color: #dfdfdf;
+	background: linear-gradient(to bottom, #dadada, #c5c5c5);
 	border: 1px solid #a5a5a5;
-	color: #febe10;
+	color: black;
 	border-radius: 3px;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 0px white;
 	vertical-align: center;
 	padding:4px;
 	margin:3px;
@@ -50,14 +50,13 @@ button.tbutton{ /* Widget Toolkit */
  * the content below. This emphasizes where the user is currently in relation to the rest
  * of the interface.
  */
-button.tabbtnsel{ /*Composer Tab (Selected button)*/
-	background-color: black;
-	background: linear-gradient(to top, #c5c5c5, black);
+button.tabbtnsel{
+	background-color: #c5c5c5;
 	border: 1px solid grey;
 	border-style: solid solid none solid;
-	color: #febe10;
+	color: black;
 	border-radius: 3px 3px 0px 0px;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 0px white;
 	vertical-align: center;
 	padding:4px;
 	margin:3px;
@@ -69,13 +68,14 @@ button.tabbtnsel{ /*Composer Tab (Selected button)*/
  * are selected. This means that all created tabs show up with a standard style in the
  * background.
  */
-button.tabbutton{ /*Composer Tab (Unselected button) */
-	background-color: black;
+button.tabbutton{
+	background-color: white;
+	background: linear-gradient(to top, grey, #c5c5c5);
 	border: 1px solid grey;
 	border-style: solid solid none solid;
-	color: #febe10;
+	color: black;
 	border-radius: 3px 3px 0px 0px;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 0px white;
 	vertical-align: center;
 	padding:4px;
 	margin:3px;
@@ -89,9 +89,9 @@ button.tabbutton{ /*Composer Tab (Unselected button) */
  * above tab content. It is a completely artificial drop shadow, created by the element's
  * gradiation, but the effect is the same, if more controlled.
  */
-div.tabbar{ /* Composer Tab Top Section */
-	background-color: black;
-	background: linear-gradient(to top, black,white);
+div.tabbar{
+	background-color: white;
+	background: linear-gradient(to top, grey,white,white,white);
 	width:100%;
 	padding:3px;
 	padding-bottom:0px;
@@ -105,8 +105,8 @@ div.tabbar{ /* Composer Tab Top Section */
  * be somewhat different from the default in order to differentiate a tab from its 
  * background.
  */
-div.tab{ /* Composer Tab Text Wrap */
-	background-color:#dadada;
+div.tab{
+	background-color:#c5c5c5;
 	border-radius: 0px 0px 3px 3px;
 }
 
@@ -119,8 +119,8 @@ div.tab{ /* Composer Tab Text Wrap */
  * appearance for these situations. It keeps the difference in color the same so that the
  * eye percieves the pressed button as flat.
  */
-button.tbutton:active{ /* Composer Tab Button Hold/Selected */
-	background: linear-gradient(to top, black, white);
+button.tbutton:active{
+	background: linear-gradient(to top, #dadada, #c5c5c5);
 }
 
 /*
@@ -143,7 +143,7 @@ button.toggled{
 	background-color: white;
 	background: linear-gradient(to top, white, #c5c5c5);
 	border: 1px solid #a5a5a5;
-	color: #febe10;
+	color: black;
 	border-radius: 3px;
 	text-shadow: 1px 1px 0px white;
 	vertical-align: center;
