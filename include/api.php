@@ -45,7 +45,9 @@ abstract class API
         header("Access-Control-Allow-Orgin: *");
         header("Access-Control-Allow-Methods: *");
         header("Content-Type: application/json");
-
+        
+        // format: ?request=endpont/verb/args[0]/args[1]/args[n]
+        // TODO: remove extra verb and rely on HTTP verbs only
         $this->args = explode('/', rtrim($request, '/'));
         $this->endpoint = array_shift($this->args);
         if (array_key_exists(0, $this->args) && !is_numeric($this->args[0])) {
