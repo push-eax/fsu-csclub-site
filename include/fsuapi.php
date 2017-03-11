@@ -6,19 +6,29 @@
  * @author kroche
  */
 
-define('fsucs', '');
-
-require_once 'config.php';
 require_once 'api.php';
 
 class FSUApi extends API {
 
     protected $User;
+    private $db;
 
     public function __construct($request, $origin) {
         parent::__construct($request);
         
-        // TODO: Implement authentication
+        // Database auth information
+        $DB_HOST = 'localhost';
+        $DB_USER = 'root';
+        $DB_PASS = 'root';
+        $DB_NAME = 'fsucs';
+
+        // Initialize database object
+        $this->db = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+        if ($this->db->connect_errno) {
+            echo "Failed to connect to MySQL: (" . $this->db->connect_errno . ") " . $this->db->connect_error;
+        }
+        
+        // TODO: Implement user authentication
     }
 
     /**
@@ -31,11 +41,24 @@ class FSUApi extends API {
     }
     
     /**
-     * getblog() retrieves a blog post given a blog ID.
+     * getblog() retrieves a blog post given a blog ID and returns the post encoded as JSON.
      * @return string
      */
-    protected function getblog() {
-        return "getblog()";
+    protected function getblog($args) {
+        // Query the database
+        // TODO: fix SQLi vulnerability
+        $res = $this->db->query("SELECT * FROM blog WHERE id = " . $args[0]);
+        
+        $ret = $res->fetch_array(MYSQLI_ASSOC); // return associative array
+        $ret["body"] = "";
+        
+        // Blog body files are named by id in blog/
+        $bodypath = "blog/" . $ret["id"];
+        $body = fopen($bodypath, "r");
+        $ret["body"] = fread($body, filesize($bodypath)) or $ret["body"] = "Blog not found.";
+        fclose($body);
+        
+        return $ret;
     }
     
      /**
