@@ -24,3 +24,41 @@ function openmenu(){
 		dom_mbutton.style.transform='rotate(0deg)';
 	}
 }
+function menuexec(funct){
+	funct();
+	openmenu();
+}
+function maketestwindow(){
+	var testwindow  = addWindow("Test Window",400)
+	var widgetSpace = makeWidgetSpace();
+	setWidgetSpace(testwindow,widgetSpace);
+	var button1     = makeButton(widgetSpace, "button", "Test Button");
+}
+function makeblankwindow(){
+	addWindow('blank',200)
+}
+function makeWidgetWindow(){
+	var anotherwindow = addWindow('Widget Toolkit Test Window',400)
+	var widgetSpace = makeWidgetSpace();
+	var toolBar = makeToolbar(widgetSpace);
+	var button = makeButton(toolBar, "tbutton", "Buttons");
+	var button2 = makeButton(toolBar, "tbutton", "In a toolbar");
+	var table = makeTable(widgetSpace);
+	var row1 = makeTableRow(table);
+	makeTableData(row1,"table", true);
+	makeTableData(row1,"headers");
+	var row2 = makeTableRow(table);
+	makeTableData(row2,"table");
+	makeTableData(row2,"content", true);
+	var rule = makeRule(widgetSpace);
+	var tabledata = [["Tables", "created", "quickly"],["using", "makeTableWithData","()"]];
+	var tablewithdata = makeTableWithData(widgetSpace, true, tabledata);
+	var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit
+	var inputfield = makeInput(form, "text");
+	var submitbutton = makeButton(form, "button", "form elements");
+	var selectoptions = [["combobox", "GTK+ calls these comboboxes"], ["select", "HTML calls these \"selects\""]];
+	var selectbox = makeSelect(form, selectoptions);
+	var section = makeSection(widgetSpace);
+	setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
+	setWidgetSpace(anotherwindow, widgetSpace);
+}
