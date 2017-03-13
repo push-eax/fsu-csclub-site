@@ -276,13 +276,15 @@ function addTab(notebook, title){
 }
 
 /*
-makeLabel(parent)
+makeLabel(parent,text)
 
 Makes a label widget similar to Gtk::Label or QLabel
 
 Arguments:
 	parent
 		Parent DOM object or widget space.
+	text
+		the text to put in the label
 
 Returns:
 	newLabel
