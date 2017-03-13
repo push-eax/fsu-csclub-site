@@ -50,11 +50,15 @@ function themeTab(tabObject){
 	//Wallpaper buttons
 	makeLabel(tabObject.widgetSpace, "<b>Wallpaper</b>");
 	var oldwall = makeButton(tabObject.widgetSpace, "button", "Grey Logo");
-	var bitcycle = makeButton(tabObject.widgetSpace, "button", "BitCycle");
+	var lineDisk = makeButton(tabObject.widgetSpace, "button", "Line Disk");
+	var bitcycle = makeButton(tabObject.widgetSpace, "button", "BitCycles");
+	var orbitals = makeButton(tabObject.widgetSpace, "button", "Orbitals");
 	
 	//Wallpaper Click Actions
 	setClickAction(oldwall.button, function(){swapwall(0)});
+	setClickAction(lineDisk.button, function(){swapwall(2)});
 	setClickAction(bitcycle.button, function(){swapwall(1)});
+	setClickAction(orbitals.button, function(){swapwall(3)});
 	
 	//Widget Toolkit Buttons
 	makeLabel(tabObject.widgetSpace, "<b>Widget Theme</b>");
@@ -77,7 +81,13 @@ function swapwall(number){
 		document.body.style.backgroundColor="black"
 	}
 	if(number == 1){
-		document.body.style.backgroundImage = "url('resources/cssite-wall2.png')"
+		document.body.style.backgroundImage = "url('resources/bitcycles.png')"
+	}
+	if(number == 2){
+		document.body.style.backgroundImage = "url('resources/linedisk.png')"
+	}
+	if(number == 3){
+		document.body.style.backgroundImage = "url('resources/orbitals.png')"
 	}
 }
 
