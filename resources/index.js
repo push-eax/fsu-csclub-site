@@ -47,14 +47,39 @@ function settingswindow(){
 }
 
 function themeTab(tabObject){
+	//Wallpaper buttons
 	makeLabel(tabObject.widgetSpace, "<b>Wallpaper</b>");
 	var oldwall = makeButton(tabObject.widgetSpace, "button", "Grey Logo");
 	var bitcycle = makeButton(tabObject.widgetSpace, "button", "BitCycle");
+	
+	//Wallpaper Click Actions
+	setClickAction(oldwall.button, function(){swapwall(0)});
+	setClickAction(bitcycle.button, function(){swapwall(1)});
+	
+	//Widget Toolkit Buttons
 	makeLabel(tabObject.widgetSpace, "<b>Widget Theme</b>");
 	var oldGrey = makeButton(tabObject.widgetSpace, "button", "GoldenGrey");
 }
 
-
+function swapwall(number){
+	/*
+	 * Wallpaper numbers:
+	 * 
+	 * 0: old grey wallpaper with the cs club logo in the middle
+	 * 1: Original bitcycle wallpaper, updates forthcoming
+	 */
+	if(number == 0){
+		document.body.style.backgroundSize = "initial";
+		document.body.style.backgroundImage = "url('resources/fsulogo.png')"
+		document.body.style.backgroundColor = "grey"
+	} else {
+		document.body.style.backgroundSize="contain"
+		document.body.style.backgroundColor="black"
+	}
+	if(number == 1){
+		document.body.style.backgroundImage = "url('resources/cssite-wall2.png')"
+	}
+}
 
 function makeWidgetWindow(){
 	var anotherwindow = addWindow('Widget Toolkit Test Window',400)
