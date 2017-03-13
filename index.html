@@ -1,9 +1,9 @@
 <html>
 	<head>
 		<title>Framingham State University Computer Science Club</title>
-		<link rel=stylesheet type=text/css href=windowTools/windowTools.css>
-		<link rel=stylesheet type=text/css href=resources/index.css>
-		<link rel=stylesheet type=text/css href=widgetTools/widgetTools.css></link>
+		<link rel=stylesheet type=text/css href=windowTools/windowTools.css id=windowToolsStyleSheet></link>
+		<link rel=stylesheet type=text/css href=resources/index.css></link>
+		<link rel=stylesheet type=text/css href=widgetTools/widgetTools.css id=widgetToolsStyleSheet></link>
 		<script src=windowTools/windowTools.js></script>
 		<script src=widgetTools/widgetTools.js></script>
 		<script src=resources/composerview.js></script>
@@ -24,6 +24,9 @@
 				<tr>
 					<td><button class=menubutton id=widgets    onclick=menuexec(makeWidgetWindow)>Widget Toolkit</button></td>
 					<td><button class=menubutton id=composerbt onclick=menuexec(addComposerWindow)>Composer</button></td>
+				</tr>
+				<tr>
+					<td><button class=menubutton id=settings   onclick=menuexec(settingswindow)>User Settings</button></td>
 				</tr>
 			</table>
 		</div>

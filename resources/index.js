@@ -37,6 +37,25 @@ function maketestwindow(){
 function makeblankwindow(){
 	addWindow('blank',200)
 }
+function settingswindow(){
+	var toplevel = addWindow("User Settings", 600)
+	var wsp      = makeWidgetSpace();
+	var tabs     = makeNotebook(wsp);
+	var theme    = addTab(tabs, "Theme");
+	themeTab(theme);
+	setWidgetSpace(toplevel, wsp);
+}
+
+function themeTab(tabObject){
+	makeLabel(tabObject.widgetSpace, "<b>Wallpaper</b>");
+	var oldwall = makeButton(tabObject.widgetSpace, "button", "Grey Logo");
+	var bitcycle = makeButton(tabObject.widgetSpace, "button", "BitCycle");
+	makeLabel(tabObject.widgetSpace, "<b>Widget Theme</b>");
+	var oldGrey = makeButton(tabObject.widgetSpace, "button", "GoldenGrey");
+}
+
+
+
 function makeWidgetWindow(){
 	var anotherwindow = addWindow('Widget Toolkit Test Window',400)
 	var widgetSpace = makeWidgetSpace();
