@@ -64,7 +64,24 @@ function themeTab(tabObject){
 	makeLabel(tabObject.widgetSpace, "<b>Widget Theme</b>");
 	var oldGrey = makeButton(tabObject.widgetSpace, "button", "GoldenGrey");
 }
+function setCookie(cname,cvalue,exdays) {
+	document.cookie = cname + "=" + cvalue + ";path=index.html";
+}
 
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = decodeURIComponent(document.cookie).split(';');
+	for(var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+}
 function swapwall(number){
 	/*
 	 * Wallpaper numbers:
@@ -88,6 +105,16 @@ function swapwall(number){
 	}
 	if(number == 3){
 		document.body.style.backgroundImage = "url('resources/orbitals.png')"
+	}
+	setCookie("wallpaper",number,"8000");
+	console.log("Stored wallpaper "+number+";");
+}
+
+function getLastWall(){
+	var value = getCookie("wallpaper");
+	console.log("Found wallpaper "+value+", resetting.");
+	if(value!= ""){
+		swapwall(value);
 	}
 }
 
@@ -116,3 +143,4 @@ function makeWidgetWindow(){
 	setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
 	setWidgetSpace(anotherwindow, widgetSpace);
 }
+getLastWall();
