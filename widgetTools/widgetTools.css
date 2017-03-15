@@ -20,7 +20,7 @@ div.toolbar{
  */
 div.subtoolbar{
 	background-color:white;
-	background: linear-gradient(to top, white, #c5c5c5);
+	background: linear-gradient(to top,#c5c5c5, #f3f3f3, #f3f3f3, #d3d3d3, #c5c5c5);
 	width:100%;
 	padding:3px;
 	position:relative;
