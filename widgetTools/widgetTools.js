@@ -462,6 +462,7 @@ function makeInput(parent, type, value = "", name = ""){
 	var input = document.createElement("input");
 	input.setAttribute("type", type);
 	if(type == "text") input.setAttribute("class", "text");
+	if(type == "password") input.setAttribute("class", "text");
 	if(value != "") input.setAttribute("value", value);
 	if(name != "") input.setAttribute("name", name);
 	parent.appendChild(input);

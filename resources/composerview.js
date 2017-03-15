@@ -7,8 +7,24 @@ function addComposerWindow_nauth(){
 	var message = "Please enter your username and password:";
 	var messagl = makeLabel(widgets, message);
 	var loginbx = makeSection(widgets);
-	var apology = makeLabel(loginbx, "We have no form element support yet in the widget toolkit, therefore this window is disabled. Sorry for the inconvienience!");
+	var userlbl = makeLabel(loginbx, "<b>Username:</b> ");
+	var userbox = makeInput(loginbx, "text", "jonsmith", "user");
+	var passlbl = makeLabel(loginbx, "<b>Password:</b> ");
+	var passbox = makeInput(loginbx, "password", "password", "pass");
+	var loginbt = makeButton(loginbx, "button", "Log In");
+	setClickAction(loginbt.button, function(){composerLogin(userbox.value, passbox.value, cpsrwin);});
 	setWidgetSpace(cpsrwin, widgets);
+}
+
+function composerLogin(user, pass, window){
+	//Backend code to log in to the system
+	//User and pass are plain-text variables.
+	var gotauth = true;
+	//If gotauth is true, a composer window shows up.
+	if(gotauth == true){
+		closeWindow(window);
+		var cpsrwin = addComposerWindow();
+	}
 }
 
 function addComposerWindow(){
@@ -37,24 +53,9 @@ function addComposerWindow(){
 	setClickAction  ( italButton.button, function() { clickItal( italButton, composer ); textSpace.value = composer.innerHTML; } );
 	setClickAction  ( udlnButton.button, function() { clickUdln( udlnButton, composer ); textSpace.value = composer.innerHTML; } );
 	setWidgetSpace  (composerwin, widgetSpace);
+	return composerwin;
 }
-/*
-function addComposerWindow_old(){
-	var cpsr       = addWindow("Composer", 480)
-	var wsp        = makeWidgetSpace()
-	var tbr        = makeToolbar(wsp)
-	var saveButton = makeButton(tbr, "tbutton", "Save");
-	var boldButton = makeButton(tbr, "tbutton", "<b>B</b>");
-	var italButton = makeButton(tbr, "tbutton", "<i>i</i>");
-	var udlnButton = makeButton(tbr, "tbutton", "<u>U</u>");
-	var tabs       = makeNotebook(wsp);
-	var composer   = makePlainTextArea(wsp);
-    setWidgetSpace ( cpsr, wsp );
-	setClickAction ( boldButton.button, function() { clickBold( boldButton, composer ) } );
-	setClickAction ( italButton.button, function() { clickItal( italButton, composer ) } );
-	setClickAction ( udlnButton.button, function() { clickUdln( udlnButton, composer ) } );
-}
-*/
+
 function clickBold(button, composer){
 	document.execCommand('bold', false, null);
 }
