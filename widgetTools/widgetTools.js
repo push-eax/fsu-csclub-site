@@ -532,6 +532,7 @@ Returns:
 function makeIcon(parent, text, iconname){
 	var icontoplevel = document.createElement("div");
 	icontoplevel.setAttribute("class", "icon");
+	icontoplevel.setAttribute("tabindex", "0");
 	var iconimg = document.createElement("img");
 	iconimg.setAttribute("src", "resources/icons/"+icontheme+"/"+iconname+".png");
 	iconimg.setAttribute("class", "icon");
@@ -564,10 +565,9 @@ function setWidgetText(parent, text){
 /*
 setButtonToggled(button)
 
-Turns a button into a button that's toggled. In widgetTools
-there is no distinction between a button and a toggle button,
-so this allows the click action of a button to turn it into
-a toggle button
+Turns a button into a button that's toggled. In widgetTools there is no distinction
+between a button and a toggle button, so this allows the click action of a button to turn
+it into a toggle button
 
 Arguments
 	button
@@ -595,8 +595,8 @@ function setButtonUntoggled(button){
 /*
 setClickAction(widget, funct)
 
-Sets the click action for an element. Essentially connects the
-onclick property for whatever object you pass it.
+Sets the click action for an element. Essentially connects the onclick property for
+whatever object you pass it.
 
 Arguments:
 	widget
@@ -607,5 +607,22 @@ Arguments:
 */
 function setClickAction(widget, funct){
 	widget.onmousedown = function(){funct()}
+}
+
+/*
+setClickAction(widget, funct)
+
+Sets the double click action for an element. Essentially connects the ondblclick property
+for whatever object you pass it.
+
+Arguments:
+	widget
+		the DOM element to change
+
+	funct
+		the function to connect the click event to
+*/
+function setDblClickAction(widget, funct){
+	widget.ondblclick = funct;
 }
 

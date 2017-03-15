@@ -56,9 +56,18 @@ div.icon{
 	padding:2px;
 	margin:10px;
 	overflow:hidden;
+	border:1px solid white;
+}
+
+div.icon:focus, div.icon:active{
+	background:linear-gradient(to top, #febe10, #daa00d);
+	border:1px solid #daa00d;
+	border-radius:3px;
+	color:black;
 }
 
 img.icon{
+	background: linear-gradient(to top, white, #f4f4f4);
 	border: 1px solid #d3d3d3;
 	border-radius:3px;
 }
