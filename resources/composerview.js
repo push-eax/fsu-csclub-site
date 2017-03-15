@@ -1,5 +1,3 @@
-var bold = false;
-
 function addComposerWindow_nauth(){
 	var cpsrwin = addWindow("Composer: Authentication Required", 480);
 	var widgets = makeWidgetSpace();
