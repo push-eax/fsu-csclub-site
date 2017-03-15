@@ -45,6 +45,34 @@ button.tbutton{
 }
 
 /*
+ * div.icon is the main way we display icons. It is a 50px wide by 80px tall box, which
+ * should be used to display icons in contexts such as the file manager. It should display
+ * two child elements: the icon img element, and the text element.
+ */
+div.icon{
+	display:inline-block;
+	width:50px;
+	height:100px;
+	padding:2px;
+	margin:10px;
+	overflow:hidden;
+}
+
+img.icon{
+	border: 1px solid #d3d3d3;
+	border-radius:3px;
+}
+
+/*
+ * div.icontext is for icon text. Exists mainly to make text wrap lines instead of
+ * overflowing the main div.icon area.*/
+p.icon{
+	display:inline-block;
+	width:48px;
+	text-align:center;
+}
+
+/*
  * tabbtnsel, or the tab button selected (tab)(btn)(sel), is the currently selected tab
  * button in the tabs interface. It is built to sit on top of the tab content, flush with
  * the content below. This emphasizes where the user is currently in relation to the rest

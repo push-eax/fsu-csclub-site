@@ -10,6 +10,14 @@ the DOM, containing all items in one widget space.
 */
 
 /*
+Basic properties:
+
+Icontheme
+	The current icon theme used for widgets. Should be user-settable.
+*/
+var icontheme = "default";
+
+/*
 makeWidgetSpace()
 
 Creates the toplevel div which is used by default.
@@ -502,10 +510,45 @@ function makeSelect(parent, options){
 }
 
 /*
+makeIcon(parent, text, iconname)
+
+Creates an icon, built to be placed in a table (for rigid width) or in a section or
+similar (for variable width, like a file manager)
+
+arguments:
+	Parent
+		element to add icon to
+	
+	text
+		Text Label
+	
+	iconname
+		Name of the icon. Uses the curretnly used icon theme to determine which to use
+		based on the name.
+	
+Returns:
+	a div.icon element
+*/
+function makeIcon(parent, text, iconname){
+	var icontoplevel = document.createElement("div");
+	icontoplevel.setAttribute("class", "icon");
+	var iconimg = document.createElement("img");
+	iconimg.setAttribute("src", "resources/icons/"+icontheme+"/"+iconname+".png");
+	iconimg.setAttribute("class", "icon");
+	var icontext = document.createElement("p");
+	icontext.setAttribute("class", "icon");
+	icontext.innerHTML=text;
+	icontoplevel.appendChild(iconimg);
+	icontoplevel.appendChild(icontext);
+	parent.appendChild(icontoplevel);
+	return icontoplevel;
+}
+
+/*
 setWidgetText(parent, text)
 
-sets the inner HTML content of an element. Could potentially
-do more in the future, but for now just a basic placeholder.
+sets the inner HTML content of an element. Could potentially do more in the future, but
+for now just a basic placeholder.
 
 Arguments:
 	parent
