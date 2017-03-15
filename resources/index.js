@@ -134,8 +134,6 @@ function makeWidgetWindow(){
 	var rule = makeRule(widgetSpace);
 	var notebook = makeNotebook(widgetSpace);
 	var formtab = addTab(notebook, "Forms");
-	var tabledata = [["Tables", "created", "quickly"],["using", "makeTableWithData","()"]];
-	var tablewithdata = makeTableWithData(widgetSpace, true, tabledata);
 	var subtoolbar = makeSubToolbar(formtab.widgetSpace);
 	var button_one = makeButton(subtoolbar, "tbutton", "Sub-Toolbar");
 	var button_two = makeButton(subtoolbar, "tbutton", "Buttons");
@@ -145,6 +143,8 @@ function makeWidgetWindow(){
 	var selectoptions = [["combobox", "GTK+ calls these comboboxes"], ["select", "HTML calls these \"selects\""]];
 	var selectbox = makeSelect(form, selectoptions);
 	var sectiontab = addTab(notebook, "Text Elements");
+	var tabledata = [["Tables", "created", "quickly"],["using", "makeTableWithData","()"]];
+	var tablewithdata = makeTableWithData(sectiontab.widgetSpace, true, tabledata);
 	var label = makeLabel(sectiontab.widgetSpace, "<b>HTML</b> <i>formatted</i> <u>Labels</u>");
 	var section = makeSection(sectiontab.widgetSpace);
 	setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
