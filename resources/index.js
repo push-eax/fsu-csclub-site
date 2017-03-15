@@ -148,6 +148,13 @@ function makeWidgetWindow(){
 	var label = makeLabel(sectiontab.widgetSpace, "<b>HTML</b> <i>formatted</i> <u>Labels</u>");
 	var section = makeSection(sectiontab.widgetSpace);
 	setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
+	var icontab = addTab(notebook, "Icons");
+	makeIcon(icontab.widgetSpace, "Folder Icon", "folder");
+	makeIcon(icontab.widgetSpace, "Blog post icon", "blogpost");
+	makeIcon(icontab.widgetSpace, "Game Icon", "game");
+	makeIcon(icontab.widgetSpace, "UI layers icon", "layers");
+	makeIcon(icontab.widgetSpace, "object icon", "object");
+	makeIcon(icontab.widgetSpace, "save icon", "save");
 	setWidgetSpace(anotherwindow, widgetSpace);
 }
 getLastWall();
