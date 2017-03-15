@@ -67,6 +67,25 @@ body{
 }
 
 /*
+ * the window object in and of itself acts as a toplevel for which all other elements can
+ * be moved. The coloration and styling of the background, however, is what makes up the
+ * titlebar. There is no titlebar object, but instead there is simply the toplevel. Its
+ * style extends only as far as its direct contents, so text, images, etc. fall under that
+ * category.
+ */
+.dialogwindow{
+	background-color:grey;
+	background: linear-gradient(to bottom, #0a0a0a, #868686);
+	color:black;
+	position:fixed;
+	z-index:4;
+	opacity:1;
+	animation-duration: .125s;
+	border-radius:2px;
+	box-shadow: 0px 0px 5px black;
+}
+
+/*
  * Defines the style of a window when it's not in the center of attention.
  */
 .window_disabled{

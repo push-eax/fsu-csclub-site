@@ -118,6 +118,13 @@ function getLastWall(){
 	}
 }
 
+function makeIconDialog(iconname){
+	var dialogwindow = addDialogWindow(iconname + " icon", 300);
+	var widgetSpace = makeWidgetSpace();
+	makeLabel(widgetSpace, "Generic "+iconname+" icon, defined per the current icon theme.");
+	setWidgetSpace(dialogwindow, widgetSpace);
+}
+
 function makeWidgetWindow(){
 	var anotherwindow = addWindow('Widget Toolkit Test Window',400)
 	var widgetSpace = makeWidgetSpace();
@@ -149,12 +156,18 @@ function makeWidgetWindow(){
 	var section = makeSection(sectiontab.widgetSpace);
 	setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
 	var icontab = addTab(notebook, "Icons");
-	makeIcon(icontab.widgetSpace, "Folder Icon", "folder");
-	makeIcon(icontab.widgetSpace, "Blog post icon", "blogpost");
-	makeIcon(icontab.widgetSpace, "Game Icon", "game");
-	makeIcon(icontab.widgetSpace, "UI layers icon", "layers");
-	makeIcon(icontab.widgetSpace, "object icon", "object");
-	makeIcon(icontab.widgetSpace, "save icon", "save");
+	var foldicon = makeIcon(icontab.widgetSpace, "Folder Icon", "folder");
+	var blogicon = makeIcon(icontab.widgetSpace, "Blog post icon", "blogpost");
+	var gameicon = makeIcon(icontab.widgetSpace, "Game Icon", "game");
+	var laysicon = makeIcon(icontab.widgetSpace, "UI layers icon", "layers");
+	var objticon = makeIcon(icontab.widgetSpace, "object icon", "object");
+	var saveicon = makeIcon(icontab.widgetSpace, "save icon", "save");
+	setDblClickAction(foldicon, function(){makeIconDialog("folder")});
+	setDblClickAction(blogicon, function(){makeIconDialog("blog post")});
+	setDblClickAction(gameicon, function(){makeIconDialog("game")});
+	setDblClickAction(laysicon, function(){makeIconDialog("UI layers")});
+	setDblClickAction(objticon, function(){makeIconDialog("object")});
+	setDblClickAction(saveicon, function(){makeIconDialog("file save")});
 	setWidgetSpace(anotherwindow, widgetSpace);
 }
 getLastWall();
