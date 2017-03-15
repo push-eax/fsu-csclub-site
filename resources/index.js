@@ -134,7 +134,7 @@ function makeWidgetWindow(){
 	var rule = makeRule(widgetSpace);
 	var tabledata = [["Tables", "created", "quickly"],["using", "makeTableWithData","()"]];
 	var tablewithdata = makeTableWithData(widgetSpace, true, tabledata);
-	var form = makeForm(widgetSpace); //TODO: Finish form code in the widget toolkit
+	var form = makeForm(widgetSpace);
 	var inputfield = makeInput(form, "text");
 	var submitbutton = makeButton(form, "button", "form elements");
 	var selectoptions = [["combobox", "GTK+ calls these comboboxes"], ["select", "HTML calls these \"selects\""]];
