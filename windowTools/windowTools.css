@@ -192,8 +192,8 @@ body{
  * The resize grab handle
  */
 .grabhandle{
-	width:10px;
-	height:10px;
+	width:15px;
+	height:15px;
 	bottom:0px;
 	right:0px;
 	position:absolute;

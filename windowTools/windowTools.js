@@ -635,7 +635,7 @@ function addWindow(title,width){
 	//but they're useless if there's no image to show that.
 	var grabhandleimage = document.createElement("img");
 	grabhandleimage.setAttribute("class", "ghimage");
-	grabhandleimage.setAttribute("src", "windowTools/Grabhandle.png");
+	grabhandleimage.setAttribute("src", "windowTools/Grabhandle2.png");
 	//There have been some problems with the program thinking
 	//that we want to drag-and-drop so add a few lines of code
 	//to prevent that from happening.
