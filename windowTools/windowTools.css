@@ -383,14 +383,9 @@ img#menubutton{
  * with the CS Club Site main menu branding.
  */
 .mheader{
-	font-family:serif;
-	padding:3px;
-	border:3px solid black;
-	border-radius:10px;
-	background-color:#febe10;
-	background:linear-gradient(to bottom, #febe10, #daa00d);
-	font-weight:bold;
-	color:#231f20;
+	padding:0px;
+	margin:0px;
+	width:100%;
 }
 
 /*
