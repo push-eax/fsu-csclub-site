@@ -624,5 +624,6 @@ Arguments:
 */
 function setDblClickAction(widget, funct){
 	widget.ondblclick = funct;
+	widget.ontouchend = funct;
 }
 
