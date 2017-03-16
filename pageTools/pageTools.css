@@ -49,6 +49,9 @@ div.dialog{
 	height:36px;
 }
 button{
-	height:50px;
-	font-size:30px;
+	height:90px;
+	font-size:75px;
+}
+div{
+	font-size:75px;
 }
