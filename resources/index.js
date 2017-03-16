@@ -127,6 +127,7 @@ function getLastWall(){
 function siteTab(tab){
 	var infolabel = makeLabel(tab.widgetSpace, "<b>Mobile Site</b>");
 	var mobilebutton = makeButton(tab.widgetSpace, "button", "Switch to Mobile Site");
+	setClickAction(mobilebutton.button, function(){window.location="m.html"});
 }
 
 function makeIconDialog(iconname){

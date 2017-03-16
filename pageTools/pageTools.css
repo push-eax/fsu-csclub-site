@@ -1,1 +1,32 @@
- 
+div.topbar{
+	background-color:white;
+	box-shadow: 0px 0px 3px black;
+	width:100%;
+	height:48px;
+	position:absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+	margin:0px;
+	padding:4px;
+	font-size:36px;
+}
+img.logo{
+	height:40px;
+	margin:4px;
+	float:right;
+}
+img.menubutton{
+	transform:rotate(90deg);
+	height:40px;
+	margin:4px;
+}
+img.menuopen{
+	transform:rotate(270deg);
+	height:40px;
+	margin:4px;
+}
+div.page{
+	height:100%;
+	width:100%;
+}
