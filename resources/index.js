@@ -38,11 +38,13 @@ function makeblankwindow(){
 	addWindow('blank',200)
 }
 function settingswindow(){
-	var toplevel = addWindow("User Settings", 600)
+	var toplevel = addWindow("User Settings", 400)
 	var wsp      = makeWidgetSpace();
 	var tabs     = makeNotebook(wsp);
 	var theme    = addTab(tabs, "Theme");
+	var site     = addTab(tabs, "Site preferences");
 	themeTab(theme);
+	siteTab(site);
 	setWidgetSpace(toplevel, wsp);
 }
 
@@ -63,6 +65,10 @@ function themeTab(tabObject){
 	//Widget Toolkit Buttons
 	makeLabel(tabObject.widgetSpace, "<b>Widget Theme</b>");
 	var oldGrey = makeButton(tabObject.widgetSpace, "button", "GoldenGrey");
+	
+	//Icon Theme Buttons
+	makeLabel(tabObject.widgetSpace, "<b>Icon Theme</b>");
+	var defaulticons = makeButton(tabObject.widgetSpace, "button", "Default Theme");
 }
 function setCookie(cname,cvalue,exdays) {
 	document.cookie = cname + "=" + cvalue + ";path=index.html";
@@ -118,6 +124,11 @@ function getLastWall(){
 	}
 }
 
+function siteTab(tab){
+	var infolabel = makeLabel(tab.widgetSpace, "<b>Mobile Site</b>");
+	var mobilebutton = makeButton(tab.widgetSpace, "button", "Switch to Mobile Site");
+}
+
 function makeIconDialog(iconname){
 	var dialogwindow = addDialogWindow(iconname + " icon", 300);
 	var widgetSpace = makeWidgetSpace();
@@ -131,6 +142,7 @@ function makeWidgetWindow(){
 	var toolBar = makeToolbar(widgetSpace);
 	var button = makeButton(toolBar, "tbutton", "Buttons");
 	var button2 = makeButton(toolBar, "tbutton", "In a toolbar");
+	var text = makeLabel(widgetSpace, "This dialog tests the supported features of the widget toolkit widgetTools. It requires the windowTools toolkit to also be present, but it does not exhaustively test it.");
 	var table = makeTable(widgetSpace);
 	var row1 = makeTableRow(table);
 	makeTableData(row1,"table", true);
@@ -162,12 +174,16 @@ function makeWidgetWindow(){
 	var laysicon = makeIcon(icontab.widgetSpace, "UI layers icon", "layers");
 	var objticon = makeIcon(icontab.widgetSpace, "object icon", "object");
 	var saveicon = makeIcon(icontab.widgetSpace, "save icon", "save");
+	var cpsricon = makeIcon(icontab.widgetSpace, "Composer Icon", "composer");
+	var muscicon = makeIcon(icontab.widgetSpace, "Music Icon", "music");
 	setDblClickAction(foldicon, function(){makeIconDialog("folder")});
 	setDblClickAction(blogicon, function(){makeIconDialog("blog post")});
 	setDblClickAction(gameicon, function(){makeIconDialog("game")});
 	setDblClickAction(laysicon, function(){makeIconDialog("UI layers")});
 	setDblClickAction(objticon, function(){makeIconDialog("object")});
 	setDblClickAction(saveicon, function(){makeIconDialog("file save")});
+	setDblClickAction(cpsricon, function(){makeIconDialog("composer")});
+	setDblClickAction(muscicon, function(){makeIconDialog("music player")});
 	setWidgetSpace(anotherwindow, widgetSpace);
 }
 getLastWall();
