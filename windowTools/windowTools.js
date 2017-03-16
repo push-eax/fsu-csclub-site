@@ -59,6 +59,10 @@ minimizetransitionreset
 	
 winminwidth
 	Minimum window width
+
+ismobile
+	Forwards compat with pageTools, tells the site we are not working in a mobile
+	environment and therefore should execute wallpaper setting, etc.
 */
 var positiondownx;
 var positiondowny;
@@ -74,6 +78,7 @@ var minimizetime = 250;
 var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s, opacity 0.25s";
 var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.125s";
 var winminwidth = 160;
+var ismobile = false;
 
 /*
 movewindow(currentwindow, increasex, increasy)

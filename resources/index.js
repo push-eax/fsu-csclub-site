@@ -187,4 +187,6 @@ function makeWidgetWindow(){
 	setDblClickAction(muscicon, function(){makeIconDialog("music player")});
 	setWidgetSpace(anotherwindow, widgetSpace);
 }
-getLastWall();
+if(ismobile == false){
+	getLastWall();
+}
