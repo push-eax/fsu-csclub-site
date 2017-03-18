@@ -79,6 +79,7 @@ var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s, 
 var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.125s";
 var winminwidth = 160;
 var ismobile = false;
+var onfinished = [];
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -511,7 +512,7 @@ function lowerAll(){
 				windowregister[i].toplevel.setAttribute("class", "window_disabled");
 				windowregister[i].toplevel.style.zIndex=2;
 				windowregister[i].toplevel.style.backgroundColor='black';
-				windowregister[i].panelButton.style.background='#daa00d';
+				windowregister[i].panelButton.style.background='#477756';
 				windowregister[i].type='inactive';
 			}
 		}
@@ -533,7 +534,7 @@ function raiseWindow(window){
 	window.toplevel.setAttribute("class", "window");
 	window.toplevel.style.zIndex=3;
 	window.type='active';
-	window.panelButton.style.background='linear-gradient(to top, #febe10, #daa00d)';
+	window.panelButton.style.background='linear-gradient(to top, #008133, #477756)';
 }
 
 /*
@@ -857,7 +858,7 @@ Arguments:
 		delta X, and the delta Y in that order.
 */
 function addResizeEventHandler(window, revhandle){
-	window.resizeEvent.append(revhandle);
+	window.resizeEvent.push(revhandle);
 }
 
 /*
@@ -871,12 +872,27 @@ document.onmouseup   = function(event){clickup  (event)};
 document.onmousemove = function(e)    {updatepos(e)    };
 
 /*
+In order to allow things to start up with the page, we need a way to insert startup hooks.
+This function will allow for that.
+*/
+function addStartupHook(functionreference){
+	onfinished.push(functionreference);
+}
+
+/*
  * to initialize variables, we should have a function dedicated
  * to stuff that happens when the window has finished loading,
  * similar to $("document").ready(...) in JQuery. The difference
  * is we're not using any libraries to do this stuff, so it's JS
  * only.
+ * This also handles startup hooks.
  */
 document.onreadystatechange = function(){
-	panel = document.getElementById("panel");
+	if(document.readyState === "complete"){
+		console.log("Startup complete, loading startup hooks, if any");
+		panel = document.getElementById("panel");
+		for(var i = 0; i<onfinished.length; i++){
+			onfinished[i]();
+		}
+	}
 };
