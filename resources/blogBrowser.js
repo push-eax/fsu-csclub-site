@@ -19,3 +19,4 @@ function makeBrowserWindow(){
 	var gameicon = makeIcon(browsersection, "Game Icon", "game");
 	var layricon = makeIcon(browsersection, "Layers Icon", "layers");
 }
+addStartupHook(makeBrowserWindow)

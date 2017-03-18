@@ -74,6 +74,16 @@ function setCookie(cname,cvalue,exdays) {
 	document.cookie = cname + "=" + cvalue + ";path=index.html";
 }
 
+function introWindow(){
+	var introwindow = addWindow("Welcome!", 400);
+	var widgets = makeWidgetSpace();
+	setWidgetSpace(introwindow, widgets);
+
+	var introlabel = makeLabel(widgets, "<h2>Welcome to the FSU CS Club Site!</h2>");
+	var jokesection = makeRule(widgets);
+	makeLabel(widgets, "<b>Click the menu button at the bottom left of the page to get started!</b>");
+}
+
 function getCookie(cname) {
 	var name = cname + "=";
 	var ca = decodeURIComponent(document.cookie).split(';');
@@ -190,3 +200,4 @@ function makeWidgetWindow(){
 if(ismobile == false){
 	getLastWall();
 }
+addStartupHook(introWindow)
