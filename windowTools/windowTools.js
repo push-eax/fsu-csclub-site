@@ -512,7 +512,7 @@ function lowerAll(){
 				windowregister[i].toplevel.setAttribute("class", "window_disabled");
 				windowregister[i].toplevel.style.zIndex=2;
 				windowregister[i].toplevel.style.backgroundColor='black';
-				windowregister[i].panelButton.style.background='#477756';
+				windowregister[i].panelButton.style.background='#daa00d';
 				windowregister[i].type='inactive';
 			}
 		}
@@ -534,7 +534,7 @@ function raiseWindow(window){
 	window.toplevel.setAttribute("class", "window");
 	window.toplevel.style.zIndex=3;
 	window.type='active';
-	window.panelButton.style.background='linear-gradient(to top, #008133, #477756)';
+	window.panelButton.style.background='linear-gradient(to top, #febe10, #daa00d)';
 }
 
 /*
