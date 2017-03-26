@@ -1,8 +1,10 @@
 body{
-	background-color:grey;
-	background-image:url('fsulogo.png');
-	background-position:center;
+	background-color:black;
+	background-image:url('orbitals.png');
+	background-size: contain;
+	background-position: center;
 	background-repeat:no-repeat;
+	overflow:hidden;
 }
 #menubutton{
 	transition:transform 0.2s;

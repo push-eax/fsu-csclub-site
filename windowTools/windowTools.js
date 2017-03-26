@@ -59,6 +59,10 @@ minimizetransitionreset
 	
 winminwidth
 	Minimum window width
+
+ismobile
+	Forwards compat with pageTools, tells the site we are not working in a mobile
+	environment and therefore should execute wallpaper setting, etc.
 */
 var positiondownx;
 var positiondowny;
@@ -74,6 +78,8 @@ var minimizetime = 250;
 var minimizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s, opacity 0.25s";
 var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.125s";
 var winminwidth = 160;
+var ismobile = false;
+var onfinished = [];
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -248,6 +254,27 @@ function clickdown(element){
 }
 
 /*
+clickdialogdown(ev, element)
+
+Used as an event handling function for when someone clicks
+a window for any reason. This does nothing but raise that
+window.
+
+Arguments:
+	element
+		element object, usually a div but not picky
+		Supplied by the addWindowListeners(element) function,
+		this defines what should be moved. It is currently
+		designed around the assumption that the left and top
+		style parameters work, meaning a position mode is set
+		other than the default. Works with class=window.
+*/
+function clickdialogdown(element){
+	//lower all the windows and raise just this one
+	raiseDialogWindow(element)
+}
+
+/*
 clickup(ev)
 
 Used as another event handler, for when someone releases the
@@ -331,6 +358,24 @@ function addWindowListeners(currentwindow){
 }
 
 /*
+addDialogWindowListeners(currentwindow)
+
+Adds event handlers to the current dialog window object.
+
+Arguments:
+	currentwindow
+		current window element. Used to identify the window
+		later, should be a JS DOM element. When in doubt, this
+		can be gotten with document.getElementById()
+*/
+function addDialogWindowListeners(currentwindow){
+	//we need to handle when the window is clicked to move it
+	//what's more important here is defning which window is clicked
+	currentwindow.titleWidget.onmousedown = function(event){clicktbar(event, currentwindow)};
+	currentwindow.toplevel.onmousedown    = function(event){clickdialogdown(currentwindow)}
+}
+
+/*
 closeWindow(window)
 
 Closes the window based on its window object.
@@ -377,6 +422,35 @@ function closeWindow(window){
 	//remove the panel button
 	panel.removeChild(window.panelButton)
 	delete window.panelButton
+	//delete window;
+	}, 256);
+}
+
+/*
+closeWindow(window)
+
+Closes the window based on its window object.
+
+Arguments:
+	window
+		A window object as returned by addWindow()
+*/
+function closeDialogWindow(window){
+	window.toplevel.setAttribute("class", "window_close");
+	setTimeout(function(){
+	//remove the title
+	window.toplevel.removeChild(window.titleWidget);
+	delete window.titleWidget;
+	//then the body
+	window.toplevel.removeChild(window.body);
+	delete window.body;
+	//then the close button
+	window.toplevel.removeChild(window.closebutton);
+	delete window.closebutton;
+	//then the toplevel parent which they were rendered under.
+	//May only need to do this, but I'm thorough.
+	document.body.removeChild(window.toplevel);
+	delete window.toplevel;
 	//delete window;
 	}, 256);
 }
@@ -461,6 +535,23 @@ function raiseWindow(window){
 	window.toplevel.style.zIndex=3;
 	window.type='active';
 	window.panelButton.style.background='linear-gradient(to top, #febe10, #daa00d)';
+}
+
+/*
+raiseDialogWindow(window)
+
+lowers all windows and raises the one selected
+
+Arguments:
+	window
+		which window should be raised
+*/
+function raiseDialogWindow(window){
+	lowerAll();
+	window.toplevel.style.opacity=1;
+	window.toplevel.setAttribute("class", "dialogwindow");
+	window.toplevel.style.zIndex=3;
+	window.type='active';
 }
 
 /*
@@ -553,9 +644,10 @@ function restoreSize(window){
 }
 
 /*
-addWindow(id)
+addWindow(title, width)
 
-Nice, fluffy way to get basic window creation macros out of the way.
+Nice, fluffy way to get basic window creation macros out of the way. Creates a full window
+with resize, minimize, close, move, widgetspace and HTML functions.
 
 Arguments:
 	id
@@ -563,12 +655,9 @@ Arguments:
 
 Returns:
 	window
-		Array of three objects:
-		[0] = the toplevel window element, including the titlebar
-		[1] = the titlebar text
-		[2] = the body of the window. This is the only one that should be used directly.
-		      it still should not be if possible.
-		[3] = the close button
+		Special window object. If you scroll down, you can see what is currently placed in
+		a window. There are quite a few things, and some of them are needed only once or
+		twice.
 */
 function addWindow(title,width){
 	//We define the toplevel element as newwindow
@@ -635,7 +724,7 @@ function addWindow(title,width){
 	//but they're useless if there's no image to show that.
 	var grabhandleimage = document.createElement("img");
 	grabhandleimage.setAttribute("class", "ghimage");
-	grabhandleimage.setAttribute("src", "windowTools/Grabhandle.png");
+	grabhandleimage.setAttribute("src", "windowTools/Grabhandle2.png");
 	//There have been some problems with the program thinking
 	//that we want to drag-and-drop so add a few lines of code
 	//to prevent that from happening.
@@ -654,15 +743,95 @@ function addWindow(title,width){
 	windowobject.panelButton=addPanelButton(windowobject);
 	//connect our listeners,
 	addWindowListeners(windowobject)
-	if(typeof windowregister != 'undefined'){
-		lowerAll()
-	}
 	windowobject.toplevel.style.zIndex = 3;
 	
 	//Then return our windowobject to the user, like they requested.
 	//While we're at it, register the window with the program so we
 	//can get to it randomly later in a list.
 	windowregister.push(windowobject);
+	return windowobject;
+	//We are now rendering a functional window.
+}
+
+/*
+addDialogWindow(title, width)
+
+Nice, fluffy way to get basic window creation macros out of the way. This one is built for
+dialog windows, which are meant to not hit the taskbar, not be something to minimize or
+resize, and easily used to quickly inform the user of things without alert()
+
+Arguments:
+	title
+		the title of the dialog
+	
+	width
+		How wide to make the dialog.
+
+Returns:
+	window
+		A special dialog window object similar to the window object from above.
+*/
+function addDialogWindow(title,width){
+	//We define the toplevel element as newwindow
+	var newwindow = document.createElement("div");
+	//set its class to window
+	newwindow.setAttribute("class", "dialogwindow")
+	//set its id to whatever the user entered.
+	//newwindow.setAttribute("id", id)
+	//And its width as well...
+	newwindow.style.width = width;
+	newwindow.style.left = "10px";
+	newwindow.style.right = (10+width)+"px";
+	newwindow.style.top = "10px";
+	//Minimize only works if we have a transition property ready to go
+	newwindow.style.transition = minimizetransitionreset;
+	//and add it to the document body.
+	document.body.appendChild(newwindow);
+	
+	//Similar deal for the title, only now we also set the contents
+	//right away
+	var windowtitle = document.createElement("div");
+	windowtitle.setAttribute("class", "windowtitle");
+	windowtitle.setAttribute("draggable", "false");
+	windowtitle.setAttribute("onmousedown", "return false");
+	//windowtitle.setAttribute("id",    id+"_title");
+	//here be content setting
+	windowtitle.innerHTML=title;
+	//and we append it to the window element instead of the body
+	newwindow.appendChild(windowtitle);
+	
+	//Now we create the window body element
+	//where all the user's stuff is
+	var windowbody = document.createElement("div");
+	windowbody.setAttribute("class", "windowbody");
+	//windowbody.setAttribute("id", id+"_body");
+	newwindow.appendChild(windowbody);
+	
+	//And add a close button. This is tricky, because the close
+	//button needs to be aware of what window we want to close
+	//ahead of time.
+	var windowclose = document.createElement("button")
+	windowclose.setAttribute("class", "closebutton");
+	//windowclose.setAttribute("id", id+"_close");
+	//For now we give it a stylish but uninspired X in lieu of a
+	//fancier close button
+	windowclose.innerHTML="<img class=closebutton_icon src=windowTools/CloseButton.png></img>";
+	newwindow.appendChild(windowclose);
+	
+	//No minimize, we're a dialog.
+	
+	//No resize, we're a dialog.
+	
+	//And define a window object. This then gets used to connect
+	//the close button's signal, so we know which elements to
+	//destroy.
+	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, titleText: title, type:"active", minleft:0, minright:0, mintop:0, minwidth:0};
+	windowclose.onclick=function(){closeDialogWindow(windowobject)};
+	//connect our listeners,
+	addDialogWindowListeners(windowobject)
+	windowobject.toplevel.style.zIndex = 3;
+	
+	//Then return our windowobject to the user, like they requested.
 	return windowobject;
 	//We are now rendering a functional window.
 }
@@ -689,7 +858,7 @@ Arguments:
 		delta X, and the delta Y in that order.
 */
 function addResizeEventHandler(window, revhandle){
-	window.resizeEvent.append(revhandle);
+	window.resizeEvent.push(revhandle);
 }
 
 /*
@@ -703,12 +872,27 @@ document.onmouseup   = function(event){clickup  (event)};
 document.onmousemove = function(e)    {updatepos(e)    };
 
 /*
+In order to allow things to start up with the page, we need a way to insert startup hooks.
+This function will allow for that.
+*/
+function addStartupHook(functionreference){
+	onfinished.push(functionreference);
+}
+
+/*
  * to initialize variables, we should have a function dedicated
  * to stuff that happens when the window has finished loading,
  * similar to $("document").ready(...) in JQuery. The difference
  * is we're not using any libraries to do this stuff, so it's JS
  * only.
+ * This also handles startup hooks.
  */
 document.onreadystatechange = function(){
-	panel = document.getElementById("panel");
+	if(document.readyState === "complete"){
+		console.log("Startup complete, loading startup hooks, if any");
+		panel = document.getElementById("panel");
+		for(var i = 0; i<onfinished.length; i++){
+			onfinished[i]();
+		}
+	}
 };
