@@ -3,3 +3,4 @@ microblogs/*
 *.kate-swp
 *#
 *kdev*
+nbproject/*
