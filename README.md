@@ -1,6 +1,6 @@
-#Framingham State University Computer Science Club Wobsite
+<h1>Framingham State University Computer Science Club Wobsite</h1>
 
-##Introduction
+<h2>Introduction</h2>
 
 The CS club at Framingham State had no webiste, and now we are making one.
 If you've followed what I'm saying this far, you understand what this project is.
