@@ -5,7 +5,7 @@
 The CS club at Framingham State had no webiste, and now we are making one.
 If you've followed what I'm saying this far, you understand what this project is.
 
-##Technical information
+<h2>Technical information</h2>
 
 This site is currently a massive custom JavaScript windowing library with some skinning and example windows. For now, it includes custom art and an index page which sets it apart (mildly) from just the bare toolkit.
 
@@ -23,7 +23,7 @@ While this is not a complete feature set, it is most of the superficial ones whi
 
 All that being said, there's no mobile site yet so please use a desktop browser for the time being.
 
-##Internal Information
+<h2>Internal Information</h2>
 
 On a more internal level, the widget toolkit operates in the following way:
 - HTML code contains start menu, panel, background
