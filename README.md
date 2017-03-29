@@ -1,10 +1,12 @@
 #Framingham State University Computer Science Club Wobsite
+
 ##Introduction
 
 The CS club at Framingham State had no webiste, and now we are making one.
 If you've followed what I'm saying this far, you understand what this project is.
 
 ##Technical information
+
 This site is currently a massive custom JavaScript windowing library with some skinning and example windows. For now, it includes custom art and an index page which sets it apart (mildly) from just the bare toolkit.
 
 Implemented features include:
@@ -22,6 +24,7 @@ While this is not a complete feature set, it is most of the superficial ones whi
 All that being said, there's no mobile site yet so please use a desktop browser for the time being.
 
 ##Internal Information
+
 On a more internal level, the widget toolkit operates in the following way:
 - HTML code contains start menu, panel, background
 - CSS defines all stlying through central widgetTools.css file. This can be extended through other stylesheets loaded later, but the widgetTools.css page defines the basics.
