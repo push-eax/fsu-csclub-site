@@ -758,11 +758,19 @@ function addWindow(title,width){
 	//ahead of time.
 	var windowclose = document.createElement("button")
 	windowclose.setAttribute("class", "closebutton");
-	//windowclose.setAttribute("id", id+"_close");
 	//For now we give it a stylish but uninspired X in lieu of a
 	//fancier close button
 	windowclose.innerHTML="<img class=closebutton_icon src=windowTools/CloseButton.png></img>";
 	newwindow.appendChild(windowclose);
+
+	//And a maximize button, since that's been added
+	//Basically copy close again and mod it
+	var windowmax = document.createElement("button")
+	windowmax.setAttribute("class", "maximizebutton");
+	//For now we give it a stylish but uninspired box in lieu of a
+	//fancier max button
+	windowmax.innerHTML="<img class=maximizebutton_icon src=windowTools/MaximizeButton.png></img>";
+	newwindow.appendChild(windowmax);
 	
 	//And now that minimization works, we may as well add a minimize button.
 	//The button needs to be aware of the same stuff as close
