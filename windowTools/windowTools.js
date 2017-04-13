@@ -701,6 +701,13 @@ function restoreSize(window){
 	raiseWindow(window)
 }
 
+function handlemax(window){
+	if(window.maximized===false)
+		maximize(window);
+	else
+		restore(window);
+}
+
 /*
 addWindow(title, width)
 
@@ -804,6 +811,7 @@ function addWindow(title,width){
 	var resizeActions = [changeWindowSize];
 	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, minimizebutton: windowminimize, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0, resizeEvent:resizeActions, maxleft: 0, maxright: 0, maxtop: 0, maxheight: 0, maximized: false};
 	windowclose.onclick=function(){closeWindow(windowobject)};
+	windowmax.onclick=function(){handlemax(windowobject)};
 	windowminimize.onclick=function(){minimize(windowobject)};
 	//Then add a panel button to the window object
 	windowobject.panelButton=addPanelButton(windowobject);
