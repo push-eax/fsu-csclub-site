@@ -10,6 +10,14 @@ the DOM, containing all items in one widget space.
 */
 
 /*
+Basic properties:
+
+Icontheme
+	The current icon theme used for widgets. Should be user-settable.
+*/
+var icontheme = "default";
+
+/*
 makeWidgetSpace()
 
 Creates the toplevel div which is used by default.
@@ -47,6 +55,29 @@ Arguments:
 function makeToolbar(widgetSpace){
 	var newToolbar = document.createElement("div");
 	newToolbar.setAttribute("class", "toolbar");
+	widgetSpace.appendChild(newToolbar);
+	return newToolbar;
+}
+
+/*
+makeSubToolbar(widgetSpace)
+
+Creates a toolbar. Designed to be placed at the top of a
+tab. Note that this toolkit intentionally does not mess
+with the idea of a menubar since those actions would produce
+too much unneccesary complexity, at the detriment of ease-
+of-use and bandwidth
+
+Arguments:
+	widgetSpace
+		the DOM element to place the toolbar in.
+		This can conceptually be any DOM element, but
+		it is reccommended that this be restricted
+		to just a widgetSpace.
+*/
+function makeSubToolbar(widgetSpace){
+	var newToolbar = document.createElement("div");
+	newToolbar.setAttribute("class", "subtoolbar");
 	widgetSpace.appendChild(newToolbar);
 	return newToolbar;
 }
@@ -101,7 +132,7 @@ function makeButton(parent, type, text){
 	newButton.setAttribute("class", type);
 	newButton.innerHTML = text;
 	parent.appendChild(newButton);
-	var buttonObject = { button:newButton, type:type, parent:parent, state:"normal" };
+	var buttonObject = { button:newButton, type:type, state:"normal" };
 	return buttonObject;
 }
 
@@ -131,13 +162,137 @@ function makeTextArea(parent){
 }
 
 /*
-makeLabel(parent)
+makePlainTextArea(parent)
+
+Makes an HTML textarea element, for plain-text editing (unformatted)
+
+Arguments:
+	parent
+		Parent DOM object, widgetSpace, etc.
+	
+Returns
+	newTextArea
+		HTML DOM textarea, form-ready but unnamed.
+*/
+
+function makePlainTextArea(parent){
+	var newTextArea = document.createElement("textarea");
+	newTextArea.setAttribute("class", "filltext");
+	parent.appendChild(newTextArea);
+	return newTextArea;
+}
+
+/*
+syncTextAreas(tPlain, tDiv)
+
+Sets a plain text field with a div content editable or plain div
+
+Arugments
+	tPlain
+		textArea DOM object
+	
+	tDiv
+		div contentEditable object
+
+No returns.
+*/
+function syncTextAreas(tPlain, tDiv){
+	tPlain.onkeyup=function(){tDiv.innerHTML=tPlain.value;}
+	tDiv.onkeyup=function(){tPlain.value=tDiv.innerHTML;}
+}
+
+/*
+makeNotebook(parent)
+
+Makes a tabbed area, similar to Gtk Notebook, or tabs in a browser.
+
+Arguments:
+	parent
+		Parent widgetspace or DOM element
+	
+	returns
+		notebook special object
+		Note that this is NOT a DOM object and should not be treated like one.
+*/
+function makeNotebook(parent){
+	var container = document.createElement("div");
+	var newTabbar = document.createElement("div");
+	newTabbar.setAttribute("class", "tabbar");
+	container.appendChild(newTabbar);
+	parent.appendChild(container);
+	var notebook = {tabbar: newTabbar, toplevel: container, tablist: [], currenttab: null};
+	return notebook;
+}
+
+/*
+selectTab(notebook, tab)
+
+Selects a tab
+
+Arguments:
+	notebook
+		notebook special object
+	
+	tab
+		tab special object
+
+No returns.
+*/
+function selectTab(notebook, tab){
+	for(var i = 0; i<notebook.tablist.length; i++){
+		notebook.tablist[i].widgetSpace.setAttribute("class", "hidden");
+		notebook.tablist[i].button.button.setAttribute("class", "tabbutton");
+	}
+	tab.widgetSpace.setAttribute("class", "tab");
+	tab.button.button.setAttribute("class", "tabbtnsel");
+	tab.button.type="tabbtnsel";
+	notebook.currenttab = tab;
+}
+
+/*
+addTab(notebook, title)
+
+Adds a tab to a notebook
+
+Arguments:
+	notebook
+		special notebook object
+	
+	title
+		Tab button title
+
+Returns:
+	newtab
+		special tab object, use newtab.widgetSpace to add elements
+*/
+function addTab(notebook, title){
+	var newbutton = makeButton(notebook.tabbar, "tabbtnsel", title);
+	var widgetSpace = makeWidgetSpace();
+	widgetSpace.setAttribute("class", "tab");
+	if(notebook.currenttab != null){
+		widgetSpace.setAttribute("class", "hidden");
+		newbutton.button.setAttribute("class", "tabbutton");
+		newbutton.type = "tabbutton";
+	}
+	var newtab = {button: newbutton, widgetSpace: widgetSpace};
+	newbutton.button.onclick = function(){selectTab(notebook, newtab);};
+	notebook.toplevel.appendChild(widgetSpace);
+	notebook.tablist.push(newtab);
+	if(notebook.currenttab == null)
+		notebook.currenttab = newtab;
+	return newtab;
+}
+
+/*
+makeLabel(parent,text)
 
 Makes a label widget similar to Gtk::Label or QLabel
 
 Arguments:
 	parent
 		Parent DOM object or widget space.
+	text
+		the text to put in the label
 
 Returns:
 	newLabel
@@ -315,6 +470,7 @@ function makeInput(parent, type, value = "", name = ""){
 	var input = document.createElement("input");
 	input.setAttribute("type", type);
 	if(type == "text") input.setAttribute("class", "text");
+	if(type == "password") input.setAttribute("class", "text");
 	if(value != "") input.setAttribute("value", value);
 	if(name != "") input.setAttribute("name", name);
 	parent.appendChild(input);
@@ -354,10 +510,46 @@ function makeSelect(parent, options){
 }
 
 /*
+makeIcon(parent, text, iconname)
+
+Creates an icon, built to be placed in a table (for rigid width) or in a section or
+similar (for variable width, like a file manager)
+
+arguments:
+	Parent
+		element to add icon to
+	
+	text
+		Text Label
+	
+	iconname
+		Name of the icon. Uses the curretnly used icon theme to determine which to use
+		based on the name.
+	
+Returns:
+	a div.icon element
+*/
+function makeIcon(parent, text, iconname){
+	var icontoplevel = document.createElement("div");
+	icontoplevel.setAttribute("class", "icon");
+	icontoplevel.setAttribute("tabindex", "0");
+	var iconimg = document.createElement("img");
+	iconimg.setAttribute("src", "resources/icons/"+icontheme+"/"+iconname+".png");
+	iconimg.setAttribute("class", "icon");
+	var icontext = document.createElement("p");
+	icontext.setAttribute("class", "icon");
+	icontext.innerHTML=text;
+	icontoplevel.appendChild(iconimg);
+	icontoplevel.appendChild(icontext);
+	parent.appendChild(icontoplevel);
+	return icontoplevel;
+}
+
+/*
 setWidgetText(parent, text)
 
-sets the inner HTML content of an element. Could potentially
-do more in the future, but for now just a basic placeholder.
+sets the inner HTML content of an element. Could potentially do more in the future, but
+for now just a basic placeholder.
 
 Arguments:
 	parent
@@ -373,10 +565,9 @@ function setWidgetText(parent, text){
 /*
 setButtonToggled(button)
 
-Turns a button into a button that's toggled. In widgetTools
-there is no distinction between a button and a toggle button,
-so this allows the click action of a button to turn it into
-a toggle button
+Turns a button into a button that's toggled. In widgetTools there is no distinction
+between a button and a toggle button, so this allows the click action of a button to turn
+it into a toggle button
 
 Arguments
 	button
@@ -404,8 +595,8 @@ function setButtonUntoggled(button){
 /*
 setClickAction(widget, funct)
 
-Sets the click action for an element. Essentially connects the
-onclick property for whatever object you pass it.
+Sets the click action for an element. Essentially connects the onclick property for
+whatever object you pass it.
 
 Arguments:
 	widget
@@ -416,5 +607,23 @@ Arguments:
 */
 function setClickAction(widget, funct){
 	widget.onmousedown = function(){funct()}
+}
+
+/*
+setClickAction(widget, funct)
+
+Sets the double click action for an element. Essentially connects the ondblclick property
+for whatever object you pass it.
+
+Arguments:
+	widget
+		the DOM element to change
+
+	funct
+		the function to connect the click event to
+*/
+function setDblClickAction(widget, funct){
+	widget.ondblclick = funct;
+	widget.ontouchend = funct;
 }
 
