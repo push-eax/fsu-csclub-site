@@ -28,37 +28,61 @@ class FSUApi extends API {
             echo "Failed to connect to MySQL: (" . $this->db->connect_errno . ") " . $this->db->connect_error;
         }
         
+        /*
+        // Prepare statements
+        if (!($getblog_statement = $this->db->prepare("SELECT * FROM blog WHERE id = ?"))) {
+            echo "Prepare failed: (" . $this->db->errno . ") " . $this->db->error;
+        }*/
+                
+        
         // TODO: Implement user authentication
     }
 
     /**
-     * searchblogs() searches through all blogs' title and author for a given string.
-     * With no argument, it will return a list of all blogs.
+     * searchblog() searches through all blogs' title and author for a given string.
      * @return string
      */
-    protected function searchblogs() {
-        return "searchblogs()";
+    protected function searchblog($args) {
+        return "searchblog()";
     }
     
     /**
      * getblog() retrieves a blog post given a blog ID and returns the post encoded as JSON.
+     * With argument "*", it will return a list of all blogs.
      * @return string
      */
     protected function getblog($args) {
         // Query the database
         // TODO: fix SQLi vulnerability
-        $res = $this->db->query("SELECT * FROM blog WHERE id = " . $args[0]);
         
-        $ret = $res->fetch_array(MYSQLI_ASSOC); // return associative array
-        $ret["body"] = "";
-        
-        // Blog body files are named by id in blog/
-        $bodypath = "blog/" . $ret["id"];
-        $body = fopen($bodypath, "r");
-        $ret["body"] = fread($body, filesize($bodypath)) or $ret["body"] = "Blog not found.";
-        fclose($body);
-        
-        return $ret;
+        if ($args[0] == "*") {
+            $res = $this->db->query("SELECT * FROM blog");
+            $ret = $res->fetch_all();
+            
+            foreach ($ret as &$arr) {
+                $bodypath = "blog/" . $arr[0];
+                $body = fopen($bodypath, "r");
+                //Fix this
+                //echo $arr[3];
+                array_push($arr, fread($body, filesize($bodypath)));
+                //echo $arr[4];
+            }
+            
+            return $ret;
+        } else {
+            $res = $this->db->query("SELECT * FROM blog WHERE id = " . $args[0]);
+            
+            $ret = $res->fetch_array(MYSQLI_ASSOC); // return associative array
+            $ret["body"] = "";
+
+            // Blog body files are named by id in blog/
+            $bodypath = "blog/" . $ret["id"];
+            $body = fopen($bodypath, "r");
+            $ret["body"] = fread($body, filesize($bodypath)) or $ret["body"] = "Blog not found.";
+            fclose($body);
+
+            return $ret;
+        }
     }
     
      /**
@@ -66,6 +90,8 @@ class FSUApi extends API {
      * @return string
      */
     protected function modblog() {
+        
+        
         return "modblog()";
     }
 }
