@@ -43,7 +43,22 @@ class FSUApi extends API {
      * @return string
      */
     protected function searchblog($args) {
-        return "searchblog()";
+        
+        // TODO: use prepare() to fix SQLi
+        /*
+        $ret;
+        
+        if (!($query = $this->db->prepare("SELECT * FROM blog WHERE title LIKE '%TESTBLOG2%'"))) {
+            echo "Prepare failed: (" . $this->db->errno . ") " . $this->db->error;
+        }
+        //$query->bind_param("s", &$args[0]);
+        $query->execute();
+        $query->bind_result($ret);
+        $query->fetch();*/
+        $res = $this->db->query("SELECT * FROM blog WHERE title LIKE '%" . $args[0] . "%' OR author LIKE '%" . $args[0] . "%'");
+        $ret = $res->fetch_all(); //get_result();//->fetch_assoc();
+        
+        return $ret;
     }
     
     /**
@@ -62,10 +77,7 @@ class FSUApi extends API {
             foreach ($ret as &$arr) {
                 $bodypath = "blog/" . $arr[0];
                 $body = fopen($bodypath, "r");
-                //Fix this
-                //echo $arr[3];
                 array_push($arr, fread($body, filesize($bodypath)));
-                //echo $arr[4];
             }
             
             return $ret;
@@ -89,9 +101,12 @@ class FSUApi extends API {
      * modblog() deletes, creates, and updates blog posts.
      * @return string
      */
-    protected function modblog() {
+    protected function modblog($args) {
+        
+        //$verb = $args[0];
         
         
-        return "modblog()";
+        
+        return $args;
     }
 }
