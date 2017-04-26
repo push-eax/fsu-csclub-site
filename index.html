@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>modblog() form</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script>
+			$.post( "backend.php", { request:"modblog/verb/arg1/arg2" }).done(function( data ) {
+				alert( "Data Loaded: " + data );
+			});
+		</script>
+	</head>
+	<body>
+		<!-- doesn't work for some reason -->
+		<form action="backend.php">
+			<input type="text" name="request">
+			<input type="submit" value="Submit">
+		</form>
+	</body>
+</html>
