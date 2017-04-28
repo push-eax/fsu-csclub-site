@@ -199,12 +199,27 @@ body{
 }
 
 /*
+ * This is the maximize button. It needs absolute positioning and width in order to fit
+ * with the titlebar. If it exceeds about 40px, that causes problems for later buttons.
+ */
+.maximizebutton{
+	position:absolute;
+	right:40px;
+	top:0px;
+	border:1px solid black;
+	box-shadow: 0px 0px 2px black;
+	background-color:black;
+	color:white;
+	height:100%;
+	width:40px;
+}
+/*
  * minimizebutton is another button in the same vein as the closebutton, but this time it
  * is built to perform minimization and appears 40px left of the right bound of close.
  */
 .minimizebutton{
 	position:absolute;
-	right:40px;
+	right:80px;
 	top:0px;
 	width:40px;
 	border:1px solid black;
@@ -217,7 +232,7 @@ body{
 /*
  * Icon dimensions for close and minimize buttons
  */
-.closebutton_icon, .minimizebutton_icon{
+.maximizebutton_icon, .closebutton_icon, .minimizebutton_icon{
 	height:100%;
 	width:20px;
 }

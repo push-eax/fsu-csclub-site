@@ -1,0 +1,13 @@
+To use API:
+
+GET: backend.php?request=endpoint/verb/arg0/arg1/arg2/argN
+
+POST: backend.php 
+for parameters, use:
+
+{ "request": "endpoint/verb/arg0/arg1/arg2/argN" }
+
+The API returns data as JSON which is easy to parse in JavaScript. 
+Use JS to populate the UI with the data you've requested using AJAX.
+
+

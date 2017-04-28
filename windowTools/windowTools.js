@@ -155,6 +155,64 @@ function changeWindowSize(currentwindow, increasex, increasey){
 }
 
 /*
+ * maximize(window)
+ *
+ * Takes the window, sets its bounds to an approximation of the screen size
+ *
+ * Arguments:
+ * 	window
+ * 		The window to be maximized
+ */
+function maximize(window){
+	//Window boundaries
+	var winbounds    = window.toplevel.getBoundingClientRect();
+	//Screen boundaries
+	var scbounds     = document.body.getBoundingClientRect();
+	//panel boundaries
+	var panbounds    = panel.getBoundingClientRect();
+	//Actual bounds
+	var scleft       = scbounds.left;
+	var scright      = scbounds.right;
+	var sctop        = scbounds.top;
+	var pantop       = panbounds.top;
+	var scheight     = pantop - sctop;
+	var winheight    = winbounds.bottom-winbounds.top;
+	//Start saving the initial values
+	window.maxtop    = winbounds.top;
+	window.maxright  = winbounds.right;
+	window.maxleft   = winbounds.left;
+	window.maxheight = winheight;
+	//set the maximized param to true
+	window.maximized = true;
+	//then start actually resizing things
+	window.toplevel.style.left  = scleft;
+	window.toplevel.style.right = scright;
+	window.toplevel.style.top   = sctop;
+	window.body.style.height    = scheight-48;
+	window.toplevel.style.width = scbounds.right-scbounds.left;
+}
+
+/*
+ * restore(window)
+ *
+ * Takes a maximized window and restores it.
+ *
+ * Arguments:
+ * 	window
+ * 		window to be restore
+ */
+function restore(window){
+	//Set the window.maximized property to false
+	window.maximized = false;
+	//Set our window size again
+	window.toplevel.style.left = window.maxleft;
+	window.toplevel.style.right = window.maxright;
+	window.toplevel.style.top = window.maxtop;
+	window.toplevel.style.width = window.maxright-window.maxleft;
+	window.body.style.height = window.maxheight;
+}
+
+/*
 updatepos(ev)
 
 Used to update a window position as it's being dragged
@@ -643,6 +701,13 @@ function restoreSize(window){
 	raiseWindow(window)
 }
 
+function handlemax(window){
+	if(window.maximized===false)
+		maximize(window);
+	else
+		restore(window);
+}
+
 /*
 addWindow(title, width)
 
@@ -700,11 +765,19 @@ function addWindow(title,width){
 	//ahead of time.
 	var windowclose = document.createElement("button")
 	windowclose.setAttribute("class", "closebutton");
-	//windowclose.setAttribute("id", id+"_close");
 	//For now we give it a stylish but uninspired X in lieu of a
 	//fancier close button
 	windowclose.innerHTML="<img class=closebutton_icon src=windowTools/CloseButton.png></img>";
 	newwindow.appendChild(windowclose);
+
+	//And a maximize button, since that's been added
+	//Basically copy close again and mod it
+	var windowmax = document.createElement("button")
+	windowmax.setAttribute("class", "maximizebutton");
+	//For now we give it a stylish but uninspired box in lieu of a
+	//fancier max button
+	windowmax.innerHTML="<img class=maximizebutton_icon src=windowTools/MaximizeButton.png></img>";
+	newwindow.appendChild(windowmax);
 	
 	//And now that minimization works, we may as well add a minimize button.
 	//The button needs to be aware of the same stuff as close
@@ -736,8 +809,9 @@ function addWindow(title,width){
 	//the close button's signal, so we know which elements to
 	//destroy.
 	var resizeActions = [changeWindowSize];
-	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, minimizebutton: windowminimize, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0, resizeEvent:resizeActions};
+	var windowobject = {toplevel: newwindow, titleWidget: windowtitle, body: windowbody, closebutton: windowclose, minimizebutton: windowminimize, grabhandle: grabhandles, titleText: title, panelButton: null, type:"active", minleft:0, minright:0, mintop:0, minwidth:0, resizeEvent:resizeActions, maxleft: 0, maxright: 0, maxtop: 0, maxheight: 0, maximized: false};
 	windowclose.onclick=function(){closeWindow(windowobject)};
+	windowmax.onclick=function(){handlemax(windowobject)};
 	windowminimize.onclick=function(){minimize(windowobject)};
 	//Then add a panel button to the window object
 	windowobject.panelButton=addPanelButton(windowobject);
