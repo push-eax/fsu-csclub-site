@@ -4,3 +4,5 @@ microblogs/*
 *#
 *kdev*
 nbproject/*
+*.swp
+*.swo
