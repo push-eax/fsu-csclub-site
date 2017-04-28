@@ -2,6 +2,9 @@ To use API:
 
 GET: backend.php?request=endpoint/verb/arg0/arg1/arg2/argN
 
+example: backend.php?request=getblog/get/1
+example: backend.php?request=getblog/get/*
+
 POST: backend.php 
 for parameters, use:
 
