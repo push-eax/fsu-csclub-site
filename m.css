@@ -1,0 +1,28 @@
+/*
+ * div.icon is the main way we display icons. It is a 50px wide by 80px tall box, which
+ * should be used to display icons in contexts such as the file manager. It should display
+ * two child elements: the icon img element, and the text element.
+ */
+div.icon{
+	display:inline-block;
+	width:100px;
+	height:200px;
+	padding:2px;
+	margin:10px;
+	overflow:hidden;
+	border:1px solid white;
+}
+
+div.icon:focus, div.icon:active{
+	background:linear-gradient(to top, #febe10, #daa00d);
+	border:1px solid #daa00d;
+	border-radius:3px;
+	color:black;
+}
+
+img.icon{
+	background: linear-gradient(to top, white, #f4f4f4);
+	border: 1px solid #d3d3d3;
+	border-radius:3px;
+	height:96px;
+}

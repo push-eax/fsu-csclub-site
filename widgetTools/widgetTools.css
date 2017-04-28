@@ -1,0 +1,284 @@
+/*
+ * This is the style used for the generic toolbar, which is supposed to house buttons at
+ * the top of windows. This includes save buttons, basic entry widgets, etc. It is NOT,
+ * however, designed to house multiple lines of widgets. It CAN, but the style doesn't
+ * account for that at the moment.
+ */
+div.toolbar{
+	background-color:white;
+	background: linear-gradient(to top, white, grey);
+	width:100%;
+	padding:3px;
+	position:relative;
+}
+
+/*
+ * The subtoolbar is designed to sit in tabs. When a tab is used, it can make use of the
+ * subtoolbar in order to add things like bold, italic, and underline buttons. These are
+ * important elements of a UI because they are how controls can be housed without making
+ * for a jarring experience within a tabbed interface such as the composer.
+ */
+div.subtoolbar{
+	background-color:white;
+	background: linear-gradient(to top,#c5c5c5, #f3f3f3, #f3f3f3, #d3d3d3, #c5c5c5);
+	width:100%;
+	padding:3px;
+	position:relative;
+}
+
+/*
+ * The tbutton is a button designed to work in a toolbar. It basically includes slightly
+ * more pronounced gradiation in order to appear homogeneous with the plain-background
+ * generic button. This is a workaround for how the eye percieves contrasting colors for
+ * the most part.
+ */
+button.tbutton{
+	background-color: #dfdfdf;
+	background: linear-gradient(to bottom, #dadada, #c5c5c5);
+	border: 1px solid #a5a5a5;
+	color: black;
+	border-radius: 3px;
+	text-shadow: 1px 1px 0px white;
+	vertical-align: center;
+	padding:4px;
+	margin:3px;
+}
+
+/*
+ * div.icon is the main way we display icons. It is a 50px wide by 80px tall box, which
+ * should be used to display icons in contexts such as the file manager. It should display
+ * two child elements: the icon img element, and the text element.
+ */
+div.icon{
+	display:inline-block;
+	width:50px;
+	height:100px;
+	padding:2px;
+	margin:10px;
+	overflow:hidden;
+	border:1px solid white;
+}
+
+div.icon:focus, div.icon:active{
+	background:linear-gradient(to top, #febe10, #daa00d);
+	border:1px solid #daa00d;
+	border-radius:3px;
+	color:black;
+}
+
+img.icon{
+	background: linear-gradient(to top, white, #f4f4f4);
+	border: 1px solid #d3d3d3;
+	border-radius:3px;
+}
+
+/*
+ * div.icontext is for icon text. Exists mainly to make text wrap lines instead of
+ * overflowing the main div.icon area.*/
+p.icon{
+	display:inline-block;
+	width:48px;
+	text-align:center;
+}
+
+/*
+ * tabbtnsel, or the tab button selected (tab)(btn)(sel), is the currently selected tab
+ * button in the tabs interface. It is built to sit on top of the tab content, flush with
+ * the content below. This emphasizes where the user is currently in relation to the rest
+ * of the interface.
+ */
+button.tabbtnsel{
+	background-color: #c5c5c5;
+	border: 1px solid grey;
+	border-style: solid solid none solid;
+	color: black;
+	border-radius: 3px 3px 0px 0px;
+	text-shadow: 1px 1px 0px white;
+	vertical-align: center;
+	padding:4px;
+	margin:3px;
+	margin-bottom:0px;
+}
+
+/*
+ * tabbutton is the master tab view style. This is what tabs are initialized as until they
+ * are selected. This means that all created tabs show up with a standard style in the
+ * background.
+ */
+button.tabbutton{
+	background-color: white;
+	background: linear-gradient(to top, grey, #c5c5c5);
+	border: 1px solid grey;
+	border-style: solid solid none solid;
+	color: black;
+	border-radius: 3px 3px 0px 0px;
+	text-shadow: 1px 1px 0px white;
+	vertical-align: center;
+	padding:4px;
+	margin:3px;
+	margin-bottom: 0px;
+}
+
+/*
+ * tabbar is the standard tab bar styling. It is derived from the toolbar, and is built to
+ * emphasize the fact that the tab space and the content space is different, without
+ * creating dip illusions in the window. This is mainly done by adding a "drop shadow"
+ * above tab content. It is a completely artificial drop shadow, created by the element's
+ * gradiation, but the effect is the same, if more controlled.
+ */
+div.tabbar{
+	background-color: white;
+	background: linear-gradient(to top, grey,white,white,white);
+	width:100%;
+	padding:3px;
+	padding-bottom:0px;
+	position:relative;
+
+}
+
+/*
+ * tab is the main body of a tab. This is the area where all tab content shows up, meaning
+ * that it essentially styles the widget space which the tab interface offers. This should
+ * be somewhat different from the default in order to differentiate a tab from its 
+ * background.
+ */
+div.tab{
+	background-color:#c5c5c5;
+	border-radius: 0px 0px 3px 3px;
+}
+
+/*
+ * This is the style which defines what happens when a toolbar button is pressed. This is
+ * where the real style changes need to take place in order to work around tricks of the
+ * light because the eye percieves a regular button when pressed in a toolbar as not flat,
+ * but gradiated because in reference to the gradiation in the background the difference
+ * is not constant. In order to work around this, the style below defines a constant
+ * appearance for these situations. It keeps the difference in color the same so that the
+ * eye percieves the pressed button as flat.
+ */
+button.tbutton:active{
+	background: linear-gradient(to top, #dadada, #c5c5c5);
+}
+
+/*
+ * button:focus determines how in-focus buttons should be handled. In a lot of browsers
+ * the default is either a glow around the button, or more classic "ants" like in FF.
+ * While this doesn't override the default behavior of FF, it does replace the blue glow
+ * of chrome, and it adds the gold glow to FF.
+ */
+button.tbutton:focus, button.button:focus, button.toggled:focus, input.button:focus{
+	padding: 3px;
+	border:2px solid #febe10;
+}
+
+/*
+ * This allows us to have "toggled" buttons as well as flat push buttons. This style is
+ * meant to fit in with regular buttons so there is no real programmatic or stylistic
+ * difference between buttons and toggle buttons.
+ */
+button.toggled{
+	background-color: white;
+	background: linear-gradient(to top, white, #c5c5c5);
+	border: 1px solid #a5a5a5;
+	color: black;
+	border-radius: 3px;
+	text-shadow: 1px 1px 0px white;
+	vertical-align: center;
+	padding:4px;
+	margin:3px;
+}
+
+/*
+ * These style rules apply to drop-down menus and things of the select element. Based off
+ * the style for buttons.
+ */
+select, button.button, input.button{
+	background-color: white;
+	background: linear-gradient(to bottom, #e1e1e1, #c5c5c5);
+	border: 1px solid #a5a5a5;
+	color: black;
+	border-radius: 3px;
+	text-shadow: 1px 1px 0px white;
+	padding:4px;
+	margin:3px;
+}
+
+/*
+ * This defines what happens when one of these dropdowns is selected.
+ */
+select:active, button.button:active, input.button:active{
+	background: #a5a5a5;
+}
+
+/*
+ * unused?
+ * needs testing to make sure we don't need it.
+ */
+img.stock{
+	padding: 3px;
+	height:20px;
+}
+
+/*
+ * filltext defines multi-line width filling text entries, such as are used in the
+ * composer. The style is careful not to use "dynamic" height as this causes problems
+ * with window resize and window bounds.
+ */
+.filltext{
+	width:100%;
+	height:256px;
+	background-color: #c5c5c5;
+	border: 1px solid #a5a5a5;
+	border-radius:3px;
+	margin:3px;
+	overflow:auto;
+}
+
+/*
+ * hidden is bassically a class to define what happens when we want to hide an element.
+ * This is used in order to implement tabs, and it is not really a style rule so much as
+ * a functionality shortcut to remove and add elements without removing and adding them.
+ */
+.hidden{
+	display:none;
+}
+
+/*
+ * text defines what happens with single line text fields. Derived in part from the style
+ * used in button.
+ * */
+input.text{
+	background-color: #c5c5c5;
+	border: 1px solid #a5a5a5;
+	border-radius:3px;
+	padding:2px;
+	margin:3px;
+}
+
+/*
+ * text:focus defines what happens when a single-line text entry field is focused. (the
+ * cursor is in the box)
+ */
+input.text:focus{
+	border:2px solid #febe10;
+	padding:1px;
+}
+
+/*
+ * section defines marked sections, so like the bordered text in the widget toolkit test
+ * window. It is built to section off parts of the UI.
+ */
+div.section{
+	border: 1px solid #a5a5a5;
+	margin:5px;
+	padding:5px;
+	border-radius: 3px;
+}
+
+/*
+ * This class is built to allow for bordered tables without using the ancient border=#px
+ * argument in the table tag. The class is set when we want borders, unset when we don't.
+ */
+.tabledata{
+	border: 1px solid #a5a5a5;
+}
