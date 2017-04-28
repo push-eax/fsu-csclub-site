@@ -1,0 +1,5 @@
+To use API:
+
+GET: backend.php?request=endpoint/verb/arg0/arg1/arg2/argN
+
+
