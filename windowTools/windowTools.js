@@ -184,7 +184,6 @@ function maximize(window){
 	window.maxright  = winbounds.right;
 	window.maxleft   = winbounds.left;
 	window.maxheight = winheight;
-	console.log(window.maxheight);
 	//set the maximized param to true
 	window.maximized = true;
 	//then start actually resizing things
