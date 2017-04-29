@@ -51,11 +51,12 @@ button.tbutton{
  */
 div.icon{
 	display:inline-block;
-	width:50px;
+	width:90px;
+	overflow:hidden;
 	height:100px;
 	padding:2px;
 	margin:10px;
-	overflow:hidden;
+	text-align:center;
 	border:1px solid white;
 }
 
@@ -70,6 +71,8 @@ img.icon{
 	background: linear-gradient(to top, white, #f4f4f4);
 	border: 1px solid #d3d3d3;
 	border-radius:3px;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 /*
@@ -77,7 +80,11 @@ img.icon{
  * overflowing the main div.icon area.*/
 p.icon{
 	display:inline-block;
-	width:48px;
+	width:90px;
+	height:20px;
+	margin-left:auto;
+	margin-right:auto;
+	overflow:hidden;
 	text-align:center;
 }
 
