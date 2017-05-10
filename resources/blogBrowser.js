@@ -15,3 +15,12 @@ function makeBrowserWindow(){
 		}
 	};
 }
+
+function makeViewWindow(title, body){
+	var view_window = addWindow(title, 500);
+	var wsp = makeWidgetSpace();
+	setWidgetSpace(view_window, wsp);
+	var titleLabel = makeLabel(wsp, "<h2>"+title+"</h2>");
+	var bodySection = makeSection(wsp);
+	setWidgetText(bodySection, body);
+}
