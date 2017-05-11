@@ -1,22 +1,38 @@
+/*
+   Event handler for menu button hover
+   */
 function onmenubover(){
 	document.getElementById("menubutton").src="windowTools/beta-start-button-3-hover.png";
 }
+/*
+   Event handler for when the mouse leaves the menu button
+   */
 function onmenubout(){
 	document.getElementById("menubutton").src="windowTools/beta-start-button-3.png";
 }
+//Tracker for menu open status
 var menuopen = false;
+
+//Function to open the menu, handles button click and app open
 function openmenu(){
-	dom_menu = document.getElementById("menu")
+	//Gets the menu, declared elsewhere in the document
+	dom_menu = document.getElementById("menu");
+	//And the background, transparent clickable area to close the window
 	dom_mbackground = document.getElementById("menubackground");
-	dom_mbutton = document.getElementById("menubutton")
+	//And gets the button
+	dom_mbutton = document.getElementById("menubutton");
 	if(menuopen == false){
+		//open the background, set the height of the menu
 		dom_mbackground.style.display='block';
 		dom_menu.style.height='500px';
 		dom_menu.style.padding='5px';
-		menuopen = true
+		//vital information about status
+		menuopen = true;
+		//sets the button, so it rotates. This animates with the provided CSS rules
 		dom_mbutton.style.transform='rotate(180deg)';
 	}
 	else{
+		//same as above, but in reverse
 		dom_mbackground.style.display='none';
 		menuopen = false
 		dom_menu.style.height='0px';
@@ -24,19 +40,31 @@ function openmenu(){
 		dom_mbutton.style.transform='rotate(0deg)';
 	}
 }
+
+/*
+   Convienience function built to execute a task while opening or closing the menu,
+   in order to allow menu buttons to be written fast.
+   */
 function menuexec(funct){
 	funct();
 	openmenu();
 }
+
+/*
+   Creates the "test window", which for now shows a test button and that's all.
+   */
 function maketestwindow(){
 	var testwindow  = addWindow("Test Window",400)
 	var widgetSpace = makeWidgetSpace();
 	setWidgetSpace(testwindow,widgetSpace);
 	var button1     = makeButton(widgetSpace, "button", "Test Button");
 }
-function makeblankwindow(){
-	addWindow('blank',200)
-}
+
+/*
+   opens and sets up the settings window.
+
+   Individual tabs are handled by separate functions, so use caution deleting them
+   */
 function settingswindow(){
 	var toplevel = addWindow("User Settings", 400)
 	var wsp      = makeWidgetSpace();
@@ -48,6 +76,10 @@ function settingswindow(){
 	setWidgetSpace(toplevel, wsp);
 }
 
+/*
+   Themes tab of the settings window, make sure there aren't conflicting references asking for this after
+   getting rid of it/changes it
+   */
 function themeTab(tabObject){
 	//Wallpaper buttons
 	makeLabel(tabObject.widgetSpace, "<b>Wallpaper</b>");
@@ -70,10 +102,20 @@ function themeTab(tabObject){
 	makeLabel(tabObject.widgetSpace, "<b>Icon Theme</b>");
 	var defaulticons = makeButton(tabObject.widgetSpace, "button", "Default Theme");
 }
+
+/*
+   Sets a cookie with the correct path set and expiration date.
+
+   Overshadowed by libcookie.js's storecookie, use that if possible.
+   */
 function setCookie(cname,cvalue,exdays) {
 	document.cookie = cname + "=" + cvalue + ";path=index.html";
 }
 
+/*
+   Creates the introduction window to the interface
+
+ */
 function introWindow(){
 	var introwindow = addWindow("Welcome!", 400);
 	var widgets = makeWidgetSpace();
@@ -84,6 +126,10 @@ function introWindow(){
 	makeLabel(widgets, "<b>Click the menu button at the bottom left of the page to get started!</b>");
 }
 
+/*
+   For grabbing a cookie by key. Again, use libcookie.js for future use, as this will
+   eventually be deleted.
+   */
 function getCookie(cname) {
 	var name = cname + "=";
 	var ca = decodeURIComponent(document.cookie).split(';');
@@ -98,6 +144,8 @@ function getCookie(cname) {
 	}
 	return "";
 }
+
+/*Swaps the wallpaper by internal number.*/
 function swapwall(number){
 	/*
 	 * Wallpaper numbers:
@@ -126,6 +174,10 @@ function swapwall(number){
 	console.log("Stored wallpaper "+number+";");
 }
 
+/*
+   Gets the last used wallpaper from the cookie store. Runs on each load of the page, regardless of whether
+   the cookie exists.
+   */
 function getLastWall(){
 	var value = getCookie("wallpaper");
 	console.log("Found wallpaper "+value+", resetting.");
@@ -134,12 +186,19 @@ function getLastWall(){
 	}
 }
 
+/*
+   Creates the content of the general site settings tab
+   */
 function siteTab(tab){
 	var infolabel = makeLabel(tab.widgetSpace, "<b>Mobile Site</b>");
 	var mobilebutton = makeButton(tab.widgetSpace, "button", "Switch to Mobile Site");
 	setClickAction(mobilebutton.button, function(){window.location="m.html"});
 }
 
+/*
+   Makes the icon dialog. This pops up in the widget toolkit test window when
+   an icon is double clicked.
+   */
 function makeIconDialog(iconname){
 	var dialogwindow = addDialogWindow(iconname + " icon", 300);
 	var widgetSpace = makeWidgetSpace();
@@ -147,12 +206,19 @@ function makeIconDialog(iconname){
 	setWidgetSpace(dialogwindow, widgetSpace);
 }
 
+/*
+   Creates the widget test window, for testing the UI toolkit.
+   */
 function makeWidgetWindow(){
-	var anotherwindow = addWindow('Widget Toolkit Test Window',400)
+	var anotherwindow = addWindow('Widget Toolkit Test Window',400);
+	//Tests widget space capabilities
 	var widgetSpace = makeWidgetSpace();
+
+	//Toolbar items
 	var toolBar = makeToolbar(widgetSpace);
 	var button = makeButton(toolBar, "tbutton", "Buttons");
 	var button2 = makeButton(toolBar, "tbutton", "In a toolbar");
+	//Labels and Tables
 	var text = makeLabel(widgetSpace, "This dialog tests the supported features of the widget toolkit widgetTools. It requires the windowTools toolkit to also be present, but it does not exhaustively test it.");
 	var table = makeTable(widgetSpace);
 	var row1 = makeTableRow(table);
@@ -161,9 +227,12 @@ function makeWidgetWindow(){
 	var row2 = makeTableRow(table);
 	makeTableData(row2,"table");
 	makeTableData(row2,"content", true);
+	//Quick Rule Interlude
 	var rule = makeRule(widgetSpace);
+	//Tabs
 	var notebook = makeNotebook(widgetSpace);
 	var formtab = addTab(notebook, "Forms");
+	//Forms
 	var subtoolbar = makeSubToolbar(formtab.widgetSpace);
 	var button_one = makeButton(subtoolbar, "tbutton", "Sub-Toolbar");
 	var button_two = makeButton(subtoolbar, "tbutton", "Buttons");
@@ -173,11 +242,14 @@ function makeWidgetWindow(){
 	var selectoptions = [["combobox", "GTK+ calls these comboboxes"], ["select", "HTML calls these \"selects\""]];
 	var selectbox = makeSelect(form, selectoptions);
 	var sectiontab = addTab(notebook, "Text Elements");
+	//Tables, created from a 2d array
 	var tabledata = [["Tables", "created", "quickly"],["using", "makeTableWithData","()"]];
 	var tablewithdata = makeTableWithData(sectiontab.widgetSpace, true, tabledata);
 	var label = makeLabel(sectiontab.widgetSpace, "<b>HTML</b> <i>formatted</i> <u>Labels</u>");
+	//sections
 	var section = makeSection(sectiontab.widgetSpace);
 	setWidgetText(section, "Sections, containing text. These should be display:block and left-aligned. They should usually also have a border.");
+	//Icons, double-clickable with dialogs as the double-click action
 	var icontab = addTab(notebook, "Icons");
 	var foldicon = makeIcon(icontab.widgetSpace, "Folder Icon", "folder");
 	var blogicon = makeIcon(icontab.widgetSpace, "Blog post icon", "blogpost");
@@ -197,6 +269,8 @@ function makeWidgetWindow(){
 	setDblClickAction(muscicon, function(){makeIconDialog("music player")});
 	setWidgetSpace(anotherwindow, widgetSpace);
 }
+
+//If we're not on mobile, get the wallpaper now.
 if(ismobile == false){
 	getLastWall();
 }
