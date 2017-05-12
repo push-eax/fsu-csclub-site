@@ -7,6 +7,34 @@ require multiple windows of the same type. While by no means
 perfect, widgetTools aims to create a seamless and integrated
 environment which does not toy with higher-level objects in
 the DOM, containing all items in one widget space.
+
+Comment structure: (Begins and ends with /// for the sake of separating example from
+description)
+///
+function name(argument shortlist)
+
+Brief description
+
+Arguments: //only shown if present
+	first (data type)
+		short argument description
+	second (data type)
+		short argument description
+
+Returns: //only shown if present
+	varname (data type)
+		short return description
+		
+///
+Note that data types (as listed above) have their own syntax:
+Possibilities for data types:
+DOM			A DOM object, straight HTML element
+number			a number. Int, long, double, etc. all count
+custom object			a JS object. Contains its own properties of different types
+string			any string of text.
+function			a JS function (exclude parens, use function name)
+
+Data types modified with [] are arrays.
 */
 
 /*
@@ -23,7 +51,7 @@ makeWidgetSpace()
 Creates the toplevel div which is used by default.
 
 Returns:
-	widgetSpace
+	widgetSpace (DOM)
 		a div DOM object, used as the parent for other
 		/make.+\(\)/ functions such as makeButton() in
 		order to place themselves in one contained
@@ -46,11 +74,15 @@ too much unneccesary complexity, at the detriment of ease-
 of-use and bandwidth
 
 Arguments:
-	widgetSpace
+	widgetSpace (DOM)
 		the DOM element to place the toolbar in.
 		This can conceptually be any DOM element, but
 		it is reccommended that this be restricted
 		to just a widgetSpace.
+
+Returns:
+	newToolbar (DOM)
+		the new toolbar object, a <div>
 */
 function makeToolbar(widgetSpace){
 	var newToolbar = document.createElement("div");
@@ -69,11 +101,15 @@ too much unneccesary complexity, at the detriment of ease-
 of-use and bandwidth
 
 Arguments:
-	widgetSpace
+	widgetSpace (DOM)
 		the DOM element to place the toolbar in.
 		This can conceptually be any DOM element, but
 		it is reccommended that this be restricted
 		to just a widgetSpace.
+
+Returns:
+	newToolbar (DOM)
+		the new toolbar object, a <div>
 */
 function makeSubToolbar(widgetSpace){
 	var newToolbar = document.createElement("div");
@@ -90,11 +126,15 @@ widgets into a bordered area, so that parts of a ui page can
 be separated cleanly.
 
 Arguments:
-	widgetSpace
+	widgetSpace (DOM)
 		the DOM element to place the section in.
 		This can conceptually be any DOM element, but
 		it is reccommended that this be restricted
 		to just a widgetSpace or other section.
+
+Returns:
+	newSection (DOM)
+		a new div element, styled as a section.
 */
 function makeSection(widgetSpace){
 	var newSection = document.createElement("div");
@@ -109,19 +149,19 @@ makeButton(parent, type, text)
 Creates a button in the specified parent.
 
 Arguments:
-	parent
+	parent (DOM)
 		The dom object or widget space to place the
 		button in
 
-	type
+	type (string)
 		the type of button to use
 		Options are currently "button" and "tbutton"
 
-	text
+	text (string)
 		the text label to place inside the button
 
 Returns:
-	buttonObject
+	buttonObject (custom object)
 		The new button object which was created
 		upon completion of the function. In order to
 		access the DOM object itself, use
@@ -146,11 +186,11 @@ WYSIWYG formatter. This is one area where a bona-fide textarea
 falls a little bit short.
 
 Arguments:
-	parent
+	parent (DOM)
 		Parent DOM object or widget space.
 
 Returns:
-	newTextArea
+	newTextArea (DOM)
 		The new text area div DOM object.
 */
 function makeTextArea(parent){
@@ -167,11 +207,11 @@ makePlainTextArea(parent)
 Makes an HTML textarea element, for plain-text editing (unformatted)
 
 Arguments:
-	parent
+	parent (DOM)
 		Parent DOM object, widgetSpace, etc.
 	
 Returns
-	newTextArea
+	newTextArea (DOM)
 		HTML DOM textarea, form-ready but unnamed.
 */
 
@@ -188,13 +228,11 @@ syncTextAreas(tPlain, tDiv)
 Sets a plain text field with a div content editable or plain div
 
 Arugments
-	tPlain
+	tPlain (DOM)
 		textArea DOM object
 	
-	tDiv
+	tDiv (DOM)
 		div contentEditable object
-
-No returns.
 */
 function syncTextAreas(tPlain, tDiv){
 	tPlain.onkeyup=function(){tDiv.innerHTML=tPlain.value;}
@@ -207,12 +245,12 @@ makeNotebook(parent)
 Makes a tabbed area, similar to Gtk Notebook, or tabs in a browser.
 
 Arguments:
-	parent
+	parent (DOM)
 		Parent widgetspace or DOM element
 	
-	returns
-		notebook special object
-		Note that this is NOT a DOM object and should not be treated like one.
+	returns (custom object)
+		notebook special object. Built to be used by tab/notebook functions and not
+		modified else.
 */
 function makeNotebook(parent){
 	var container = document.createElement("div");
@@ -230,10 +268,10 @@ selectTab(notebook, tab)
 Selects a tab
 
 Arguments:
-	notebook
+	notebook (custom object)
 		notebook special object
 	
-	tab
+	tab (custom object)
 		tab special object
 
 No returns.
@@ -255,14 +293,14 @@ addTab(notebook, title)
 Adds a tab to a notebook
 
 Arguments:
-	notebook
+	notebook (custom object)
 		special notebook object
 	
-	title
+	title (string)
 		Tab button title
 
 Returns:
-	newtab
+	newtab (custom object)
 		special tab object, use newtab.widgetSpace to add elements
 */
 function addTab(notebook, title){
@@ -289,13 +327,13 @@ makeLabel(parent,text)
 Makes a label widget similar to Gtk::Label or QLabel
 
 Arguments:
-	parent
+	parent (DOM)
 		Parent DOM object or widget space.
-	text
+	text (string)
 		the text to put in the label
 
 Returns:
-	newLabel
+	newLabel (DOM)
 		The new label div DOM object.
 */
 function makeLabel(parent,text){
@@ -311,8 +349,12 @@ makeTable(parent)
 
 Makes an HTML table.
 
+Arugments:
+	parent (DOM)
+		parent object, widgetspace, etc.
+
 Returns:
-	newtable
+	newtable (DOM)
 		new HTML DOM table
 */
 function makeTable(parent){
@@ -328,13 +370,13 @@ makeTableWithData(parent, borders, values)
 Makes an HTML table, complete with contents
 
 Arguments:
-	parent
+	parent (DOM)
 		Object to add table do
 	
-	borders
+	borders (bool)
 		Whether table data elements should have borders
 	
-	content
+	content (number[])
 		Two-dimensional array representing table rows, and
 		the second dimension for table datas
 
@@ -365,8 +407,12 @@ makeTableRow(parent)
 
 Makes an HTML table row
 
+Arguments:
+	parent (DOM)
+		parent object to add the row to
+
 Returns:
-	newtablerow
+	newtablerow (DOM)
 		new HTML DOM tr
 */
 function makeTableRow(parent){
@@ -382,17 +428,17 @@ makeTableData(parent, tdata[, borderless])
 makes an HTML table data element
 
 Arguments:
-	parent
+	parent (DOM)
 		object to add td to
 	
-	tdata
+	tdata (string)
 		Contents of the cell
 	
-	borderless
+	borderless (bool)
 		whether the cell should have borders
 
 returns:
-	newtabledata
+	newtabledata (DOM)
 		new HTML DOM td
 */
 function makeTableData(parent, tdata, borderless=false){
@@ -411,11 +457,12 @@ makeRule(parent)
 Makes a horizontal rule
 
 Arguments:
-	parent
+	parent (DOM)
 		Where to put the HR
 
 Returns
-	HTML DOM HR object
+	newrule (DOM)
+		HTML DOM HR object
 */
 function makeRule(parent){
 	var newrule = document.createElement("hr");
@@ -429,14 +476,15 @@ makeForm(parent [, action])
 makes an HTML form
 
 Arguments:
-	parent
+	parent (DOM)
 		object to add the form to
 	
-	action
+	action (string)
 		submit action
 
 Returns:
-	new HTML DOM form object
+	newform (DOM)
+		new HTML DOM form object
 */
 function makeForm(parent, action = ""){
 	var newform = document.createElement("form");
@@ -451,20 +499,21 @@ makeInput(parent, type[, value[, name]])
 Creates an input object, such as a text field or submit button
 
 Arguments:
-	parent
+	parent (DOM)
 		object to add the input to
 	
-	type
+	type (string)
 		type of input (text, number, date, etc..)
 	
-	value
+	value (string)
 		the value of the input
 	
-	name
+	name (string)
 		name of the input
 
 Returns:
-	HTML DOM input object
+	input (DOM)
+		HTML DOM input object
 */
 function makeInput(parent, type, value = "", name = ""){
 	var input = document.createElement("input");
@@ -483,10 +532,10 @@ makeSelect(parent, options)
 Creates a select object, similar to a GTK+ combobox
 
 Arguments:
-	parent
+	parent (DOM)
 		Parent object to add the combobox to
 	
-	options
+	options (string[][])
 		Select value/text pairs, stored in a two-dimensional
 		array. The first is the value= tag, the second is the
 		text displayed on the option. (example:
@@ -494,7 +543,8 @@ Arguments:
 		...value="keyboard">Desktop Keyboards</option>...
 
 Returns:
-	HTML DOM select object
+	select (DOM)
+		HTML DOM select object
 */
 function makeSelect(parent, options){
 	var select = document.createElement("select");
@@ -516,18 +566,19 @@ Creates an icon, built to be placed in a table (for rigid width) or in a section
 similar (for variable width, like a file manager)
 
 arguments:
-	Parent
+	Parent (DOM)
 		element to add icon to
 	
-	text
+	text (string)
 		Text Label
 	
-	iconname
+	iconname (string)
 		Name of the icon. Uses the curretnly used icon theme to determine which to use
 		based on the name.
 	
 Returns:
-	a div.icon element
+	icontoplevel (DOM)
+		a div.icon element
 */
 function makeIcon(parent, text, iconname){
 	var icontoplevel = document.createElement("div");
@@ -552,10 +603,10 @@ sets the inner HTML content of an element. Could potentially do more in the futu
 for now just a basic placeholder.
 
 Arguments:
-	parent
+	parent (DOM)
 		The parent DOM object or widget space
 
-	text
+	text (string)
 		The text to insert into the HTML
 */
 function setWidgetText(parent, text){
@@ -570,7 +621,7 @@ between a button and a toggle button, so this allows the click action of a butto
 it into a toggle button
 
 Arguments
-	button
+	button (custom object)
 		the button object to work with
 */
 function setButtonToggled(button){
@@ -584,7 +635,7 @@ setButtonUntoggled(button)
 Does the reverse of above
 
 Arguments
-	button
+	button (custom object
 		the button object to work with
 */
 function setButtonUntoggled(button){
@@ -599,10 +650,10 @@ Sets the click action for an element. Essentially connects the onclick property 
 whatever object you pass it.
 
 Arguments:
-	widget
+	widget (DOM)
 		the DOM element to change
 
-	funct
+	funct (function)
 		the function to connect the click event to
 */
 function setClickAction(widget, funct){
@@ -616,10 +667,10 @@ Sets the double click action for an element. Essentially connects the ondblclick
 for whatever object you pass it.
 
 Arguments:
-	widget
+	widget (DOM)
 		the DOM element to change
 
-	funct
+	funct (function)
 		the function to connect the click event to
 */
 function setDblClickAction(widget, funct){

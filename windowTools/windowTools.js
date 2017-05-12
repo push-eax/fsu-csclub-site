@@ -166,6 +166,8 @@ function changeWindowSize(currentwindow, increasex, increasey){
 function maximize(window){
 	//Window boundaries
 	var winbounds    = window.toplevel.getBoundingClientRect();
+	//Window body boundaries
+	var winbodbounds = window.body.getBoundingClientRect();
 	//Screen boundaries
 	var scbounds     = document.body.getBoundingClientRect();
 	//panel boundaries
@@ -176,7 +178,7 @@ function maximize(window){
 	var sctop        = scbounds.top;
 	var pantop       = panbounds.top;
 	var scheight     = pantop - sctop;
-	var winheight    = winbounds.bottom-winbounds.top;
+	var winheight    = winbodbounds.bottom-winbounds.top;
 	//Start saving the initial values
 	window.maxtop    = winbounds.top;
 	window.maxright  = winbounds.right;
