@@ -65,11 +65,3 @@ function clickItal(button, composer){
 function clickUdln(button, composer){
 	document.execCommand('underline', false, null);
 }
-
-function post(path, params) {
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'blogger.php');
-        var blog = new FormData();
-        blog.append('body', params.textContent);
-	xhr.send(blog);
-}
