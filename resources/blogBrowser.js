@@ -29,17 +29,18 @@ function viewBlog(blogid){
 	xhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
 			var blog =  JSON.parse(this.responseText);
-			makeViewWindow(blog.title, blog.body);
+			makeViewWindow(blog.title, blog.author, blog.date, blog.body);
 		}
 	};
 	//makeViewWindow(blog[3], blog[4]);
 }
 
-function makeViewWindow(title, body){
+function makeViewWindow(title, author, date, body){
 	var view_window = addWindow(title, 500);
 	var wsp = makeWidgetSpace();
 	setWidgetSpace(view_window, wsp);
 	var titleLabel = makeLabel(wsp, "<h2>"+title+"</h2>");
+	var authorLabel = makeLabel(wsp, "<h3>"+author+"</h3>"+date);
 	var bodySection = makeSection(wsp);
 	setWidgetText(bodySection, body);
 }
