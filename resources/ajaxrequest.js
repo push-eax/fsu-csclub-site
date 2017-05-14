@@ -7,11 +7,13 @@ function getBlogList(){
 
 function getBlogById(idnum){
 	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "backend.php?request=getblog//"+idnum, true);
+	xhttp.send();
 	xhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
-			return JSON.parse(this.responseText);
+			return this.responseText;
 		}
 	};
-	xhttp.open("GET", "backend.php?request=getblog//"+idnum, false);
-	xhttp.send();
 }
+
+
