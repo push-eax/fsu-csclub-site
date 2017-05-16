@@ -7,6 +7,8 @@ CONTENTS ///////////////////////////////////////////////////////////////////////
  - WindowTools
    - Usage steps
    - Further Notes
+ - WidgetTools
+   - Usage steps
  
 
 WindowTools //////////////////////////////////////////////////////////////////////////////
@@ -17,7 +19,7 @@ the entire site interface. While it is the BASE TOOLKIT, it is not the end-all-b
 all global settings. The wallpaper, for example, is a body CSS-defined background-image,
 and while it may in fact be tied to WindowTools, that kind of thing is not a guarantee.
 
-Usage Steps -----------------------------------------------------------------------------
+Usage Steps ------------------------------------------------------------------------------
 
 1. Create a window object. This involves makeWindow() in one form or another. The data you
    need is the window title, and the width. See the API reference for more details on this
@@ -27,6 +29,8 @@ Usage Steps --------------------------------------------------------------------
    independent of any widget toolkit, in the case of the fsu-csclub-site it is a tool
    which is universally used. Continuing to do so means a consistent feel for users of the
    site.
+   
+   The alternative is to write HTML to go into the window. Put that in a string.
 
 3. Set the window contents. Generally, this involves either setWidgetSpace() and then
    handing off population of the window to widgetTools, or setWindowContents() with an
@@ -56,3 +60,27 @@ should be aware of:
 
 Please read the comments above each function before use. It is important that you
 understand what these functions do properly, and what they require to run.
+
+
+WidgetTools //////////////////////////////////////////////////////////////////////////////
+
+WidgetTools is designed to make JS page building quick, provided a small space. It is not
+reliant on WindowTools, and can act as its own unit.
+
+That said, many of the components now in WidgetTools were originally in an older toolkit
+also named widgetTools, which eventually became windowTools. The split happened mostly
+because windowTools needed its own space to mature, and it was becoming far too large a
+file to be easily worked on. If, for some reason, you have the inclination to find the old
+widgetTools, please run back to November 2016 in GitHub in order to find the original file
+
+Useage Steps -----------------------------------------------------------------------------
+
+1. Create a container for the widgets to sit in. This could be a div, a table data, or any
+   other HTML space.
+
+2. Create a widget space. This is the toplevel div that the toolkit will use as a parent
+   to all widgetTools content.
+
+3. Start creating child objects. This involves passing the widgetSpace as the first
+   argument in a list. Once this is done, the element will add itself to that widgetSpace
+   in the order determined by the HTML rendering engine.
