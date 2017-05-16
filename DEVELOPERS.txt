@@ -1,0 +1,58 @@
+DEVELOPERS.TXT
+a general thought process document, designed to help fellow developers follow API logic
+and more effectively make use of the tools in the site. Note that lines end at 90
+characters, if your line length goes over that you should \n.
+
+CONTENTS /////////////////////////////////////////////////////////////////////////////////
+ - WindowTools
+   - Usage steps
+   - Further Notes
+ 
+
+WindowTools //////////////////////////////////////////////////////////////////////////////
+
+WindowTools is designed to make creating and updating windows easy. It contains code for
+everything from window creation, to the panel, to the menu, and anything that is global to
+the entire site interface. While it is the BASE TOOLKIT, it is not the end-all-be-all of
+all global settings. The wallpaper, for example, is a body CSS-defined background-image,
+and while it may in fact be tied to WindowTools, that kind of thing is not a guarantee.
+
+Usage Steps -----------------------------------------------------------------------------
+
+1. Create a window object. This involves makeWindow() in one form or another. The data you
+   need is the window title, and the width. See the API reference for more details on this
+   step.
+
+2. Create a widget space object. While this is not required, and windowTools operates
+   independent of any widget toolkit, in the case of the fsu-csclub-site it is a tool
+   which is universally used. Continuing to do so means a consistent feel for users of the
+   site.
+
+3. Set the window contents. Generally, this involves either setWidgetSpace() and then
+   handing off population of the window to widgetTools, or setWindowContents() with an
+   HTML string. It is important that one or the other of these functions be used for this
+   purpose, as other operations may overwrite the resize code at the end of the window.
+   
+   CAUTION: if you use a custom HTML string, make sure that ALL of your tags are CLOSED.
+   Open tags can cause serious rendering issues with the entire site, not limited to just
+   your window.
+
+Further Notes ----------------------------------------------------------------------------
+
+Once a window has been created, it can be manipulated in a variety of ways through JS.
+Keep in mind, however, that most of these functions require a window object, and are meant
+to be triggered by user actions. This being said, there are some useful features you
+should be aware of:
+
+ - lowerAll() unfocuses everything.
+ - raiseWindow(window) raises the specified window to the foreground
+ - closeWindow(window) closes the specified window
+ - closeDialogWindow(window) does the same, but for dialogs instead of windows
+ - addDialogWindow() creates a dialog, meant for small bits of warning text. see js.alert
+ - maximize(window) maximizes the window
+ - restore(window) unmaximizes the window
+ - minimize(window) minimizes the window
+ - restoreSize(window) unminimizes the window
+
+Please read the comments above each function before use. It is important that you
+understand what these functions do properly, and what they require to run.
