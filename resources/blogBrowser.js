@@ -15,11 +15,29 @@ function makeBrowserWindow(){
 				icon = makeIcon(browsersection, bloglist[i][1], "folder");
 				blogid = bloglist[i][0];
 				(function(_id){
-					icon.onmousedown =  function(){ viewBlog(_id); } ;
+					icon.onmousedown =  function(){ makePostBrowserWindow(_id); } ;
 				})(blogid);
 			}
 		}
 	};
+}
+
+function makePostBrowserWindow(id){
+	var toplevel = addWindow("Browse Blog Posts", 600);
+	var wspace = makeWidgetSpace();
+	setWidgetSpace(toplevel, wspace);
+	var tbar = makeToolbar(wspace);
+	var backbutton = makeButton(tbar, "tbutton", "Back");
+	var browsersection = makeSection(wspace);
+	var icon;
+	var blogid;
+	for(var i = 0; i<2; i++){
+		icon = makeIcon(browsersection, "Blog" + i, "folder");
+		blogid = i + 1;
+		(function(_id){
+			icon.onmousedown =  function(){ viewBlog(_id); } ;
+		})(blogid);
+	}
 }
 
 function viewBlog(blogid){
