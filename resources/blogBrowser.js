@@ -1,8 +1,9 @@
-
 function makeBrowserWindow(){
+	console.log("sending xhttp");
 	var blogxhttp = getBlogList();
 	blogxhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status==200){
+			console.log("Request good.");
 			bloglist = JSON.parse(this.responseText);
 			var toplevel = addWindow("Browse Blog Directory", 600);
 			var wspace = makeWidgetSpace();
@@ -10,13 +11,11 @@ function makeBrowserWindow(){
 			var tbar = makeToolbar(wspace);
 			var backbutton = makeButton(tbar, "tbutton", "Back");
 			var browsersection = makeSection(wspace);
-			var icon;
-			var blogid;
 			for(var i = 0; i<bloglist.length; i++){
-				icon = makeIcon(browsersection, bloglist[i][1], "folder");
-				blogid = bloglist[i][0];
+				var icon = makeIcon(browsersection, bloglist[i][1], "folder");
+				var blogid = bloglist[i][0];
 				(function(_id){
-					setDblClickAction(function(){ makePostBrowserWindow(_id); } );
+					setDblClickAction(icon, function(){makePostBrowserWindow(_id); } );
 				})(blogid);
 			}
 		}
@@ -24,6 +23,7 @@ function makeBrowserWindow(){
 }
 
 function makePostBrowserWindow(blogid){
+	console.log(blogid);
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("GET", "backend.php?request=getpost//" + blogid + "/*", true);
 	xhttp.send();
@@ -36,11 +36,9 @@ function makePostBrowserWindow(blogid){
 			var tbar = makeToolbar(wspace);
 			var backbutton = makeButton(tbar, "tbutton", "Back");
 			var browsersection = makeSection(wspace);
-			var icon;
-			var postid;
 			for(var i = 0; i<postdata.length; i++){
-				icon = makeIcon(browsersection, postdata[i][2], "folder");
-				postid = postdata[i][1];
+				var icon = makeIcon(browsersection, postdata[i][2], "folder");
+				var postid = postdata[i][1];
 				(function(_id){
 					setDblClickAction(icon, function(){ viewBlog(blogid, _id); } );
 				})(postid);
