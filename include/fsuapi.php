@@ -138,6 +138,14 @@ class FSUApi extends API {
 		fclose($body);
 		return $ret;
 	}
+
+	protected function makeblog($argv){
+		return "Ask an admin, stupid. Guru meditation: 444-" . $argv[0];
+	}
+
+	protected function makepost($argv){
+		return "We need an auth system first. Please do this manually or with the help of an admin for the moment. Guru meditation: 501-" . $argv[0];
+	}
     
      /**
      * modblog() deletes, creates, and updates blog posts.
