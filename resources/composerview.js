@@ -65,4 +65,3 @@ function clickItal(button, composer){
 function clickUdln(button, composer){
 	document.execCommand('underline', false, null);
 }
-
