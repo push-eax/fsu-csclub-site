@@ -98,7 +98,7 @@ class FSUApi extends API {
 		*/
 		$ret = [];
 		$ret["title"] = "You've been fooled, Son!";
-		$ret["body"] = "You thought you'd get a blog, instead you got snark!<br>Guru meditation: 508-*-*";
+		$ret["body"] = "You thought you'd get a blog, instead you got snark!<br>Guru meditation: 450-" . $argv[0] . "-*";
 		return $ret;
     }
 
