@@ -1,3 +1,4 @@
+
 function makeBrowserWindow(){
 	var blogxhttp = getBlogList();
 	blogxhttp.onreadystatechange = function(){
@@ -22,27 +23,35 @@ function makeBrowserWindow(){
 	};
 }
 
-function makePostBrowserWindow(id){
-	var toplevel = addWindow("Browse Blog Posts", 600);
-	var wspace = makeWidgetSpace();
-	setWidgetSpace(toplevel, wspace);
-	var tbar = makeToolbar(wspace);
-	var backbutton = makeButton(tbar, "tbutton", "Back");
-	var browsersection = makeSection(wspace);
-	var icon;
-	var blogid;
-	for(var i = 0; i<2; i++){
-		icon = makeIcon(browsersection, "Blog" + i, "folder");
-		blogid = i + 1;
-		(function(_id){
-			icon.onmousedown =  function(){ viewBlog(_id); } ;
-		})(blogid);
-	}
+function makePostBrowserWindow(blogid){
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "backend.php?request=getpost//" + blogid + "/*", true);
+	xhttp.send();
+	xhttp.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status == 200){
+			var postdata = JSON.parse(this.responseText);
+			var toplevel = addWindow("Browse Blog Posts", 600);
+			var wspace = makeWidgetSpace();
+			setWidgetSpace(toplevel, wspace);
+			var tbar = makeToolbar(wspace);
+			var backbutton = makeButton(tbar, "tbutton", "Back");
+			var browsersection = makeSection(wspace);
+			var icon;
+			var postid;
+			for(var i = 0; i<postdata.length; i++){
+				icon = makeIcon(browsersection, postdata[i][2], "folder");
+				postid = postdata[i][1];
+				(function(_id){
+					icon.onmousedown =  function(){ viewBlog(blogid, _id); } ;
+				})(postid);
+			}
+		}
+	};
 }
 
-function viewBlog(blogid){
+function viewBlog(blogid, postid){
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", "backend.php?request=getblog//"+blogid, true);
+	xhttp.open("GET", "backend.php?request=getpost//" + blogid + "/" + postid, true);
 	xhttp.send();
 	xhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
@@ -58,7 +67,7 @@ function makeViewWindow(title, author, date, body){
 	var wsp = makeWidgetSpace();
 	setWidgetSpace(view_window, wsp);
 	var titleLabel = makeLabel(wsp, "<h2>"+title+"</h2>");
-	var authorLabel = makeLabel(wsp, "<h3>"+author+"</h3>"+date);
+	var dateLabel = makeLabel(wsp, date);
 	var bodySection = makeSection(wsp);
 	setWidgetText(bodySection, body);
 }
