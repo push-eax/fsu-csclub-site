@@ -63,6 +63,13 @@ winminwidth
 ismobile
 	Forwards compat with pageTools, tells the site we are not working in a mobile
 	environment and therefore should execute wallpaper setting, etc.
+
+onfinished
+	A list of functions to start when the page finishes loading
+
+wintoolscolors
+	Colors that the script uses, for tasks like focus/unfocus and panel button management.
+	Used as a way to make porting windowTools easier.
 */
 var positiondownx;
 var positiondowny;
@@ -80,6 +87,7 @@ var minimizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.12
 var winminwidth = 160;
 var ismobile = false;
 var onfinished = [];
+var wintoolscolors = {lowerpanelcolor: "#daa00d", activepanelcolor: "#febe10", lowerwindowborder: 'black', minipanelcolor: 'grey'};
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -571,8 +579,8 @@ function lowerAll(){
 			if(windowregister[i].type == 'active'){
 				windowregister[i].toplevel.setAttribute("class", "window_disabled");
 				windowregister[i].toplevel.style.zIndex=2;
-				windowregister[i].toplevel.style.backgroundColor='black';
-				windowregister[i].panelButton.style.background='#daa00d';
+				windowregister[i].toplevel.style.backgroundColor=wintoolscolors.lowerwindowborder;
+				windowregister[i].panelButton.style.background=wintoolscolors.lowerpanelcolor;
 				windowregister[i].type='inactive';
 			}
 		}
@@ -594,7 +602,7 @@ function raiseWindow(window){
 	window.toplevel.setAttribute("class", "window");
 	window.toplevel.style.zIndex=3;
 	window.type='active';
-	window.panelButton.style.background='linear-gradient(to top, #febe10, #daa00d)';
+	window.panelButton.style.background='linear-gradient(to top, '+wintoolscolors.activepanelcolor+', '+wintoolscolors.lowerpanelcolor+')';
 }
 
 /*
@@ -681,7 +689,7 @@ function minimize(window){
  	window.toplevel.style.width         = 200;
  	window.toplevel.style.opacity       = 0;
 	window.type                         = 'minimized'
-	window.panelButton.style.background = 'grey';
+	window.panelButton.style.background = wintoolscolors.minipanelcolor;
 }
 
 /*
@@ -727,6 +735,8 @@ Returns:
 		twice.
 */
 function addWindow(title,width){
+	//Our window is the only window we care about now
+	lowerAll();
 	//We define the toplevel element as newwindow
 	var newwindow = document.createElement("div");
 	//set its class to window

@@ -69,7 +69,7 @@ class FSUApi extends API {
     protected function getblog($args) {
         // Query the database
         // TODO: fix SQLi vulnerability
-        
+        /*
         if ($args[0] == "*") {
             $res = $this->db->query("SELECT * FROM blog");
             $ret = $res->fetch_all();
@@ -95,7 +95,49 @@ class FSUApi extends API {
 
             return $ret;
         }
+		*/
+		$ret = [];
+		$ret["title"] = "You've been fooled, Son!";
+		$ret["body"] = "You thought you'd get a blog, instead you got snark!<br>Guru meditation: 508-*-*";
+		return $ret;
     }
+
+	/**
+	  getpost() retrieves a post given a blog id and a post id and returns the post encoded as JSON.
+
+	  Note: arguments are strict. Argument 1 is the blog id, argument 2 is the post id.
+
+	  With argument "*" it will do truely evil things, like return multiple posts to one window
+	  */
+	protected function getpost($argv){
+		//this function relies on more exact data than the others, bear in mind when using.
+		if ($argv[0] == "*"){
+			$ret["title"] = "ERROR! ERROR! ERROR!";
+			$ret["body"] = "Invalid blog id! Some programmer probably thought they could get cheap.<br>Guru meditation: 500-*-*";
+			return $ret;
+		}
+		if ($argv[1] == "*"){
+			$res = $this->db->query("select * from posts where blogid = " . $argv[0]);
+			$ret = $res->fetch_all();
+
+			foreach($ret as &$arr){
+				$bodypath = "blog/" . $arr["blogid"] . "/" . $arr["postid"] . ".post.txt";
+				$body = fopen($bodypath, "r");
+				$arr["body"] = fread($body, filesize($bodypath));
+			}
+			return $ret;
+		}
+		$res = $this->db->query("select * from posts where blogid = " . $argv[0] . " and postid = " . $argv[1]);
+		$ret = $res->fetch_array(MYSQLI_ASSOC);
+		$ret["body"] = "";
+		//Now to construct the body, we have the header information, but we need to parse the fs to
+		//get blog/post data.
+		$bodypath="blog/" . $ret["blogid"] . "/" . $ret["postid"] . ".post.txt";
+		$body = fopen($bodypath, "r");
+		$ret["body"] = fread($body, filesize($bodypath)) or $ret["body"] = "Internal error 404<br>Guru meditation: 404-" . $ret["blogid"] . "-" . $ret["postid"];
+		fclose($body);
+		return $ret;
+	}
     
      /**
      * modblog() deletes, creates, and updates blog posts.
