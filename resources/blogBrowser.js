@@ -16,7 +16,7 @@ function makeBrowserWindow(){
 				icon = makeIcon(browsersection, bloglist[i][1], "folder");
 				blogid = bloglist[i][0];
 				(function(_id){
-					icon.onmousedown =  function(){ makePostBrowserWindow(_id); } ;
+					setDblClickAction(function(){ makePostBrowserWindow(_id); } );
 				})(blogid);
 			}
 		}
@@ -42,7 +42,7 @@ function makePostBrowserWindow(blogid){
 				icon = makeIcon(browsersection, postdata[i][2], "folder");
 				postid = postdata[i][1];
 				(function(_id){
-					icon.onmousedown =  function(){ viewBlog(blogid, _id); } ;
+					setDblClickAction(icon, function(){ viewBlog(blogid, _id); } );
 				})(postid);
 			}
 		}
