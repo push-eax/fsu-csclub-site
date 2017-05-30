@@ -69,7 +69,7 @@ class FSUApi extends API {
     protected function getblog($args) {
         // Query the database
         // TODO: fix SQLi vulnerability
-        
+        /*
         if ($args[0] == "*") {
             $res = $this->db->query("SELECT * FROM blog");
             $ret = $res->fetch_all();
@@ -95,6 +95,11 @@ class FSUApi extends API {
 
             return $ret;
         }
+		*/
+		$ret = [];
+		$ret["title"] = "You've been fooled, Son!";
+		$ret["body"] = "You thought you'd get a blog, instead you got snark!<br>Guru meditation: 508-*-*";
+		return $ret;
     }
 
 	/**
@@ -113,7 +118,7 @@ class FSUApi extends API {
 		}
 		if ($argv[1] == "*"){
 			$res = $this->db->query("select * from posts where blogid = " . $argv[0]);
-			$ret = res->fetch_all();
+			$ret = $res->fetch_all();
 
 			foreach($ret as &$arr){
 				$bodypath = "blog/" . $arr["blogid"] . "/" . $arr["postid"] . ".post.txt";
