@@ -6,3 +6,4 @@ microblogs/*
 nbproject/*
 *.swp
 *.swo
+*.pyc
