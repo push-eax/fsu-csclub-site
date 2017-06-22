@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import hashlib
 import mysql.connector
-
+import random;
+import time;
 
 """
 AUTHENTICATION SCRIPT. WRITTEN MAY-JULY '17 CANNONCONTRAPTION ET. AL.
@@ -61,6 +62,8 @@ registered -- registration time, int
 #TODO: homestuck references aside, this needs to query the database for the salt.
 salt = "MmMmM! SoOoO SaLtY! HoNk"
 
+randgen = random.SystemRandom();
+
 connection = None;
 cursor = None;
 
@@ -103,12 +106,12 @@ def check_password(passstring, user):
     hlib.update(password);
     passhash = hlib.digest();
     #print(passhash+" is the pass hash.") #Uncomment only when debugging.
-    dbquery = "select pass from auth where user = %s";
+    dbquery = "select pass,uid from auth where user = %s";
     initconnect();
     cursor.execute(dbquery, user); #protects against SQL injection
-    for passwd in cursor:
+    for (passwd,uid) in cursor:
         if passwd == passhash:
-	    return get_auth_string();
+	    return get_auth_string(uid);
     return "ENOAUTH";
 
 """
@@ -121,5 +124,10 @@ Arguments:
 Returns:
 	A valid auth string.
 """
-def get_auth_string():
-    pass; #TODO: Implement random string store/expire in the database.
+def get_auth_string(userid):
+    part1 = randgen.random()*3000;
+    part2 = randgen.random()*8123673;
+    final = int(part1 + part2);
+    rquery = "insert into randomstring(rstring, uid, lasthit, registered) values(%s, %s, %s, %s)";
+    cursor.execute(rquery, final, userid, int(time.time()), int(time.time()));
+    return str(final);
