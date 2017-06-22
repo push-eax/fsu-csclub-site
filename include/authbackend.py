@@ -75,7 +75,7 @@ returns 1 on existing connection.
 def initconnect():
     if connection != None and cursor != None:
         return 1;
-    connection = mysql.connector.connect(user="fsuauth", database="fsucs-authtables", pass="imdonew/this")
+    connection = mysql.connector.connect(user="fsuauth", database="fsucs-authtables", pass="dtapass1")
     cursor = connection.cursor();
     return 0;
 
