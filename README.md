@@ -18,6 +18,8 @@ Implemented features include:
 - window move opacity
 - window resize with opacity
 - minimize/restore animations, menu animations
+- window maximize/restore
+- basic touch events
 
 While this is not a complete feature set, it is most of the superficial ones which are easy to spot. Being as lightweight as it is, it executes very fast, even on older hardware.
 
@@ -32,3 +34,5 @@ On a more internal level, the widget toolkit operates in the following way:
 - Windows are NOT DOM nodes, but in fact they are their own object, containing all the elements the program needs to work with.
 - These objects are manipulated using functions that are built in and designed to allow some purpose-built HTML code to be a part of a window.
 - Each window initilizes itself with a single command (addWindow(title, width)) which returns such a window object.
+
+<a href="https://binbashworks.blogspot.com/2017/02/web-programming-desktop-with-javascript.html">Post on CannonContraption's Blag about Creating the site</a>
