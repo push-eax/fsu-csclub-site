@@ -120,7 +120,7 @@ get_auth_string()
 Gets an auth string for temporary signed-in access.
 
 Arguments:
-	None.
+	User's ID
 Returns:
 	A valid auth string.
 """
@@ -131,3 +131,24 @@ def get_auth_string(userid):
     rquery = "insert into randomstring(rstring, uid, lasthit, registered) values(%s, %s, %s, %s)";
     cursor.execute(rquery, final, userid, int(time.time()), int(time.time()));
     return str(final);
+
+"""
+check_auth_string()
+
+Checks the auth string for validity
+
+Arguments:
+	User's ID
+
+Returns:
+	Result of auth check
+"""
+def check_auth_string(uid, randstr):
+    #For now, assuming that we're dealing with 1 hour timeout.
+    deadline = time.time()-3600; #1h*60m*60s = 3600 seconds
+    checkquery = "select rstring,uid,lasthit,registered from randomstring where rstring = %s and uid = %s"
+    cursor.execute(checkquery, randstr, uid);
+    for(rstring, uid, lasthit, registered) in cursor:
+        if(rstring >= deadline):
+            return true;
+    return false;
