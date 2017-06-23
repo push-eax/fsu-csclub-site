@@ -192,9 +192,11 @@ def check_auth_string(uid, randstr):
     checkquery = "select rstring,uid,lasthit from randomstring where rstring = %s and uid = %s"
     initconnect()
     cursor.execute(checkquery, (randstr, uid));
-    for(rstring, uid, lasthit) in cursor:
-        print(deadline)
-        print(lasthit)
+    results = cursor.fetchall();
+    for(rstring, uid, lasthit) in results:
         if(int(lasthit) >= int(deadline)):
+            updatequery = "update randomstring set lasthit = %(time)s where uid = %(usid)s"
+            cursor.execute(updatequery, {'time':int(time.time()),'usid':uid});
+            connection.commit();
             return True;
     return False;
