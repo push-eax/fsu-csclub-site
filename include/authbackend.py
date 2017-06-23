@@ -176,9 +176,12 @@ Returns:
 def check_auth_string(uid, randstr):
     #For now, assuming that we're dealing with 1 hour timeout.
     deadline = time.time()-3600; #1h*60m*60s = 3600 seconds
-    checkquery = "select rstring,uid,lasthit,registered from randomstring where rstring = %s and uid = %s"
-    cursor.execute(checkquery, randstr, uid);
-    for(rstring, uid, lasthit, registered) in cursor:
-        if(rstring >= deadline):
-            return true;
-    return false;
+    checkquery = "select rstring,uid,lasthit from randomstring where rstring = %s and uid = %s"
+    initconnect()
+    cursor.execute(checkquery, (randstr, uid));
+    for(rstring, uid, lasthit) in cursor:
+        print(deadline)
+        print(lasthit)
+        if(int(lasthit) >= int(deadline)):
+            return True;
+    return False;
