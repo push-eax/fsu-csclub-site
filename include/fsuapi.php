@@ -159,4 +159,18 @@ class FSUApi extends API {
         
         return $args;
     }
+
+	/**
+	  getAuthId() gets a randomly generated auth id from the server
+	  in order to run a login session. It launches the password checking
+	  system which then sends an id if OK or "NOLOGIN" if failed.
+	*/
+	protected function getAuthId($args){
+		/*
+		   getAuthId needs to query another process with the password hashed from the client. It then should
+		   get a random ID. the random id will be stored in the database separate, so that it can act as a
+		   temporary login token. These tokens should last about 15 minutes before they die.
+		*/
+	}
+
 }

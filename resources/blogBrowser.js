@@ -1,9 +1,7 @@
 function makeBrowserWindow(){
-	console.log("sending xhttp");
 	var blogxhttp = getBlogList();
 	blogxhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status==200){
-			console.log("Request good.");
 			bloglist = JSON.parse(this.responseText);
 			var toplevel = addWindow("Browse Blog Directory", 600);
 			var wspace = makeWidgetSpace();
@@ -23,7 +21,6 @@ function makeBrowserWindow(){
 }
 
 function makePostBrowserWindow(blogid){
-	console.log(blogid);
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("GET", "backend.php?request=getpost//" + blogid + "/*", true);
 	xhttp.send();
