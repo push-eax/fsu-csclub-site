@@ -19,7 +19,7 @@ class FSUApi extends API {
         // Database auth information
         $DB_HOST = 'localhost';
         $DB_USER = 'fsucs';
-        $DB_PASS = 'computer_science';
+        $DB_PASS = 'computer_1_science';
         $DB_NAME = 'fsucs';
 
         // Initialize database object
