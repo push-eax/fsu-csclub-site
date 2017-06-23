@@ -84,9 +84,11 @@ connection globals. Sets them if not already done. No args/returns 0 on success
 returns 1 on existing connection.
 """
 def initconnect():
+    global connection;
+    global cursor;
     if connection != None and cursor != None:
         return 1;
-    connection = mysql.connector.connect(user="fsuauth", database="fsucs-authtables", pass="dtapass1")
+    connection = mysql.connector.connect(user="fsuauth", database="fsucs_authtables", password="dtapass1")
     cursor = connection.cursor();
     if connection == None:
         return 2;
@@ -113,30 +115,32 @@ check_password()
 Checks the password for the given user against the password database by hashing
 
 Arguments:
-	passstring (string)
-		The password as sent from the client
-	user (string)
-		the username to check against
+    passstring (string)
+        The password as sent from the client
+    user (string)
+        the username to check against
 
 Returns:
-	Fail:
-		"ENOAUTH"
-	Success:
-		A random string which the client can use as an auth id for fifteen
-		minutes, or however long the check command makes it last.
+    Fail:
+        "ENOAUTH"
+    Success:
+        A random string which the client can use as an auth id for fifteen
+        minutes, or however long the check command makes it last.
 """
-def check_password(passstring, user):
+def check_password(passstring, usern):
+    global connection;
+    global cursor;
     hlib = hashlib.sha512();
     password = salt + passstring;
-    hlib.update(password);
-    passhash = hlib.digest();
+    hlib.update(password.encode("utf-8"));
+    passhash = hlib.hexdigest();
     #print(passhash+" is the pass hash.") #Uncomment only when debugging.
-    dbquery = "select pass,uid from auth where user = %s";
+    dbquery = "select pass,uid from users where uname = %(name)s";
     initconnect();
-    cursor.execute(dbquery, user); #protects against SQL injection
+    cursor.execute(dbquery, { 'name' : usern}); #protects against SQL injection
     for (passwd,uid) in cursor:
         if passwd == passhash:
-	    return get_auth_string(uid);
+            return get_auth_string(uid);
     return "ENOAUTH";
 
 """
@@ -145,16 +149,17 @@ get_auth_string()
 Gets an auth string for temporary signed-in access.
 
 Arguments:
-	User's ID
+    User's ID
 Returns:
-	A valid auth string.
+    A valid auth string.
 """
 def get_auth_string(userid):
     part1 = randgen.random()*3000;
     part2 = randgen.random()*8123673;
     final = int(part1 + part2);
     rquery = "insert into randomstring(rstring, uid, lasthit, registered) values(%s, %s, %s, %s)";
-    cursor.execute(rquery, final, userid, int(time.time()), int(time.time()));
+    cursor.execute(rquery, (final, userid, int(time.time()), int(time.time())));
+    connection.commit();
     return str(final);
 
 """
@@ -163,10 +168,10 @@ check_auth_string()
 Checks the auth string for validity
 
 Arguments:
-	User's ID
+    User's ID
 
 Returns:
-	Result of auth check
+    Result of auth check
 """
 def check_auth_string(uid, randstr):
     #For now, assuming that we're dealing with 1 hour timeout.
