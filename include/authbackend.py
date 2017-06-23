@@ -42,6 +42,15 @@ permissions -- User permissions, int
     same thing. It also does not violate any database practices, since the permissions
     level is what is being stored. Storing this as a mode should be no less proper
     than as a bunch of booleans, despite data lumping.
+    
+    1 = can create/delete users
+    2 = can set blog owners
+    4 = can set blog perms
+    8 = can create/delete blogs
+    16= can grant/revoke special user permissions
+    
+    Unless someone adds a permission above and doesn't change this comment, 31 is the
+    value for admin, basically granting superuser permissions.
 
 RANDOMSTRING TABLE
 rstring -- Random string, varchar(200) primary key not null
@@ -67,7 +76,6 @@ randgen = random.SystemRandom();
 connection = None;
 cursor = None;
 
-
 """
 initconnect()
 
@@ -80,7 +88,24 @@ def initconnect():
         return 1;
     connection = mysql.connector.connect(user="fsuauth", database="fsucs-authtables", pass="dtapass1")
     cursor = connection.cursor();
+    if connection == None:
+        return 2;
+    if cursor == None:
+        return 3;
     return 0;
+
+"""
+set_permissions()
+
+Sets the user permissions assuming the provided user and password are correct.
+"""
+def set_permissions(user, password, user_to_mod, mode):
+    if(check_password(password, user) != "ENOAUTH"):
+        usermodquery = "update users set permissions = %s where uname = %s";
+        connection.query(usermodquery, mode, user_to_mod);
+        return "MODSET_COMPLETE"
+    else:
+        return "ENOPERMISSION"
 
 """
 check_password()
