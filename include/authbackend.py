@@ -3,6 +3,7 @@ import hashlib
 import mysql.connector
 import random;
 import time;
+from utilparser import *
 
 """
 AUTHENTICATION SCRIPT. WRITTEN MAY-JULY '17 CANNONCONTRAPTION ET. AL.
@@ -102,12 +103,23 @@ set_permissions()
 Sets the user permissions assuming the provided user and password are correct.
 """
 def set_permissions(user, password, user_to_mod, mode):
-    if(check_password(password, user) != "ENOAUTH"):
+    global cursor;
+    global connection;
+    if(check_password(password, user, randid=False) != "ENOAUTH"):
         usermodquery = "update users set permissions = %s where uname = %s";
-        connection.query(usermodquery, mode, user_to_mod);
-        return "MODSET_COMPLETE"
+        userauthquery = "select permissions from users where uname = %(name)s";
+        cursor.execute(userauthquery, { 'name' : user})
+        auth_good = False;
+        for (permissions) in cursor:
+            if parse_exists(int(permissions[0]), 16): auth_good = True;
+        if(auth_good):
+            cursor.execute(usermodquery, (mode, user_to_mod));
+            connection.commit();
+            return "MODSET_COMPLETE"
+        else:
+            return "ENOPERMISSION"
     else:
-        return "ENOPERMISSION"
+        return "ENOLOGIN"
 
 """
 check_password()
@@ -127,7 +139,7 @@ Returns:
         A random string which the client can use as an auth id for fifteen
         minutes, or however long the check command makes it last.
 """
-def check_password(passstring, usern):
+def check_password(passstring, usern, randid=True):
     global connection;
     global cursor;
     hlib = hashlib.sha512();
@@ -140,7 +152,8 @@ def check_password(passstring, usern):
     cursor.execute(dbquery, { 'name' : usern}); #protects against SQL injection
     for (passwd,uid) in cursor:
         if passwd == passhash:
-            return get_auth_string(uid);
+            if randid: return get_auth_string(uid);
+            else: return "SUCCESS"
     return "ENOAUTH";
 
 """

@@ -3,6 +3,6 @@ def parse_exists(compound, component):
     while i>0:
         if(compound - i >=0):
             compound-=i;
-            if(i == value) return True;
+            if(i == component): return True;
         i/=2;
     return False;
