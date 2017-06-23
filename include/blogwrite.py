@@ -11,6 +11,9 @@ with the blog/post information.
 """
 
 def send_blog_info(post_title, post_body, blog_name, rstring, uname):
+    uid = authbackend.get_uid_from_name(uname);
+    if(uid = "ENODBCONNECT"): return "ENOUNAMEDBCON";
+    
     pass; #TODO: Pass along the rstring to auth, then post title to database, body to disk if good
 
 def create_new_blog(blog_name, author_full_name):
