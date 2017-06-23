@@ -251,3 +251,25 @@ def check_auth_string(uid, randstr):
             return True;
     #But if there isn't a string, or it's expired, we let the eat kek.
     return False;
+
+"""
+get_uid_from_name()
+
+Gets the user's ID from the username.
+Just for convienience so we can be lazy and not repeatedly write SQL queries everywhere
+
+Arguments:
+    uname - the username to check
+
+Retruns: uid - the UID corresponding to the uname
+"""
+def get_uid_from_name(uname):
+    query = "select uid from users where uname = %(name)s";
+    istatus = initconnect();
+    if(istatus > 1):
+        return "ENODBCONNECT";
+    cursor.execute(query, {'name':uname});
+    ruid = None;
+    for (uid) in cursor:
+        ruid = uid;
+    return ruid;
