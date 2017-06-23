@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import mysql.connector;
 import authbackend;
 
 """
@@ -8,15 +7,30 @@ This CGI script will then be AJAX-requested by the frontend. From there, the
 user sends auth details to the backend. The composer opens, allowing for edits.
 When the user finishes, this script kicks in and populates the folder structure
 with the blog/post information.
+
+Please note any to-do comments in the function, as they need to be fixed before
+this function can be called "complete"
 """
 
-def send_blog_info(post_title, post_body, blog_name, rstring, uname):
+def set_blog_info(post_id, post_title, post_body, blog_id, rstring, uname):
     uid = authbackend.get_uid_from_name(uname);
-    if(uid = "ENODBCONNECT"): return "ENOUNAMEDBCON";
-    
+    if(uid == "ENODBCONNECT"): return "ENOUNAMEDBCON";
+    if(uid == None): return "ENOUSER";
+    acheck = check_auth_string(uid, rstring);
+    if(acheck == False): return "ENOAUTH";
+    pcheck = get_permission(uid, 4);
+    if(pcheck == "DENIED"): return "DENIED";
+    if(pcheck != "GRANTED"): return "EPERMCHECKFAIL";
+    query = "update posts set title = %(title)s where blogid = %(blogid) and postid = %(postid)s"
+    authbackend.cursor.execute(query, {'title':post_title, 'blogid':blog_id, 'postid':post_id})
+    authbackend.connection.commit();
+    #TODO: Update the post body
     pass; #TODO: Pass along the rstring to auth, then post title to database, body to disk if good
 
-def create_new_blog(blog_name, author_full_name):
+def create_new_blog(blog_name, author_full_name, uname, rstring):
+    uid = authbackend.get_uid_from_name(uname);
+    if(uid == "ENODBCONNECT"): return "ENOUNAMEDBCON";
+    if(uid == None): return "ENOUSER";
     pass; #TODO: Allow certain users to create blogs for others
 
 def set_blog_owner(blog_name, user_name):
