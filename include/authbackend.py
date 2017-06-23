@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
+#used for sha-256 hashing
 import hashlib
+#Used for connecting to MySQL
 import mysql.connector
+#Used for creating random auth strings
 import random;
+#used for updating the timestamp on those random auth strings
 import time;
+#used for parsing mode variables and extracting individual booleans from them
 from utilparser import *
 
 """
@@ -85,12 +90,17 @@ connection globals. Sets them if not already done. No args/returns 0 on success
 returns 1 on existing connection.
 """
 def initconnect():
+    #The global keyword means we are editing global vars instead of making local ones
     global connection;
     global cursor;
+    #Don't do anything if we have init'ed already
     if connection != None and cursor != None:
         return 1;
+    #and open our connection if we haven't.
     connection = mysql.connector.connect(user="fsuauth", database="fsucs_authtables", password="dtapass1")
+    #Create a cursor...
     cursor = connection.cursor();
+    #and then check our work. Return as appropriate.
     if connection == None:
         return 2;
     if cursor == None:
@@ -105,20 +115,32 @@ Sets the user permissions assuming the provided user and password are correct.
 def set_permissions(user, password, user_to_mod, mode):
     global cursor;
     global connection;
+    #Check to make sure the user authenticating here exists and typed the
+    #correct password
     if(check_password(password, user, randid=False) != "ENOAUTH"):
+        #set up the two sql queries requred to handle permissions in this context
         usermodquery = "update users set permissions = %s where uname = %s";
         userauthquery = "select permissions from users where uname = %(name)s";
+        #then double-check that the logged in user has the permissions to do this
         cursor.execute(userauthquery, { 'name' : user})
+        #use this to check that we got a positive match
         auth_good = False;
         for (permissions) in cursor:
+            #use parse_exists from utilparser.py to check for mode 16
+            #set auth_good if that person has permission 16
             if parse_exists(int(permissions[0]), 16): auth_good = True;
         if(auth_good):
+            #If we got the permissions, then run the change permissions query and
+            #commit it to the database.
             cursor.execute(usermodquery, (mode, user_to_mod));
             connection.commit();
             return "MODSET_COMPLETE"
         else:
+            #If you see this, you're a bad person who should check their permissions
+            #before running a privildiged script.
             return "ENOPERMISSION"
     else:
+        #Derieved from gnu.org/fun ENOHORSE
         return "ENOLOGIN"
 
 """
@@ -142,18 +164,37 @@ Returns:
 def check_password(passstring, usern, randid=True):
     global connection;
     global cursor;
+    #Our password db uses sha512 for hashing. Change at your own peril. Or just before
+    #any accounts are set up, either way.
     hlib = hashlib.sha512();
+    #Grab our salt and add it to the password string. Nothing fancy.
     password = salt + passstring;
+    #Update the hlib object with the byte string to hash. This requires sending encoded
+    #UTF-8 bytes instead of a plain Python string.
     hlib.update(password.encode("utf-8"));
+    #Then get the hexidecimal digest, to be stored in the DB and compared against.
     passhash = hlib.hexdigest();
-    #print(passhash+" is the pass hash.") #Uncomment only when debugging.
+    #Create our database query, so we can actually check against a real users table.
     dbquery = "select pass,uid from users where uname = %(name)s";
-    initconnect();
+    #Make sure we have a connection to the MySQL database
+    initresult = initconnect();
+    #Check to make sure that connection worked...
+    if(initresult != 0 and initresult != 1):
+        return 'ENOCONNECTION';
+    #If we got a good connection, then execute the SQL. This uses the SQL replace function
+    #This means that MySQL will escape anything that could allow for a SQL injection attack,
+    #and also it means that the db query requires no crappy string concat black magic
     cursor.execute(dbquery, { 'name' : usern}); #protects against SQL injection
+    #Runs through the results
     for (passwd,uid) in cursor:
+        #Checks the hashed password, returns according to the randid variable from the function call
         if passwd == passhash:
             if randid: return get_auth_string(uid);
             else: return "SUCCESS"
+    #Anyone with this error code is assumed to be a black ops agent, and so they immediately
+    #get an informative error message saying their secret service ID is down for maintenence.
+    #Either that or the user just entered a wrong password, but these comments don't explore
+    #that possibility.
     return "ENOAUTH";
 
 """
@@ -167,12 +208,16 @@ Returns:
     A valid auth string.
 """
 def get_auth_string(userid):
-    part1 = randgen.random()*3000;
+    #Creates a two-part random number
+    part1 = randgen.random()*300000000;
     part2 = randgen.random()*8123673;
-    final = int(part1 + part2);
+    #Then we convert to binary, concatinate, and turn it into a string. Not a hack at all!
+    final = str((str(part1).encode("ascii", "ignore") + str(part2).encode("utf-8")));
+    #We then insert that into the database
     rquery = "insert into randomstring(rstring, uid, lasthit, registered) values(%s, %s, %s, %s)";
     cursor.execute(rquery, (final, userid, int(time.time()), int(time.time())));
     connection.commit();
+    #and return the hacky string.
     return str(final);
 
 """
@@ -188,15 +233,21 @@ Returns:
 """
 def check_auth_string(uid, randstr):
     #For now, assuming that we're dealing with 1 hour timeout.
+    #We create a deadline, past which timestamps expire
     deadline = time.time()-3600; #1h*60m*60s = 3600 seconds
+    #then we query for the random string
     checkquery = "select rstring,uid,lasthit from randomstring where rstring = %s and uid = %s"
     initconnect()
     cursor.execute(checkquery, (randstr, uid));
     results = cursor.fetchall();
     for(rstring, uid, lasthit) in results:
+        #If the timestamp isn't too old, we reset the deadline counter on the
+        #random string by setting its last hit time to now, instead of whenever it was
+        #hit before now.
         if(int(lasthit) >= int(deadline)):
             updatequery = "update randomstring set lasthit = %(time)s where uid = %(usid)s"
             cursor.execute(updatequery, {'time':int(time.time()),'usid':uid});
             connection.commit();
             return True;
+    #But if there isn't a string, or it's expired, we let the eat kek.
     return False;
