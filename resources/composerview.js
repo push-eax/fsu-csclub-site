@@ -1,9 +1,11 @@
-function addComposerWindow_nauth(){
-	var cpsrwin = addWindow("Composer: Authentication Required", 480);
+function login(){
+	var cpsrwin = addWindow("User Login", 480);
 	var widgets = makeWidgetSpace();
 	var toolbar = makeToolbar(widgets);
 	var message = "Please enter your username and password:";
 	var messagl = makeLabel(widgets, message);
+	var descrbx = makeSection(widgets);
+	var descrlb = makeLabel(descrbx, "Members of the CS Club who have requested a login can use this function to gain access to their blog(s), and other features of the site. Note that this is for members only, and public accounts are not available at this point in time.");
 	var loginbx = makeSection(widgets);
 	var userlbl = makeLabel(loginbx, "<b>Username:</b> ");
 	var userbox = makeInput(loginbx, "text", "jonsmith", "user");
