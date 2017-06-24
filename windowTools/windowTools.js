@@ -189,7 +189,7 @@ function maximize(window){
 	var sctop        = scbounds.top;
 	var pantop       = panbounds.top;
 	var scheight     = pantop - sctop;
-	var winheight    = winbodbounds.bottom-winbounds.top;
+	var winheight    = winbodbounds.bottom-winbodbounds.top;
 	//Start saving the initial values
 	window.maxtop    = winbounds.top;
 	window.maxright  = winbounds.right;
