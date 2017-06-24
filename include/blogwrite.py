@@ -12,6 +12,22 @@ Please note any to-do comments in the function, as they need to be fixed before
 this function can be called "complete"
 """
 
+"""
+set_blog_info()
+
+Updates an existing blog post with new title and body information.
+The date and author fields are static.
+
+Arguments:
+    post_id - the blog post id. How the post is identified.
+    post_title - the NEW post title, will replace whatever was there before
+    post_body - the NEW post body, will replace whatever was there before.
+                This should also create a backup of the old one in case of
+                trolling.
+    blog_id - the blog id. How the blog is identified.
+    rstring - the authentication random string. Needed to prove login.
+    uname - the username the rstring belongs to.
+"""
 def set_blog_info(post_id, post_title, post_body, blog_id, rstring, uname):
     uid = authbackend.get_uid_from_name(uname);
     if(uid == "ENODBCONNECT"): return "ENOUNAMEDBCON";
@@ -25,7 +41,7 @@ def set_blog_info(post_id, post_title, post_body, blog_id, rstring, uname):
     authbackend.cursor.execute(query, {'title':post_title, 'blogid':blog_id, 'postid':post_id})
     authbackend.connection.commit();
     #TODO: Update the post body
-    pass; #TODO: Pass along the rstring to auth, then post title to database, body to disk if good
+    return "SUCCESS";
 
 def create_new_blog(blog_name, author_full_name, uname, rstring):
     uid = authbackend.get_uid_from_name(uname);
