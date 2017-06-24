@@ -40,7 +40,15 @@ def set_blog_info(post_id, post_title, post_body, blog_id, rstring, uname):
     query = "update posts set title = %(title)s where blogid = %(blogid) and postid = %(postid)s"
     authbackend.cursor.execute(query, {'title':post_title, 'blogid':blog_id, 'postid':post_id})
     authbackend.connection.commit();
-    #TODO: Update the post body
+    blogfile = open("blog/"+str(blogid)+"/"+str(postid), "r");
+    backupfile = open("blog/"+str(blogid)+"/"+str(postid)+"~", "w");
+    for line in blogfile:
+        backupfile.write(line+"\n")
+    blogfile.close();
+    backupfile.close();
+    blogfile = open("blog/"+str(blogid)+"/"+str(postid), "w");
+    blogfile.write(post_body);
+    blogfile.close();
     return "SUCCESS";
 
 def create_new_blog(blog_name, author_full_name, uname, rstring):

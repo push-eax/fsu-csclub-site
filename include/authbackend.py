@@ -112,12 +112,12 @@ set_permissions()
 
 Sets the user permissions assuming the provided user and password are correct.
 """
-def set_permissions(user, password, user_to_mod, mode):
+def set_permissions(user, rstring, user_to_mod, mode):
     global cursor;
     global connection;
     #Check to make sure the user authenticating here exists and typed the
     #correct password
-    if(check_password(password, user, randid=False) != "ENOAUTH"):
+    if(check_auth_string(get_uid_from_name(user), rstring) != "ENOAUTH"):
         #set up the two sql queries requred to handle permissions in this context
         usermodquery = "update users set permissions = %s where uname = %s";
         userauthquery = "select permissions from users where uname = %(name)s";
@@ -236,7 +236,7 @@ def check_auth_string(uid, randstr):
     #We create a deadline, past which timestamps expire
     deadline = time.time()-3600; #1h*60m*60s = 3600 seconds
     #then we query for the random string
-    checkquery = "select rstring,uid,lasthit from randomstring where rstring = %s and uid = %s"
+    checkquery = "select rstring,uid,lasthit from randomstring where revoked = false and rstring = %s and uid = %s"
     initconnect()
     cursor.execute(checkquery, (randstr, uid));
     results = cursor.fetchall();
@@ -273,3 +273,31 @@ def get_uid_from_name(uname):
     for (uid) in cursor:
         ruid = uid;
     return ruid;
+
+"""
+get_permission()
+
+Returns whether the specified user has permission to complete a task. This could be something
+like modifying a blog, adding/removing users, etc. This function will look up and verify
+user permissions.
+
+arguments:
+    uid - the user id to check
+    value - the permissions value to check for
+
+returns: authorized (success or error code) - whether the user has that permission
+"""
+def get_permission(uid, value):
+    query = "select permissions from users where uid = %(uid)s";
+    istatus = initconnect();
+    if(istatus > 1):
+        return "ENODBCONNECT";
+    cursor.execute(query, {'uid': uid});
+    permval = 0;
+    for (permissions) in cursor:
+        permval = permissions;
+    if(parse_exists(permval, value)):
+        return "GRANTED";
+    else:
+        return "DENIED";
+    
