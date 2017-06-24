@@ -88,6 +88,8 @@ var winminwidth = 160;
 var ismobile = false;
 var onfinished = [];
 var wintoolscolors = {lowerpanelcolor: "#daa00d", activepanelcolor: "#febe10", lowerwindowborder: 'black', minipanelcolor: 'grey'};
+var maximizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s";
+var maximizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.125s";
 
 /*
 movewindow(currentwindow, increasex, increasy)
@@ -172,6 +174,7 @@ function changeWindowSize(currentwindow, increasex, increasey){
  * 		The window to be maximized
  */
 function maximize(window){
+	window.toplevel.style.transition = maximizetransitiontime;
 	//Window boundaries
 	var winbounds    = window.toplevel.getBoundingClientRect();
 	//Window body boundaries
@@ -200,6 +203,7 @@ function maximize(window){
 	window.toplevel.style.top   = sctop;
 	window.body.style.height    = scheight-48;
 	window.toplevel.style.width = scbounds.right-scbounds.left;
+	setTimeout(function(){window.toplevel.style.transition = maximizetransitionreset;}, minimizetime);
 }
 
 /*
@@ -212,6 +216,7 @@ function maximize(window){
  * 		window to be restore
  */
 function restore(window){
+	window.toplevel.style.transition = maximizetransitiontime;
 	//Set the window.maximized property to false
 	window.maximized = false;
 	//Set our window size again
@@ -220,6 +225,7 @@ function restore(window){
 	window.toplevel.style.top = window.maxtop;
 	window.toplevel.style.width = window.maxright-window.maxleft;
 	window.body.style.height = window.maxheight;
+	setTimeout(function(){window.toplevel.style.transition = maximizetransitionreset;}, minimizetime);
 }
 
 /*
