@@ -70,8 +70,5 @@ def create_new_blog(blog_name, author_full_name, uname, rstring):
         lastid=idnum;
     os.makedirs("blog/"+str(lastid));
 
-def set_blog_owner(blog_name, user_name):
-    pass; #TODO: interface with auth backend to let admins set blog permissions
-
-def set_edit_permissions(blog_name, user_name):
-    pass; #TODO: interface with auth backend to let admins set blog permissions
+def create_new_post(blog_id, author_name, uname, rstring):
+    pass #TODO: create post creation system
