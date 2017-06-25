@@ -20,7 +20,7 @@ function openmenu(){
 	//And the background, transparent clickable area to close the window
 	dom_mbackground = document.getElementById("menubackground");
 	//And gets the button
-	dom_mbutton = document.getElementById("menubutton");
+	dom_mbutton = document.getElementById("menubutton");2
 	if(menuopen == false){
 		//open the background, set the height of the menu
 		dom_mbackground.style.display='block';
@@ -117,13 +117,13 @@ function setCookie(cname,cvalue,exdays) {
 
  */
 function introWindow(){
-	var introwindow = addWindow("Welcome!", 400);
-	var widgets = makeWidgetSpace();
-	setWidgetSpace(introwindow, widgets);
+    var introwindow = addWindow("Welcome!", 400, "corner");
+    var widgets = makeWidgetSpace();
+    setWidgetSpace(introwindow, widgets);
 
-	var introlabel = makeLabel(widgets, "<h2>Welcome to the FSU CS Club Site!</h2>");
-	var jokesection = makeRule(widgets);
-	makeLabel(widgets, "<b>Click the menu button at the bottom left of the page to get started!</b>");
+    var introlabel = makeLabel(widgets, "<h2>Welcome to the FSU CS Club Site!</h2>");
+    var jokesection = makeRule(widgets);
+    makeLabel(widgets, "<b>Click the menu button at the bottom left of the page to get started!</b>");
 }
 
 /*
@@ -200,7 +200,7 @@ function siteTab(tab){
    an icon is double clicked.
    */
 function makeIconDialog(iconname){
-	var dialogwindow = addDialogWindow(iconname + " icon", 300);
+    var dialogwindow = addDialogWindow(iconname + " icon", 300, "center");
 	var widgetSpace = makeWidgetSpace();
 	makeLabel(widgetSpace, "Generic "+iconname+" icon, defined per the current icon theme.");
 	setWidgetSpace(dialogwindow, widgetSpace);
