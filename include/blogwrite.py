@@ -55,7 +55,20 @@ def create_new_blog(blog_name, author_full_name, uname, rstring):
     uid = authbackend.get_uid_from_name(uname);
     if(uid == "ENODBCONNECT"): return "ENOUNAMEDBCON";
     if(uid == None): return "ENOUSER";
-    pass; #TODO: Allow certain users to create blogs for others
+    ascheck = authbackend.check_auth_string(uid,rstring);
+    if(ascheck == False): return "DENIED";
+    apcheck = authbackend.get_permission(uid, 8);
+    if(apcheck == "ENODBCONNECT"): return "ENOPERMDBCON";
+    if(apcheck == "DENIED"): return "ENOPERMISSION";
+    query = "insert into blog (title, author) values (%s, %s)";
+    authbackend.cursor.execute(query, (blog_name, author_full_name));
+    authbackend.connection.commit();
+    query = "select id from blog where title = %(title)s and author = %(author)s"
+    authbackend.curosr.execute(query, {'title':blog_name, 'author':author_full_name});
+    lastid = 0;
+    for (idnum) in authbackend.cursor:
+        lastid=idnum;
+    os.makedirs("blog/"+str(lastid));
 
 def set_blog_owner(blog_name, user_name):
     pass; #TODO: interface with auth backend to let admins set blog permissions
