@@ -1,5 +1,7 @@
 function makeBrowserWindow(){
-	var blogxhttp = getBlogList();
+    var blogxhttp = new XMLHttpRequest();
+    blogxhttp.open("GET", "backend.php?request=searchblog//", true);
+    blogxhttp.send();
 	blogxhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status==200){
 			bloglist = JSON.parse(this.responseText);
