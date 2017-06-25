@@ -231,14 +231,14 @@ Arguments:
 Returns:
     Result of auth check
 """
-def check_auth_string(uid, randstr):
+def check_auth_string(uid, rstring):
     #For now, assuming that we're dealing with 1 hour timeout.
     #We create a deadline, past which timestamps expire
     deadline = time.time()-3600; #1h*60m*60s = 3600 seconds
     #then we query for the random string
     checkquery = "select rstring,uid,lasthit from randomstring where revoked = false and rstring = %s and uid = %s"
     initconnect()
-    cursor.execute(checkquery, (randstr, uid));
+    cursor.execute(checkquery, (rstring, uid));
     results = cursor.fetchall();
     for(rstring, uid, lasthit) in results:
         #If the timestamp isn't too old, we reset the deadline counter on the
