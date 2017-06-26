@@ -5,8 +5,8 @@ from urllib.parse import parse_qsl;
 print("Content-Type: text/plain\r\n\r\n");
 form = cgi.FieldStorage();
 if "login" in form:
-    uname = parse_qsl(form["login"]);
-    passwd = parse_qsl(form["passwd"]);
+    uname = form["login"].value;
+    passwd = form["passwd"].value;
     rstring = authbackend.check_password(passwd, uname);
     print("{Response:'"+str(rstring)+"'}");
 if "suserperms" in form:
