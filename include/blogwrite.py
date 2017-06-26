@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import authbackend;
+import datetime;
 
 """
 This file is built to act as a library to interface with a composer CGI script.
@@ -133,7 +134,7 @@ Returns: Nothing right now, it's not done.
     "DENIED" -- the user/rstring combination was rejected, whoever it is let their session time out
                 or is trying to trick the system.
 """
-def create_new_post(blog_id, author_name, uname, rstring):
+def create_new_post(blog_id, author_name, title, body, uname, rstring):
     #Check for a UID
     uid = authbackend.get_uid_from_name(uname);
     if(uid == "ENODBCONNECT"): return "ENOUNAMEDBCON";
@@ -141,6 +142,18 @@ def create_new_post(blog_id, author_name, uname, rstring):
     #then check their auth tokens and make sure they're fo'real and have a login.
     ascheck = authbackend.check_auth_string(uid, rstring);
     if(ascheck == False): return "DENIED";
-    apcheck = autbackend.get_permission(uid, 4); #Emacs is glitching so I don't have number reference
-    
-    pass #TODO: create post creation system
+    #Now check the user's permissions and rights for that blog...
+    apcheck = autbackend.get_permission(uid, 32, blog=blog_id);
+    if(apcheck == "ENODBCONNECT"): return "ENOPERMDBCON"; #Error: no permed bacon.. or permissions db connection...
+    if(apcheck == "DENIED"): return "ENOPERMISSION";
+    query = "insert into posts(blogid, title, date) values (%(blog)s, %(title)s, %(date)s)";
+    cdate = str(datetime.date.year)+"-"+str(datetime.date.month)+"-"+str(datetime.date.day)
+    authbackend.cursor.execute(query, {'blog':blog_id, 'title':title, 'date': cdate});
+    authbackend.connection.commit();
+    query = "select postid from posts where blogid = %(blog)s and title = %(title)s and date = %(date)s";
+    authbackend.cursor.execute(query, {'blog':blog_id, 'title':title, 'date': cdate});
+    posts = 0;
+    for (postid) in authbackend.cursor:
+        posts = postid;
+    newpostbody = open("blog/"+blog_id+"/"+posts+".post.txt", "w");
+    newpostbody.write(body);
