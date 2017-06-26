@@ -27,7 +27,7 @@ function login(){
     setClickAction(loginbt.button, function(){composerLogin(userbox.value, passbox.value, cpsrwin);});
     setWidgetSpace(cpsrwin, widgets);
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "include/loginsys", true);
+    xhttp.open("POST", "include/loginsys.cgi", true);
     xhttp.send("login="+encodeURIComponent(userbox.value)+"&passwd="+encodeURIComponent(passbox.value));
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status==200){
@@ -36,6 +36,13 @@ function login(){
 	        var dialogwindow = addDialogWindow("Login Failed", 300);
 	        var widgetSpace = makeWidgetSpace();
 	        makeLabel(widgetSpace, "Login failed. Please check your username and password, then try again.");
+            } else if (loginresponse.response == "ENOCONNECTION"){
+                var dialogwindow = addDialogWindow("Login Failed", 300);
+                var widgetSpace = makeWidgetSpace();
+                makeLabel(widgetSpace, "Login failed due to a database error. Check the site installation or contact an administrator.");
+            } else {
+                rstring = loginresponse.response;
+                cpsrwin.close();
             }
         }
     }
