@@ -54,6 +54,7 @@ permissions -- User permissions, int
     4 = can set blog perms
     8 = can create/delete blogs
     16= can grant/revoke special user permissions
+    32= can post to a blog (if global like in this case, all blogs)
     
     Unless someone adds a permission above and doesn't change this comment, 31 is the
     value for admin, basically granting superuser permissions.
@@ -312,9 +313,11 @@ arguments:
     uid - the user id to check
     value - the permissions value to check for
 
-returns: authorized (success or error code) - whether the user has that permission
+returns: "GRANTED" on success
+    ENODBCONNECT -- Couldn't connect to the auth DB.
+    DENIED -- that user doesn't have permission to do that.
 """
-def get_permission(uid, value):
+def get_permission(uid, value, blog=None):
     #Standard stuff by now, start with a query
     query = "select permissions from users where uid = %(uid)s";
     #check the DB connection
@@ -333,6 +336,14 @@ def get_permission(uid, value):
     #of the mode number. Return appropriately.
     if(parse_exists(permval, value)):
         return "GRANTED";
-    else:
-        return "DENIED";
+    #Now we have to check the blog id. If the permission exists for a specific blog, we grant it.
+    if blog == None:
+        return "DENIED"
+    query = "select specialpermissions from postrights where uid = %(uid)s and blogid = %(blog)s";
+    cursor.execute(query, {'uid': uid, 'blog': blog});
+    for (specialpermissions) in cursor:
+        permval = specialpermissions;
+    if(parse_exists(permval, value)):
+        return "GRANTED"
+    return "DENIED"
     
