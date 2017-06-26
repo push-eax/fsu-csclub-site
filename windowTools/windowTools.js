@@ -948,10 +948,8 @@ function addDialogWindow(title,width,position){
     addDialogWindowListeners(windowobject)
     windowobject.toplevel.style.zIndex = 3;
     var winrect = windowbody.getBoundingClientRect();
-    var toprect = window.getBoundingClientRect();
+    var toprect = newwindow.getBoundingClientRect();
     if(position == "center"){
-        console.log("Winrect dimensions are"+winrect.bottom-toprect.top)
-        console.log(scbounds.bottom/2)
         newwindow.style.top = ((scbounds.bottom/2) - (winrect.bottom-toprect.top)-20);
     }
     //Then return our windowobject to the user, like they requested.
