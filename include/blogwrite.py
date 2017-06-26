@@ -146,14 +146,20 @@ def create_new_post(blog_id, author_name, title, body, uname, rstring):
     apcheck = autbackend.get_permission(uid, 32, blog=blog_id);
     if(apcheck == "ENODBCONNECT"): return "ENOPERMDBCON"; #Error: no permed bacon.. or permissions db connection...
     if(apcheck == "DENIED"): return "ENOPERMISSION";
+    #and now we create the metadata creation sql
     query = "insert into posts(blogid, title, date) values (%(blog)s, %(title)s, %(date)s)";
+    #and run it, though first we need a date string
     cdate = str(datetime.date.year)+"-"+str(datetime.date.month)+"-"+str(datetime.date.day)
     authbackend.cursor.execute(query, {'blog':blog_id, 'title':title, 'date': cdate});
+    #Again, confusing when you forget this step during an insert
     authbackend.connection.commit();
+    #and now we need the post ID of the freshly created post.
     query = "select postid from posts where blogid = %(blog)s and title = %(title)s and date = %(date)s";
     authbackend.cursor.execute(query, {'blog':blog_id, 'title':title, 'date': cdate});
+    #And iterate through relevant results until we find it... should only be one, for loop is FORmality.
     posts = 0;
     for (postid) in authbackend.cursor:
         posts = postid;
+    #Takes the post ID, and opens the body file. Then writes the post to it.
     newpostbody = open("blog/"+blog_id+"/"+posts+".post.txt", "w");
     newpostbody.write(body);
