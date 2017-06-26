@@ -20,7 +20,7 @@ the event of a SQL injection attack, password hashes are still inaccesible. This
 be a significant improvement on security, but it will nonetheless add to the organization
 of serverside information at the very least.
 
-USERS TABLE
+USERS TABLE ##############################################################################
 uid -- user id, int not null auto_increment primary key
     The user ID field. Primary identifier of users so that in the event of username error,
     there is still a valid identifier for each user.
@@ -58,7 +58,7 @@ permissions -- User permissions, int
     Unless someone adds a permission above and doesn't change this comment, 31 is the
     value for admin, basically granting superuser permissions.
 
-RANDOMSTRING TABLE
+RANDOMSTRING TABLE #######################################################################
 rstring -- Random string, varchar(200) primary key not null
     The random string assigned to the client session
 
@@ -72,6 +72,27 @@ lasthit -- Last contact time, int
 registered -- registration time, int
     The timestamp corresponding to login time, or the time when the random string was
     generated.
+
+PROP TABLE ###############################################################################
+xkey -- INI style key
+    This table is for config properties and security specifics like the salt. This is
+    the key for the key/value table.
+
+xvalue -- INI style value
+    see xkey for description, this is the value field.
+
+POSTRIGHTS TABLE #########################################################################
+blogid -- the blog id
+    Which blog we are setting permissions for
+
+uid -- the user id
+    Who are we granting access?
+
+specialpermissions -- special permissions field
+    There are global permissions defined in the users table, but this field is for
+    more fine grained control. If a user should have unlimited access to a blog,
+    or needs a set of specific permissions set, this is where to set them. Same
+    numbers apply, this is another mode variable.
 """
 
 #TODO: homestuck references aside, this needs to query the database for the salt.
@@ -264,14 +285,20 @@ Arguments:
 Retruns: uid - the UID corresponding to the uname
 """
 def get_uid_from_name(uname):
+    #We set a query
     query = "select uid from users where uname = %(name)s";
+    #verify a database connection exists
     istatus = initconnect();
+    #and report when it doesn't
     if(istatus > 1):
         return "ENODBCONNECT";
+    #then execute the query, passing the username to the SQL where
     cursor.execute(query, {'name':uname});
+    #and then scan the results for our answer
     ruid = None;
     for (uid) in cursor:
         ruid = uid;
+    #Will return None if there is no user.
     return ruid;
 
 """
@@ -288,14 +315,22 @@ arguments:
 returns: authorized (success or error code) - whether the user has that permission
 """
 def get_permission(uid, value):
+    #Standard stuff by now, start with a query
     query = "select permissions from users where uid = %(uid)s";
+    #check the DB connection
     istatus = initconnect();
+    #report lack of successful DB connection
     if(istatus > 1):
         return "ENODBCONNECT";
+    #Execute our query, passing relevant information (UID in this case)
     cursor.execute(query, {'uid': uid});
+    #then create a variable to store our result in
     permval = 0;
+    #Put our result in there,
     for (permissions) in cursor:
         permval = permissions;
+    #and use a parse_exists function to determine whether the permissions number is a component
+    #of the mode number. Return appropriately.
     if(parse_exists(permval, value)):
         return "GRANTED";
     else:

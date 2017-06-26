@@ -27,8 +27,8 @@ function login(){
     setClickAction(loginbt.button, function(){composerLogin(userbox.value, passbox.value, cpsrwin);});
     setWidgetSpace(cpsrwin, widgets);
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "backend.php?request=searchblog//", true);
-    xhttp.send();
+    xhttp.open("POST", "include/loginsys", true);
+    xhttp.send("login="+encodeURIComponent(userbox.value)+"&passwd="+encodeURIComponent(passbox.value));
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status==200){
             var loginresponse = JSON.parse(this.responseText);
