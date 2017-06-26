@@ -28,10 +28,12 @@ function makePostBrowserWindow(blogid, wspace){
 	xhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
 			var postdata = JSON.parse(this.responseText);
+			var restore = wspace.children;
 			setWidgetText(wspace, "");
 			var tbar = makeToolbar(wspace);
-			var backButton = makeButton(tbar, "Back");
 			var browsersection = makeSection(wspace);
+			var backButton = makeButton(tbar, "tbutton", "Back");
+			document.getElementsByClassName("tbutton")[0].onclick = function( ) { console.log("itverks"); backButtonAction(wspace); };
 			for(var i = 0; i<postdata.length; i++){
 				var icon = makeIcon(browsersection, postdata[i][2], "folder");
 				var postid = postdata[i][1];
@@ -39,6 +41,7 @@ function makePostBrowserWindow(blogid, wspace){
 					setDblClickAction(icon, function(){ viewBlog(blogid, _id); } );
 				})(postid);
 			}
+			//setClickAction(backButton, function(){console.log("ing!!!!!");});
 		}
 	}; } 
 
@@ -63,4 +66,24 @@ function makeViewWindow(title, author, date, body){
 	var dateLabel = makeLabel(wsp, date);
 	var bodySection = makeSection(wsp);
 	setWidgetText(bodySection, body);
+}
+
+function backButtonAction(wspace){
+	var blogxhttp = new XMLHttpRequest();
+	blogxhttp.open("GET", "backend.php?request=searchblog//", true);
+	blogxhttp.send();
+	blogxhttp.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status==200){
+			bloglist = JSON.parse(this.responseText);
+			setWidgetText(wspace, "");
+			var browsersection = makeSection(wspace);
+			for(var i = 0; i<bloglist.length; i++){
+				var icon = makeIcon(browsersection, bloglist[i][1], "folder");
+				var blogid = bloglist[i][0];
+				(function(_id){
+					setDblClickAction(icon, function(){makePostBrowserWindow(_id, wspace); } );
+				})(blogid);
+			}
+		}
+	};	
 }
