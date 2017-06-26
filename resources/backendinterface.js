@@ -24,22 +24,28 @@ function login(){
     var passlbl = makeLabel(loginbx, "<b>Password:</b> ");
     var passbox = makeInput(loginbx, "password", "password", "pass");
     var loginbt = makeButton(loginbx, "button", "Log In");
-    setClickAction(loginbt.button, function(){composerLogin(userbox.value, passbox.value, cpsrwin);});
+    setClickAction(loginbt.button, function(){actlogin(userbox, passbox, cpsrwin);});
     setWidgetSpace(cpsrwin, widgets);
+}
+
+function actlogin(userbox, passbox, cpsrwin){
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "include/loginsys.cgi", true);
+    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhttp.send("login="+encodeURIComponent(userbox.value)+"&passwd="+encodeURIComponent(passbox.value));
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status==200){
             var loginresponse = JSON.parse(this.responseText);
-            if(loginresponse.response == "ENOAUTH"){
-	        var dialogwindow = addDialogWindow("Login Failed", 300);
+            if(loginresponse.Response == "ENOAUTH"){
+	        var dialogwindow = addDialogWindow("Login Failed", 300, "center");
 	        var widgetSpace = makeWidgetSpace();
 	        makeLabel(widgetSpace, "Login failed. Please check your username and password, then try again.");
-            } else if (loginresponse.response == "ENOCONNECTION"){
-                var dialogwindow = addDialogWindow("Login Failed", 300);
+                setWidgetSpace(dialogwindow, widgetSpace);
+            } else if (loginresponse.Response == "ENOCONNECTION"){
+                var dialogwindow = addDialogWindow("Login Failed", 300,"center");
                 var widgetSpace = makeWidgetSpace();
                 makeLabel(widgetSpace, "Login failed due to a database error. Check the site installation or contact an administrator.");
+                setWidgetSpace(dialogwindow, widgetSpace);
             } else {
                 rstring = loginresponse.response;
                 cpsrwin.close();
