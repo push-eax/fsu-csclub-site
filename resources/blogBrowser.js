@@ -33,7 +33,10 @@ function makePostBrowserWindow(blogid, wspace){
 			var tbar = makeToolbar(wspace);
 			var browsersection = makeSection(wspace);
 			var backButton = makeButton(tbar, "tbutton", "Back");
-			document.getElementsByClassName("tbutton")[0].onclick = function( ) { console.log("itverks"); backButtonAction(wspace); };
+			setClickAction(backButton.button, function(){ backButtonAction(wspace); });
+			
+			//document.getElementsByClassName("tbutton")[0].onclick = function( ) { console.log("itverks"); backButtonAction(wspace); };
+			
 			for(var i = 0; i<postdata.length; i++){
 				var icon = makeIcon(browsersection, postdata[i][2], "folder");
 				var postid = postdata[i][1];
