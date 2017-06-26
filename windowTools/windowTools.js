@@ -847,7 +847,8 @@ function addWindow(title,width,position){
     addWindowListeners(windowobject)
     windowobject.toplevel.style.zIndex = 3;
     var winrect = windowbody.getBoundingClientRect();
-    //I am baffled at how inaccurate this is, future issue?
+    //Needs to happen after contents are added too.
+    //TODO: Create function to handle this.
     if(position == "center"){
         newwindow.style.top = ((scbounds.bottom/2) - (winrect.bottom+winrect.top));
     }
