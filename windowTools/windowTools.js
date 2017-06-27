@@ -88,8 +88,8 @@ var winminwidth = 160;
 var ismobile = false;
 var onfinished = [];
 var wintoolscolors = {lowerpanelcolor: "#daa00d", activepanelcolor: "#febe10", lowerwindowborder: 'black', minipanelcolor: 'grey'};
-var maximizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, width 0.125s";
-var maximizetransitionreset = "top 0s, right 0s, left 0s, width 0s, opacity 0.125s";
+var maximizetransitiontime = "top 0.25s, right 0.25s, left 0.25s, bottom 0.125s, width 0.125s";
+var maximizetransitionreset = "top 0s, right 0s, left 0s, width 0s, bottom 0s, opacity 0.125s";
 
 /*
 movewindow(currentwindow, increasex, increasy)
