@@ -144,6 +144,21 @@ function addComposerWindow(mode){
 }
 
 /*
+composerDetails
+
+Opens a composer details view, allowing the user to set their author and title details.
+
+Arguments:
+    ExistingTitle -- Any title the post already has. Allows the user to edit the existing title.
+    ExistingAuthor -- The author name field. This allows the field to populate the author name.
+
+Returns:
+    PostMeta object -- custom object with title and author fields.
+*/
+function composerDetails(ExistingTitle, ExistingAuthor){
+}
+
+/*
 clickBold()
 
 Built to make the current text edit field show bold text. WYSIWYG editing mode only.
