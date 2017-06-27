@@ -28,7 +28,20 @@ function login(){
     setClickAction(loginbt.button, function(){actlogin(userbox, passbox, cpsrwin);});
     setWidgetSpace(cpsrwin, widgets);
 }
+ /*
+actlogin()
 
+The login actions function.
+
+Login() is built to create a window, this is what happens when you click the log
+in button. It will send the relevant information off to the server.
+
+Arguments:
+    userbox -- the makeinput result which contaians the username.
+    passbox -- The password makeinput result
+    cpsrwin -- the login window. The cpsrwin name is carry-over from when the compser was to be
+               the only component which would use a sign-in.
+*/
 function actlogin(userbox, passbox, cpsrwin){
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "include/loginsys.cgi", true);
@@ -51,11 +64,25 @@ function actlogin(userbox, passbox, cpsrwin){
                 rstring = loginresponse.response;
                 uname = userbox.value;
                 cpsrwin.close();
+                var menutable = document.getElementById("menutable");
+                var composerLine = makeTableRow(menutable);
+                var newpstbutton = makeButton(makeTableData(composerLine), "menubutton", "New Post");
+                var editpstbutton = makeButton(makeTableData(composerLine), "menubutton", "Edit Post");
             }
         }
     }
 }
 
+/*
+addComposerWindow()
+
+Adds a window for composing and editing a blog post.
+
+The window is designed to act as a place where the user types blog details.
+
+Upon completion, it should have a "new blog" and "existing blog" mode or similar mechanism
+so that it does not clone blog posts every time an edit is made.
+*/
 function addComposerWindow(){
     var composerwin = addWindow("Composer Tab Window", 500);
     var widgetSpace = makeWidgetSpace();
@@ -86,18 +113,44 @@ function addComposerWindow(){
     return composerwin;
 }
 
+/*
+clickBold()
+
+Built to make the current text edit field show bold text. WYSIWYG editing mode only.
+*/
 function clickBold(button, composer){
     document.execCommand('bold', false, null);
 }
 
+/*
+clickItal()
+
+Built to make the current text edit field show italic text. WYSIWYG editing mode only.
+*/
 function clickItal(button, composer){
     document.execCommand('italic', false, null);
 }
 
+/*
+clickUdln()
+
+Built to make the current text edit field show underlined text. WYSIWYG editing mode only.
+*/
 function clickUdln(button, composer){
     document.execCommand('underline', false, null);
 }
 
+/*
+makePstBd()
+
+Creates a new blog post based on the information given.
+
+Arguments:
+    title -- The post title
+    blogid -- the blog ID number
+    aname -- the author name
+    body -- the blog body
+*/
 function makePstBd(title, blogid, aname, body){
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "include/loginsys.cgi", true);
