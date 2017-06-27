@@ -1,5 +1,6 @@
 var gotauth = false;
 var rstring = "ENOAUTH";
+var uname = "NOBODY";
 
 /*
 login()
@@ -48,6 +49,7 @@ function actlogin(userbox, passbox, cpsrwin){
                 setWidgetSpace(dialogwindow, widgetSpace);
             } else {
                 rstring = loginresponse.response;
+                uname = userbox.value;
                 cpsrwin.close();
             }
         }
@@ -79,6 +81,7 @@ function addComposerWindow(){
     setClickAction  ( boldButton.button, function() { clickBold( boldButton, composer ); textSpace.value = composer.innerHTML; } );
     setClickAction  ( italButton.button, function() { clickItal( italButton, composer ); textSpace.value = composer.innerHTML; } );
     setClickAction  ( udlnButton.button, function() { clickUdln( udlnButton, composer ); textSpace.value = composer.innerHTML; } );
+    setClickAction  ( saveButton.button, function() { makePstBd( textSpace.value ); } );
     setWidgetSpace  (composerwin, widgetSpace);
     return composerwin;
 }
@@ -93,4 +96,30 @@ function clickItal(button, composer){
 
 function clickUdln(button, composer){
     document.execCommand('underline', false, null);
+}
+
+function makePstBd(title, blogid, aname, body){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "include/loginsys.cgi", true);
+    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    xhttp.send("makepost="+encodeURIComponent(title)+"&blogid="+encodeURIComponent(blogid)+"&author="+encodeURIComponent(aname)+"&body="+encodeURIComponent(body)+"&uname="+encodeURIComponent(uname)+"&rstring="+encodeURIComponent(rstring));
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status==200){
+            var loginresponse = JSON.parse(this.responseText);
+            if(loginresponse.Response == "ENOUSER"||loginresponse.Response == "DENIED"||loginresponse.Response == "ENOPERMISSION"){
+	        var dialogwindow = addDialogWindow("Login Failed", 300, "center");
+	        var widgetSpace = makeWidgetSpace();
+	        makeLabel(widgetSpace, "Login failed. Please check your username and password, then try again. Guru Meditation: "+loginresponse.Response);
+                setWidgetSpace(dialogwindow, widgetSpace);
+            } else if (loginresponse.Response == "ENOUNAMEDBCON" || loginresponse.Response == "ENOPERMDBCON"){
+                var dialogwindow = addDialogWindow("Login Failed", 300,"center");
+                var widgetSpace = makeWidgetSpace();
+                makeLabel(widgetSpace, "Login failed due to a database error. Check the site installation or contact an administrator. GURU MEDITATION: "+loginresponse.Response);
+                setWidgetSpace(dialogwindow, widgetSpace);
+            }
+            else if (loginresponse.Response == "SUCCESS"){
+                console.log("Saved post successfully")
+            }
+        }
+    }
 }
