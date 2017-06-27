@@ -113,12 +113,15 @@ function addComposerWindow(mode){
         var errorwindow = addDialogWindow("ERROR", 200, "center");
         setWindowContents(errorwindow, "The composer has no mode set!");
     }
+    var title = "Untitled";
+    var author = "Nobody"
     var composerwin = addWindow("Composer Tab Window", 500);
     var widgetSpace = makeWidgetSpace();
+    //Toolbar
     var toolbar     = makeToolbar(widgetSpace);
     var saveButton  = makeButton(toolbar, "tbutton", "Save");
-    //var titlelabel  = makeLabel(toolbar, "Title: ");
-    var titleInput  = makeInput(toolbar, "text", "Untitled", "title");
+    var titleButton = makeButton(toolbar, "tbutton", "Metadata/Details");
+    //Begin notebook tabs
     var tabs        = makeNotebook(widgetSpace);
     var tab_one     = addTab(tabs, "HTML Editor");
     var tab_two     = addTab(tabs, "WYSIWYG Editor");
@@ -133,10 +136,13 @@ function addComposerWindow(mode){
     //First tab
     var textSpace   = makePlainTextArea(tab_one.widgetSpace);
     syncTextAreas(textSpace, composer);
+    //To allow external dialogs, we bundle up all of the objects above...
+    var cpsrdata    = {title: title, author: author, cpsrwin: composerwin, text: textSpace};
     //Second tab events
     setClickAction  ( boldButton.button, function() { clickBold( boldButton, composer ); textSpace.value = composer.innerHTML; } );
     setClickAction  ( italButton.button, function() { clickItal( italButton, composer ); textSpace.value = composer.innerHTML; } );
     setClickAction  ( udlnButton.button, function() { clickUdln( udlnButton, composer ); textSpace.value = composer.innerHTML; } );
+    setClickAction  ( titleButton.button, function(){ composerDetails(composerwinobject); } );
     if( mode == "compose" ) setClickAction  ( saveButton.button, function() { makePstBd( textSpace.value ); mode = "edit" } );
     if( mode == "edit" )    setClickAction  ( saveButton.button, function() { setWindowContents(addDialogWindow("Not Implemented", 300, "center"), "Not implemented yet. See GitLab for status."); } )
     setWidgetSpace  (composerwin, widgetSpace);
@@ -155,7 +161,21 @@ Arguments:
 Returns:
     PostMeta object -- custom object with title and author fields.
 */
-function composerDetails(ExistingTitle, ExistingAuthor){
+function composerDetails(ExistingTitle, ExistingAuthor, composerwinobject){
+    var cdetailswin = addWindow("Metadata/Details", 400, "center");
+    var wspace      = makeWidgetSpace();
+    setWidgetSpace(cdetailswin, wspace);
+    var description = makeLabel(wspace, "Edit Author and Title Details: ");
+    var section     = makeSection(wspace);
+    var titlelabel  = makeLabel(section, "Title");
+    var titlefield  = makeInput(section, "text", ExistingTitle, "title");
+    var authorlabel = makeLabel(section, "Author");
+    var authorfield = makeInput(section, "text", ExistingAuthor, "author");
+    var okbutton    = makeButton(section, "button", "OK");
+    setClickAction  ( okbutton.button, function(){
+        composerwinobject.title  = titlefield.value;
+        composerwinobject.author = authorfield.value;
+    } );
 }
 
 /*
