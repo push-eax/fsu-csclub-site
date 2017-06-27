@@ -1,0 +1,44 @@
+
+blogwrite.py,83
+def edit_post(46,2045
+def create_new_blog(101,5100
+def create_new_post(137,6652
+
+authbackend.py,211
+def initconnect(114,4664
+def set_permissions(137,5394
+def check_password(186,7338
+def get_auth_string(232,9456
+def check_auth_string(256,10210
+def get_uid_from_name(288,11529
+def get_permission(320,12533
+
+compose.cgi,181
+import cgi;2,23
+import sys;3,35
+import blogwrite;4,47
+form 6,119
+    blogid 9,205
+    aname 10,240
+    body 11,274
+    uname 12,305
+    rstring 13,338
+    response 14,375
+
+loginsys.cgi,266
+import cgi;2,23
+import sys;3,35
+import authbackend;4,47
+from urllib.parse import parse_qsl;5,67
+form 7,157
+    passwd 10,237
+    rstring 11,272
+    rstring 15,436
+    umod 16,467
+    mode 17,492
+    response 18,517
+    oldpass 22,682
+    newpass 23,709
+
+utilparser.py,22
+def parse_exists(1,0
