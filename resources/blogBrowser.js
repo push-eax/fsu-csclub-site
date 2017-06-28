@@ -34,9 +34,6 @@ function makePostBrowserWindow(blogid, wspace){
             var browsersection = makeSection(wspace);
             var backButton = makeButton(tbar, "tbutton", "Back");
             setClickAction(backButton.button, function(){ backButtonAction(wspace); });
-            
-            //document.getElementsByClassName("tbutton")[0].onclick = function( ) { console.log("itverks"); backButtonAction(wspace); };
-            
             for(var i = 0; i<postdata.length; i++){
                 var icon = makeIcon(browsersection, postdata[i][2], "folder");
                 var postid = postdata[i][1];
@@ -44,7 +41,6 @@ function makePostBrowserWindow(blogid, wspace){
                     setDblClickAction(icon, function(){ viewBlog(blogid, _id); } );
                 })(postid);
             }
-            //setClickAction(backButton, function(){console.log("ing!!!!!");});
         }
     }; } 
 
@@ -58,7 +54,6 @@ function viewBlog(blogid, postid){
             makeViewWindow(blog.title, blog.author, blog.date, blog.body);
         }
     };
-    //makeViewWindow(blog[3], blog[4]);
 }
 
 function makeViewWindow(title, author, date, body){
