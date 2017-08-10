@@ -5,11 +5,11 @@
  * account for that at the moment.
  */
 div.toolbar{
-	background-color:white;
-	background: linear-gradient(to top, white, grey);
-	width:100%;
-	padding:3px;
-	position:relative;
+  background-color:white;
+  background: linear-gradient(to top, white, grey);
+  width:100%;
+  padding:3px;
+  position:relative;
 }
 
 /*
@@ -19,11 +19,11 @@ div.toolbar{
  * for a jarring experience within a tabbed interface such as the composer.
  */
 div.subtoolbar{
-	background-color:white;
-	background: linear-gradient(to top,#c5c5c5, #f3f3f3, #f3f3f3, #d3d3d3, #c5c5c5);
-	width:100%;
-	padding:3px;
-	position:relative;
+  background-color:white;
+  background: linear-gradient(to top,#c5c5c5, #f3f3f3, #f3f3f3, #d3d3d3, #c5c5c5);
+  width:100%;
+  padding:3px;
+  position:relative;
 }
 
 /*
@@ -33,15 +33,15 @@ div.subtoolbar{
  * the most part.
  */
 button.tbutton{
-	background-color: #dfdfdf;
-	background: linear-gradient(to bottom, #dadada, #c5c5c5);
-	border: 1px solid #a5a5a5;
-	color: black;
-	border-radius: 3px;
-	text-shadow: 1px 1px 0px white;
-	vertical-align: center;
-	padding:4px;
-	margin:3px;
+  background-color: #dfdfdf;
+  background: linear-gradient(to bottom, #dadada, #c5c5c5);
+  border: 1px solid #a5a5a5;
+  color: black;
+  border-radius: 3px;
+  text-shadow: 1px 1px 0px white;
+  vertical-align: center;
+  padding:4px;
+  margin:3px;
 }
 
 /*
@@ -50,42 +50,42 @@ button.tbutton{
  * two child elements: the icon img element, and the text element.
  */
 div.icon{
-	display:inline-block;
-	width:90px;
-	overflow:hidden;
-	height:100px;
-	padding:2px;
-	margin:10px;
-	text-align:center;
-	border:1px solid white;
+  display:inline-block;
+  width:90px;
+  overflow:hidden;
+  height:100px;
+  padding:2px;
+  margin:10px;
+  text-align:center;
+  border:1px solid white;
 }
 
 div.icon:focus, div.icon:active{
-	background:linear-gradient(to top, #febe10, #daa00d);
-	border:1px solid #daa00d;
-	border-radius:3px;
-	color:black;
+  background:linear-gradient(to top, #febe10, #daa00d);
+  border:1px solid #daa00d;
+  border-radius:3px;
+  color:black;
 }
 
 img.icon{
-	background: linear-gradient(to top, white, #f4f4f4);
-	border: 1px solid #d3d3d3;
-	border-radius:3px;
-	margin-left:auto;
-	margin-right:auto;
+  background: linear-gradient(to top, white, #f4f4f4);
+  border: 1px solid #d3d3d3;
+  border-radius:3px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 /*
  * div.icontext is for icon text. Exists mainly to make text wrap lines instead of
  * overflowing the main div.icon area.*/
 p.icon{
-	display:inline-block;
-	width:90px;
-	height:20px;
-	margin-left:auto;
-	margin-right:auto;
-	overflow:hidden;
-	text-align:center;
+  display:inline-block;
+  width:90px;
+  height:20px;
+  margin-left:auto;
+  margin-right:auto;
+  overflow:hidden;
+  text-align:center;
 }
 
 /*
@@ -95,16 +95,16 @@ p.icon{
  * of the interface.
  */
 button.tabbtnsel{
-	background-color: #c5c5c5;
-	border: 1px solid grey;
-	border-style: solid solid none solid;
-	color: black;
-	border-radius: 3px 3px 0px 0px;
-	text-shadow: 1px 1px 0px white;
-	vertical-align: center;
-	padding:4px;
-	margin:3px;
-	margin-bottom:0px;
+  background-color: #c5c5c5;
+  border: 1px solid grey;
+  border-style: solid solid none solid;
+  color: black;
+  border-radius: 3px 3px 0px 0px;
+  text-shadow: 1px 1px 0px white;
+  vertical-align: center;
+  padding:4px;
+  margin:3px;
+  margin-bottom:0px;
 }
 
 /*
@@ -113,17 +113,17 @@ button.tabbtnsel{
  * background.
  */
 button.tabbutton{
-	background-color: white;
-	background: linear-gradient(to top, grey, #c5c5c5);
-	border: 1px solid grey;
-	border-style: solid solid none solid;
-	color: black;
-	border-radius: 3px 3px 0px 0px;
-	text-shadow: 1px 1px 0px white;
-	vertical-align: center;
-	padding:4px;
-	margin:3px;
-	margin-bottom: 0px;
+  background-color: white;
+  background: linear-gradient(to top, grey, #c5c5c5);
+  border: 1px solid grey;
+  border-style: solid solid none solid;
+  color: black;
+  border-radius: 3px 3px 0px 0px;
+  text-shadow: 1px 1px 0px white;
+  vertical-align: center;
+  padding:4px;
+  margin:3px;
+  margin-bottom: 0px;
 }
 
 /*
@@ -134,12 +134,12 @@ button.tabbutton{
  * gradiation, but the effect is the same, if more controlled.
  */
 div.tabbar{
-	background-color: white;
-	background: linear-gradient(to top, grey,white,white,white);
-	width:100%;
-	padding:3px;
-	padding-bottom:0px;
-	position:relative;
+  background-color: white;
+  background: linear-gradient(to top, grey,white,white,white);
+  width:100%;
+  padding:3px;
+  padding-bottom:0px;
+  position:relative;
 
 }
 
@@ -150,8 +150,8 @@ div.tabbar{
  * background.
  */
 div.tab{
-	background-color:#c5c5c5;
-	border-radius: 0px 0px 3px 3px;
+  background-color:#c5c5c5;
+  border-radius: 0px 0px 3px 3px;
 }
 
 /*
@@ -164,7 +164,7 @@ div.tab{
  * eye percieves the pressed button as flat.
  */
 button.tbutton:active{
-	background: linear-gradient(to top, #dadada, #c5c5c5);
+  background: linear-gradient(to top, #dadada, #c5c5c5);
 }
 
 /*
@@ -174,8 +174,8 @@ button.tbutton:active{
  * of chrome, and it adds the gold glow to FF.
  */
 button.tbutton:focus, button.button:focus, button.toggled:focus, input.button:focus{
-	padding: 3px;
-	border:2px solid #febe10;
+  padding: 3px;
+  border:2px solid #febe10;
 }
 
 /*
@@ -184,15 +184,15 @@ button.tbutton:focus, button.button:focus, button.toggled:focus, input.button:fo
  * difference between buttons and toggle buttons.
  */
 button.toggled{
-	background-color: white;
-	background: linear-gradient(to top, white, #c5c5c5);
-	border: 1px solid #a5a5a5;
-	color: black;
-	border-radius: 3px;
-	text-shadow: 1px 1px 0px white;
-	vertical-align: center;
-	padding:4px;
-	margin:3px;
+  background-color: white;
+  background: linear-gradient(to top, white, #c5c5c5);
+  border: 1px solid #a5a5a5;
+  color: black;
+  border-radius: 3px;
+  text-shadow: 1px 1px 0px white;
+  vertical-align: center;
+  padding:4px;
+  margin:3px;
 }
 
 /*
@@ -200,21 +200,21 @@ button.toggled{
  * the style for buttons.
  */
 select, button.button, input.button{
-	background-color: white;
-	background: linear-gradient(to bottom, #e1e1e1, #c5c5c5);
-	border: 1px solid #a5a5a5;
-	color: black;
-	border-radius: 3px;
-	text-shadow: 1px 1px 0px white;
-	padding:4px;
-	margin:3px;
+  background-color: white;
+  background: linear-gradient(to bottom, #e1e1e1, #c5c5c5);
+  border: 1px solid #a5a5a5;
+  color: black;
+  border-radius: 3px;
+  text-shadow: 1px 1px 0px white;
+  padding:4px;
+  margin:3px;
 }
 
 /*
  * This defines what happens when one of these dropdowns is selected.
  */
 select:active, button.button:active, input.button:active{
-	background: #a5a5a5;
+  background: #a5a5a5;
 }
 
 /*
@@ -222,8 +222,8 @@ select:active, button.button:active, input.button:active{
  * needs testing to make sure we don't need it.
  */
 img.stock{
-	padding: 3px;
-	height:20px;
+  padding: 3px;
+  height:20px;
 }
 
 /*
@@ -232,13 +232,13 @@ img.stock{
  * with window resize and window bounds.
  */
 .filltext{
-	width:100%;
-	height:256px;
-	background-color: #c5c5c5;
-	border: 1px solid #a5a5a5;
-	border-radius:3px;
-	margin:3px;
-	overflow:auto;
+  width:100%;
+  height:256px;
+  background-color: #c5c5c5;
+  border: 1px solid #a5a5a5;
+  border-radius:3px;
+  margin:3px;
+  overflow:auto;
 }
 
 /*
@@ -247,7 +247,7 @@ img.stock{
  * a functionality shortcut to remove and add elements without removing and adding them.
  */
 .hidden{
-	display:none;
+  display:none;
 }
 
 /*
@@ -255,11 +255,11 @@ img.stock{
  * used in button.
  * */
 input.text{
-	background-color: #c5c5c5;
-	border: 1px solid #a5a5a5;
-	border-radius:3px;
-	padding:2px;
-	margin:3px;
+  background-color: #c5c5c5;
+  border: 1px solid #a5a5a5;
+  border-radius:3px;
+  padding:2px;
+  margin:3px;
 }
 
 /*
@@ -267,8 +267,8 @@ input.text{
  * cursor is in the box)
  */
 input.text:focus{
-	border:2px solid #febe10;
-	padding:1px;
+  border:2px solid #febe10;
+  padding:1px;
 }
 
 /*
@@ -276,10 +276,10 @@ input.text:focus{
  * window. It is built to section off parts of the UI.
  */
 div.section{
-	border: 1px solid #a5a5a5;
-	margin:5px;
-	padding:5px;
-	border-radius: 3px;
+  border: 1px solid #a5a5a5;
+  margin:5px;
+  padding:5px;
+  border-radius: 3px;
 }
 
 /*
@@ -287,5 +287,5 @@ div.section{
  * argument in the table tag. The class is set when we want borders, unset when we don't.
  */
 .tabledata{
-	border: 1px solid #a5a5a5;
+  border: 1px solid #a5a5a5;
 }
