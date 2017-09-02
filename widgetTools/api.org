@@ -1,0 +1,384 @@
+* Introduction to This Document
+** Purpose
+This document is where all the API docs previously contained in source code went.
+The code itself has been refactored since these were present there, and the
+existence of this document should greatly compress the size of the code the
+browser need load.
+** How best to read this file
+If you opened this file without a copy of Emacs or similar, it probably looks
+like a flat file, with a bunch of sections. There is a better way to read it,
+however. If you have a copy of Emacs and are willing, use org-mode. It is
+included with certain distributions of the program, and can be found at
+http://orgmode.org/
+
+If you prefer the Vim text editor over Emacs, you can try the following
+vimscript to enable similar functionality:
+https://vim.sourceforge.io/scripts/script.php?script_id=3342
+** General Information
+This document is formatted the following way:
+Heading
+ Subheading
+  Sub-Subheading
+   Description
+
+As an example, "Available Functions/makeWidgetSpace" would include a description
+of the function, along with arguments and return definitions.
+** Warnings
+A lot of this info is subject to change, and as such, it is a good idea to find
+the function declaration to find whether a function still takes the same
+arguments, for example, and whether the return is still what is claimed in this
+document.
+
+Part of the purpose of the refactoring to begin with was to make the code itself
+clearer, as opposed to attempting to enforce comment updates. This means that the
+comments themselves (as they were before) are not so useful in code. Further, it
+means that the information would otherwise have been deleted.
+** Errata
+Please report any mistakes in this document to the GitLab issues board at
+https://gitlab.com/CannonContraption/fsu-csclub-site/issues/
+All issues reported to that page should mention that they are in fact from the
+api.org document, and they should specify where the error happened. This will
+notify developers of the project to the issue so that it can be updated.
+* Basic variables
+** Property Definitions
+*** icontheme
+The current icon theme used for widgets. Should be user-settable.
+
+* Available Functions
+** makeWidgetSpace
+Creates the toplevel div which is used by default.
+
+Returns:
+  widgetSpace (DOM)
+    a div DOM object, used as the parent for other
+    /make.+\(\)/ functions such as makeButton() in
+    order to place themselves in one contained
+    environment. Includes the correct class name
+    and other data to fit properly into a window.
+** makeToolbar
+  Creates a toolbar. Designed to be placed at the top of a
+  window. Note that this toolkit intentionally does not mess
+  with the idea of a menubar since those actions would produce
+  too much unneccesary complexity, at the detriment of ease-
+  of-use and bandwidth
+
+  Arguments:
+  widgetSpace (DOM)
+  the DOM element to place the toolbar in.
+  This can conceptually be any DOM element, but
+  it is reccommended that this be restricted
+  to just a widgetSpace.
+
+  Returns:
+  newToolbar (DOM)
+  the new toolbar object, a <div>
+** makeSubToolbar
+  Creates a toolbar. Designed to be placed at the top of a
+  tab. Note that this toolkit intentionally does not mess
+  with the idea of a menubar since those actions would produce
+  too much unneccesary complexity, at the detriment of ease-
+  of-use and bandwidth
+
+  Arguments:
+  widgetSpace (DOM)
+  the DOM element to place the toolbar in.
+  This can conceptually be any DOM element, but
+  it is reccommended that this be restricted
+  to just a widgetSpace.
+
+  Returns:
+  newToolbar (DOM)
+  the new toolbar object, a <div>
+** makeSection
+  makeSection(widgetSpace)
+
+  Creates a new section area, which can be used to add other
+  widgets into a bordered area, so that parts of a ui page can
+  be separated cleanly.
+
+  Arguments:
+  widgetSpace (DOM)
+  the DOM element to place the section in.
+  This can conceptually be any DOM element, but
+  it is reccommended that this be restricted
+  to just a widgetSpace or other section.
+
+  Returns:
+  newSection (DOM)
+  a new div element, styled as a section.
+** makeButton
+  Creates a button in the specified parent.
+
+  Arguments:
+  parent (DOM)
+  The dom object or widget space to place the
+  button in
+
+  type (string)
+  the type of button to use
+  Options are currently "button" and "tbutton"
+
+  text (string)
+  the text label to place inside the button
+
+  Returns:
+  buttonObject (custom object)
+  The new button object which was created
+  upon completion of the function. In order to
+  access the DOM object itself, use
+  buttonObject.button
+** makeTextArea
+  Makes a multi-line text editor field. Actually uses a div
+  with the contentediable bit turned on. This has the advantage
+  of allowing for rather complex formatting and a totally
+  WYSIWYG formatter. This is one area where a bona-fide textarea
+  falls a little bit short.
+
+  Arguments:
+  parent (DOM)
+  Parent DOM object or widget space.
+
+  Returns:
+  newTextArea (DOM)
+  The new text area div DOM object.
+** makePlainTextArea
+  Makes an HTML textarea element, for plain-text editing (unformatted)
+
+  Arguments:
+  parent (DOM)
+  Parent DOM object, widgetSpace, etc.
+  
+  Returns
+  newTextArea (DOM)
+  HTML DOM textarea, form-ready but unnamed.
+** syncTextAreas
+  Sets a plain text field with a div content editable or plain div
+
+  Arugments
+  tPlain (DOM)
+  textArea DOM object
+  
+  tDiv (DOM)
+  div contentEditable object
+** makeNotebook
+  Makes a tabbed area, similar to Gtk Notebook, or tabs in a browser.
+
+  Arguments:
+  parent (DOM)
+  Parent widgetspace or DOM element
+  
+  returns (custom object)
+  notebook special object. Built to be used by tab/notebook functions and not
+  modified else.
+** selectTab
+  Selects a tab
+
+  Arguments:
+  notebook (custom object)
+  notebook special object
+  
+  tab (custom object)
+  tab special object
+
+  No returns.
+** addTab
+  Adds a tab to a notebook
+
+  Arguments:
+  notebook (custom object)
+  special notebook object
+  
+  title (string)
+  Tab button title
+
+  Returns:
+  newtab (custom object)
+  special tab object, use newtab.widgetSpace to add elements
+** makeLabel
+  Makes a label widget similar to Gtk::Label or QLabel
+
+  Arguments:
+  parent (DOM)
+  Parent DOM object or widget space.
+  text (string)
+  the text to put in the label
+
+  Returns:
+  newLabel (DOM)
+  The new label div DOM object.
+** makeTable
+  Makes an HTML table.
+
+  Arugments:
+  parent (DOM)
+  parent object, widgetspace, etc.
+
+  Returns:
+  newtable (DOM)
+  new HTML DOM table
+** makeTableWithData
+  Makes an HTML table, complete with contents
+
+  Arguments:
+  parent (DOM)
+  Object to add table do
+  
+  borders (bool)
+  Whether table data elements should have borders
+  
+  content (number[])
+  Two-dimensional array representing table rows, and
+  the second dimension for table datas
+
+  Returns:
+  newtable
+  new HTML DOM table
+** makeTableRow
+  Makes an HTML table row
+
+  Arguments:
+  parent (DOM)
+  parent object to add the row to
+
+  Returns:
+  newtablerow (DOM)
+  new HTML DOM tr
+** makeTableData
+  makes an HTML table data element
+
+  Arguments:
+  parent (DOM)
+  object to add td to
+  
+  tdata (string)
+  Contents of the cell
+  
+  borderless (bool)
+  whether the cell should have borders
+
+  returns:
+  newtabledata (DOM)
+  new HTML DOM td
+** makeRule
+  Makes a horizontal rule
+
+  Arguments:
+  parent (DOM)
+  Where to put the HR
+
+  Returns
+  newrule (DOM)
+  HTML DOM HR object
+** makeForm
+  makes an HTML form
+
+  Arguments:
+  parent (DOM)
+  object to add the form to
+  
+  action (string)
+  submit action
+
+  Returns:
+  newform (DOM)
+  new HTML DOM form object
+** makeInput
+  Creates an input object, such as a text field or submit button
+
+  Arguments:
+  parent (DOM)
+  object to add the input to
+  
+  type (string)
+  type of input (text, number, date, etc..)
+  
+  value (string)
+  the value of the input
+  
+  name (string)
+  name of the input
+
+  Returns:
+  input (DOM)
+  HTML DOM input object
+** makeSelect
+  Creates a select object, similar to a GTK+ combobox
+
+  Arguments:
+  parent (DOM)
+  Parent object to add the combobox to
+  
+  options (string[][])
+  Select value/text pairs, stored in a two-dimensional
+  array. The first is the value= tag, the second is the
+  text displayed on the option. (example:
+  [["keyboard", "Desktop Keyboards"], ["mc", "Desktop Mice"]]
+  ...value="keyboard">Desktop Keyboards</option>...
+
+  Returns:
+  select (DOM)
+  HTML DOM select object
+** makeIcon
+  Creates an icon, built to be placed in a table (for rigid width) or in a section or
+  similar (for variable width, like a file manager)
+
+  arguments:
+  Parent (DOM)
+  element to add icon to
+  
+  text (string)
+  Text Label
+  
+  iconname (string)
+  Name of the icon. Uses the curretnly used icon theme to determine which to use
+  based on the name.
+  
+  Returns:
+  icontoplevel (DOM)
+  a div.icon element
+** setWidgetText
+  sets the inner HTML content of an element. Could potentially do more in the future, but
+  for now just a basic placeholder.
+
+  Arguments:
+  parent (DOM)
+  The parent DOM object or widget space
+
+  text (string)
+  The text to insert into the HTML
+** setButtonToggled
+  setButtonToggled(button)
+
+  Turns a button into a button that's toggled. In widgetTools there is no distinction
+  between a button and a toggle button, so this allows the click action of a button to turn
+  it into a toggle button
+
+  Arguments
+  button (custom object)
+  the button object to work with
+** setButtonUntoggled
+  Does the reverse of above
+
+  Arguments
+  button (custom object
+  the button object to work with
+** setClickAction
+  Sets the click action for an element. Essentially connects the onclick property for
+  whatever object you pass it.
+
+  Arguments:
+  widget (DOM)
+  the DOM element to change
+
+  funct (function)
+  the function to connect the click event to
+** setDblClickAction
+  Sets the double click action for an element. Essentially connects the ondblclick property
+  for whatever object you pass it.
+
+  Arguments:
+  widget (DOM)
+  the DOM element to change
+
+  funct (function)
+  the function to connect the click event to
