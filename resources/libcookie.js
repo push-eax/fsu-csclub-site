@@ -9,16 +9,31 @@
 
 function storecookie(
     key,
-    value)
+    value,
+    daystoexpire)
 {
-    var ck = key+"="+value+";path=/;";
-    document.cookie = ck;
+    var date = new Date();
+    date.setTime(
+        date.getTime() +
+            (daystoexpire *
+             24 *
+             60 *
+             60 *
+             1000));
+    var cookie =
+        key +
+        "=" +
+        value +
+        ";expires=" +
+        date.toString() +
+        ";path=/;";
+    document.cookie = cookie;
 }
 
 function deletecookie(key)
 {
     var date = new Date();
-    d.setTime(d.getTime() + (daystoexpire*24*60*60*1000));
+    date.setTime(date.getTime() + (daystoexpire*24*60*60*1000));
     var expires = "expires=Thu, 01 Jan 1970 00:00:00 UTC;";
     document.cookie = key+";"+expires;
 }

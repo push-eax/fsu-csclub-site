@@ -140,7 +140,8 @@ function setCookie(
     document.cookie = cookieName +
         "=" +
         cookieValue +
-        ";path=index.html";
+        
+        ";";
 }
 
 function introWindow(){
@@ -210,7 +211,7 @@ function setWallpaper(number){
     {
 	document.body.style.backgroundImage = "url('resources/orbitals.png')"
     }
-    setCookie(
+    storecookie(
         "wallpaper",
         number,
         "8000");
