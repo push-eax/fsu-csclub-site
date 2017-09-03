@@ -80,7 +80,7 @@ function makePostBrowserWindow(
                 backButton.button,
                 function()
                 {
-                    backButtonAction(wspace);
+                    backButtonAction(widgetSpace);
                 });
             for(
                 var i = 0;
@@ -146,14 +146,14 @@ function makeViewWindow(
     var widgetSpace = makeWidgetSpace();
     setWidgetSpace(
         viewWindow,
-        wsp);
+        widgetSpace);
     var titleLabel = makeLabel(
-        wsp,
+        widgetSpace,
         "<h2>" +
             title +
             "</h2>");
     var dateLabel = makeLabel(
-        wsp,
+        widgetSpace,
         date);
     var bodySection = makeSection(widgetSpace);
     setWidgetText(

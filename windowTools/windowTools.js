@@ -764,7 +764,7 @@ document.onmousemove = function(event)
     updatepos(event)
 };
 
-function (startupFunction)
+function addStartupHook(startupFunction)
 {
     onPageLoadFinished.push(startupFunction);
 }
