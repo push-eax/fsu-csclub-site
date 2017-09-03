@@ -39,7 +39,7 @@ https://gitlab.com/CannonContraption/fsu-csclub-site/issues/
 All issues reported to that page should mention that they are in fact from the
 api.org document, and they should specify where the error happened. This will
 notify developers of the project to the issue so that it can be updated.
-* Basic variables
+* Global variables
 ** Property Definitions
 *** icontheme
 The current icon theme used for widgets. Should be user-settable.
@@ -382,3 +382,21 @@ Returns:
 
   funct (function)
   the function to connect the click event to
+* Startup tasks
+** Introduction
+windowTools executes some code on launch. This means that it can handle page
+startup hooks, such as opening windows on launch. It also allows for some global
+event handlers, allowing for clickdown and clickup actions.
+** Event handlers
+*** onmouseup
+    handles when the mouse is lifted, calling clickup() and
+    allowing any ongoing move operations to finish
+*** onmousemove
+    handles the movement of the mouse, facilitating window moving.
+** Startup state
+ to initialize variables, we should have a function dedicated
+ to stuff that happens when the window has finished loading,
+ similar to $("document").ready(...) in JQuery. The difference
+ is we're not using any libraries to do this stuff, so it's JS
+ only.
+ This also handles startup hooks.
