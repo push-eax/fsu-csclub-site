@@ -1,0 +1,369 @@
+* Introduction to This Document
+** Purpose
+This document is where all the API docs previously contained in source code went.
+The code itself has been refactored since these were present there, and the
+existence of this document should greatly compress the size of the code the
+browser need load.
+** How best to read this file
+If you opened this file without a copy of Emacs or similar, it probably looks
+like a flat file, with a bunch of sections. There is a better way to read it,
+however. If you have a copy of Emacs and are willing, use org-mode. It is
+included with certain distributions of the program, and can be found at
+http://orgmode.org/
+
+If you prefer the Vim text editor over Emacs, you can try the following
+vimscript to enable similar functionality:
+https://vim.sourceforge.io/scripts/script.php?script_id=3342
+** General Information
+This document is formatted the following way:
+Heading
+ Subheading
+  Sub-Subheading
+   Description
+
+As an example, "Available Functions/makeWidgetSpace" would include a description
+of the function, along with arguments and return definitions.
+** Warnings
+A lot of this info is subject to change, and as such, it is a good idea to find
+the function declaration to find whether a function still takes the same
+arguments, for example, and whether the return is still what is claimed in this
+document.
+
+Part of the purpose of the refactoring to begin with was to make the code itself
+clearer, as opposed to attempting to enforce comment updates. This means that the
+comments themselves (as they were before) are not so useful in code. Further, it
+means that the information would otherwise have been deleted.
+** Errata
+Please report any mistakes in this document to the GitLab issues board at
+https://gitlab.com/CannonContraption/fsu-csclub-site/issues/
+All issues reported to that page should mention that they are in fact from the
+api.org document, and they should specify where the error happened. This will
+notify developers of the project to the issue so that it can be updated.
+* Global Variables
+** mouseClickDownX
+    position of the mouse (x-coord) on window move click
+** mouseClickDownY
+    position of the mouse (y-coord) on window move click
+** mouseClickUpX
+    position of the mouse (x-coord) on mouseup
+** mouseClickUpY
+    position of the mouse (y-coord) on mouseup
+** clickedWindow
+    global variable representing a window object
+    used to define which window should be moved when a window
+    needs moving. Basically defines which window (if any) was
+    just clicked.
+** currentlyMovingWindow
+    true on mousedown before mouseup when moving a window.
+** currentlyResizingWindow
+    tells the program we are looking to resize a window, so
+    all events should send their diffrences of position to 
+    adjust the size and not the position of a window.
+** windowmovetransparancy
+    opacity value of the windows as they are moved.
+** allWindowsList
+    An array containing all active windows, added to every
+    time windowAdd() is created. It is used to push all 
+    windows back a z-index when one is selected.
+** panel
+    Variable which will represent our panel,
+    allowing us to add to and manipulate it without re-
+    fetching its DOM node.
+** longestMinimizeTransitionTime
+    The longest amount of time the minimize or unminimze
+    transition would take. Should never be any longer, since
+    these animatiions interfere with moving windows.
+** minimizetransition
+    variable to define the minimize animation. When the minimize
+    request is sent this becomes the value of window.toplevel.
+    style.transition
+** resetMinimizeTransition
+    variable containing all the transition rules modified by the
+    minimize transition, except with time set to 0 so as not to
+    break window moving
+
+    Again, when in use it is set with element.style.transition=...
+** windowMinimumWidth
+    Minimum window width
+** ismobile
+    Variable to determine whether we're in a mobile browser.
+** onPageLoadFinished
+    A list of functions to start when the page finishes loading
+** colorScheme
+    Colors that the script uses, for tasks like focus/unfocus and
+    panel button management.
+    Used as a way to make porting windowTools easier.
+* Available Functions
+** movewindow
+Used to move a window by a certain offset X and Y.
+
+Arguments:
+    currentwindow
+        window object to move
+    
+    increasex
+        X-increase. Number value, no text included.
+        Though the function does directly modify CSS, the
+        string parts are added as part of the function.
+    
+    increasey
+        Y-increase. Number value, no text included.
+        See increasex for more details.
+** changeWindowSize
+Changes the size of a window by increments of increasex
+and increasey.
+
+Arguments:
+    currentwindow
+        window object to resize
+    
+    increasex
+        amount of width to add
+    
+    increasey
+        amount of height to add
+** maximize
+  Takes the window, sets its bounds to an approximation of the screen size
+
+  Arguments:
+      window
+          The window to be maximized
+** restore
+ Takes a maximized window and restores it from maximized to normal.
+
+ Arguments:
+     window
+         window to be restore
+** updatepos
+Used to update a window position as it's being dragged
+
+Arguments:
+    jsEvent
+        Event which triggered this state update
+        note this is not meant to be invoked, only used as
+        an event handler.
+** clickTitleBar
+Used as an event handling function for when someone clicks
+the title bar of a window expecting to be able to move it.
+
+Arguments:
+    jsEvent
+        event object.
+        Supplied by the event itself, should not be manual.
+        Assumes mouse event.
+    
+    element
+        element object, usually a div but not picky
+        Supplied by the addWindowListeners(element) function,
+        this defines what should be moved. It is currently
+        designed around the assumption that the left and top
+        style parameters work, meaning a position mode is set
+        other than the default. Works with class=window.
+** clickdown
+Used as an event handling function for when someone clicks
+a window for any reason. This does nothing but raise that
+window.
+
+Arguments:
+    element
+        element object, usually a div but not picky
+        Supplied by the addWindowListeners(element) function,
+        this defines what should be moved. It is currently
+        designed around the assumption that the left and top
+        style parameters work, meaning a position mode is set
+        other than the default. Works with class=window.
+** clickdialogdown
+Used as an event handling function for when someone clicks
+a window for any reason. This does nothing but raise that
+window.
+
+Arguments:
+    element
+        element object, usually a div but not picky
+        Supplied by the addWindowListeners(element) function,
+        this defines what should be moved. It is currently
+        designed around the assumption that the left and top
+        style parameters work, meaning a position mode is set
+        other than the default. Works with class=window.
+** clickup
+Used as another event handler, for when someone releases the
+mouse. It picks up whether or not there are any drawn windows,
+and should be used for window management tasks. At the time of
+writing it checks to see if the window should be moved, and
+if so, it moves the window. Otherwise, it does nothing substantial.
+
+Arguments:
+    jsEvent
+        event object.
+        Supplied by the event itself, should not be manual.
+        Assumes mouse event.
+** dragResize
+function run when dragging an element on mouse move
+
+Arguments:
+    jsEvent
+        Event used to trigger the function
+    
+    element
+        the window object we're moving
+** centerWindow
+Moves a window to the middle of the browser's screen.
+
+Arguments:
+  window
+    The window to center
+** closeWindow
+Closes the window based on its window object.
+
+Arguments:
+    window
+        A window object as returned by addWindow()
+** closeDialogWindow
+Closes the dialog window based on its window object.
+
+Note that the difference between this and closeWindow is which type of window
+they can close. closeWindow assumes an object with more elements in it, and thus
+will fail when presented with a dialog window. This function, on the other hand,
+might not completely close a full window.
+
+Arguments:
+    window
+        A window object as returned by addDialogWindow()
+** setWindowContents
+Sets the window's body contents.
+
+This is a required step because setting innerHTML directly causes
+problems with window resizing. If you try to set it on its own, the
+grabhandle for corner resizing disappears making it impossible to
+resize the window.
+
+Arguments:
+    window
+        a window object
+    
+    contents
+        what to put in the body
+** setWidgetSpace
+Adds a child object to the window's body space. Built primarily
+to accomodate JS-based widget toolkits. The widgetTools.js toolkit
+uses an object called the widget space which acts as the parent for
+all widgets in an area. They then add themselves to the widget
+space. This encapsulation works because it runs in a contained
+space that doesn't actually need access to any higher-level tag,
+and therefore can't screw with things it shouldn't like the window
+body object.
+
+Arguments:
+    window
+        the current window object.
+
+    widgetSpace
+        the object to add to the window
+** lowerAll
+Lowers all windows to z-index 2.
+** raiseWindow
+lowers all windows and raises the one selected
+
+Arguments:
+    window
+        which window should be raised
+** raiseDialogWindow
+lowers all windows and raises the dialog selected
+
+Note that dialogs cannot be covered by regular windows.
+This function does not cover all of the features required by raiseWindow() and
+should therefore not be used as a replacement for it.
+
+Arguments:
+    window
+        which window should be raised
+** clickpanelbutton
+helper function to determine what to do when the panel button
+is clicked for a window. Checks the window state and executes
+the appropriate action.
+
+Arguments:
+    window
+        window object to manipulate
+** addPanelButton
+Adds a button to the panel corresponding to the window.
+
+Arguments:
+    window
+        the window object we are adding
+** minimize
+hides a window by moving it to the bottom of the screen and
+storing its coordinates so we can restore it later. Functionally identical to
+minimize in a desktop window manager.
+
+Arguments:
+    window
+        window object to minimize
+** restoreSize
+restores a minimized window to its original coordinates from minimized state to
+normal state.
+
+Arguments:
+    window
+        window object to restore
+** handleMax
+Handles the maximize button, basically the same as toggleMaximize would be in
+English-ish function names.
+
+Arguments
+  Window
+    The window at hand
+** addWindow
+Nice, fluffy way to get basic window creation macros out of the way. Creates a 
+full window with resize, minimize, close, move, widgetspace and HTML functions.
+
+Arguments:
+    id
+        Text string for the id of the window.
+
+Returns:
+    window
+        Special window object. See the source code to view the contents of this
+        object.
+** addDialogWindow
+Nice, fluffy way to get basic window creation macros out of the way. This one is
+built for dialog windows, which are meant to not hit the taskbar, not be
+something to minimize or resize, and easily used to quickly inform the user of
+things without alert(), thus keeping the visual style and functionality of the
+window toolkit.
+
+Arguments:
+    title
+        the title of the dialog
+    
+    width
+        How wide to make the dialog.
+
+Returns:
+    window
+        A special dialog window object similar to the window object from above.
+** addResizeEventHandler
+As part of making the window toolkit work with a widget toolkit, the
+code required to make a window resize needs to allow for subfunctions.
+This is the result of CSS's 100% property not taking other elements
+into account and simply filling the window on resize. This causes odd
+behavior when a window is resized. To combat this, a function needed
+to be inserted into the resize function. Instead of making one function
+which would work only with widgetTools.js, however, it made more sense
+to add an interface to insert random code into the resize event.
+
+Arguments:
+    window
+        The window to attach the resize event handler to.
+
+    revhandle
+        The resize event handling function. This function
+        needs to accept two arguments: the current window, the
+        delta X, and the delta Y in that order.
+** addStartupHook
+In order to allow things to start up with the page, we need a way to insert
+startup hooks. This function will allow for that.
+
+Arguments:
+    startupFunction
+        The function pointer we want to run when the page finishes loading.
