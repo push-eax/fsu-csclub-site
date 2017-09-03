@@ -262,9 +262,11 @@ function centerWindow(window)
 {
     var screenBounds = document.body.getBoundingClientRect();
     var windowBounds = window.body.getBoundingClientRect();
-    window.style.top = (
-        (screenBounds.bottom/2) -
-            (windowBounds.bottom+winrect.top)
+    window.toplevel.style.top = (
+        (screenBounds.bottom /
+         2) -
+            (windowBounds.bottom +
+             windowBounds.top)
     );
 }
 
@@ -773,7 +775,7 @@ document.onreadystatechange = function()
 {
     if(document.readyState === "complete")
     {
-        console.log("Startup complete, loading startup hooks, if any");
+        //console.log("Startup complete, loading startup hooks, if any");
         panel = document.getElementById("panel");
         for(
             var i = 0;

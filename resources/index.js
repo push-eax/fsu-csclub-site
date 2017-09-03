@@ -215,18 +215,18 @@ function setWallpaper(number){
         "wallpaper",
         number,
         "8000");
-    console.log(
+    /*console.log(
         "Stored wallpaper "+
             number+
-            ";");
+            ";");*/
 }
 
 function lastWallpaper(){
     var value = getCookie("wallpaper");
-    console.log(
+    /*console.log(
         "Found wallpaper "+
             value+
-            ", resetting.");
+            ", resetting.");*/
     if(value!= ""){
 	setWallpaper(value);
     }
