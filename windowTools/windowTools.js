@@ -84,8 +84,7 @@ function changeWindowSize(
         "px";
 }
 
-function maximize(
-    window)
+function maximize(window)
 {
     window.toplevel.style.transition = maximizetransitiontime;
     var windowBounds = window.toplevel.getBoundingClientRect();
@@ -127,8 +126,7 @@ function maximize(
         longestMinimizeTransitionTime);
 }
 
-function restore(
-    window)
+function restore(window)
 {
     window.toplevel.style.transition = maximizetransitiontime;
 
@@ -149,8 +147,7 @@ function restore(
         longestMinimizeTransitionTime);
 }
 
-function updatepos(
-    jsEvent)
+function updatepos(jsEvent)
 {
     var windowPositionDeltaX;
     var windowPositionDeltaY;
@@ -211,20 +208,17 @@ function clickTitleBar(
     currentlyMovingWindow = true;
 }
 
-function clickdown(
-    element)
+function clickdown(element)
 {
     raiseWindow(element)
 }
 
-function clickdialogdown(
-    element)
+function clickdialogdown(element)
 {
     raiseDialogWindow(element)
 }
 
-function clickup(
-    jsEvent)
+function clickup(jsEvent)
 {
     mouseClickUpX = jsEvent.pageX;
     mouseClickUpY = jsEvent.pageY;
@@ -264,8 +258,7 @@ function dragResize(
     currentlyResizingWindow = true;
 }
 
-function centerWindow(
-    window)
+function centerWindow(window)
 {
     var screenBounds = document.body.getBoundingClientRect();
     var windowBounds = window.body.getBoundingClientRect();
@@ -275,8 +268,7 @@ function centerWindow(
     );
 }
 
-function closeWindow(
-    window)
+function closeWindow(window)
 {
     window.toplevel.setAttribute(
         "class",
@@ -319,8 +311,7 @@ function closeWindow(
         256);
 }
 
-function closeDialogWindow(
-    window)
+function closeDialogWindow(window)
 {
     window.toplevel.setAttribute(
         "class",
@@ -382,8 +373,7 @@ function lowerAll()
     }
 }
 
-function raiseWindow(
-    window)
+function raiseWindow(window)
 {
     lowerAll();
     window.toplevel.style.opacity=1;
@@ -400,8 +390,7 @@ function raiseWindow(
         ')';
 }
 
-function raiseDialogWindow(
-    window)
+function raiseDialogWindow(window)
 {
     lowerAll();
     window.toplevel.style.opacity=1;
@@ -412,8 +401,7 @@ function raiseDialogWindow(
     window.type='active';
 }
 
-function clickPanelButton(
-    window)
+function clickPanelButton(window)
 {
     if(window.type=='active')
     {
@@ -435,8 +423,7 @@ function clickPanelButton(
     }
 }
 
-function addPanelButton(
-    window)
+function addPanelButton(window)
 {
     var newbutton = document.createElement("button");
     newbutton.innerHTML = window.titleText;
@@ -451,8 +438,7 @@ function addPanelButton(
     return newbutton;
 }
 
-function minimize(
-    window)
+function minimize(window)
 {
     var panelBoundaries = window.panelButton.getBoundingClientRect();
     var windowBoundaries = window.toplevel.getBoundingClientRect();
@@ -470,8 +456,8 @@ function minimize(
     window.panelButton.style.background = colorScheme.minipanelcolor;
 }
 
-function restoreSize(
-    window){
+function restoreSize(window)
+{
     window.toplevel.style.transition = minimizetransition;
     window.toplevel.style.top = window.preMinimizeTop;
     window.toplevel.style.right = window.preMinimizeRight;
@@ -486,8 +472,7 @@ function restoreSize(
     raiseWindow(window)
 }
 
-function handlemax(
-    window)
+function handlemax(window)
 {
     if(window.maximized===false)
         maximize(window);
@@ -770,19 +755,16 @@ function addResizeEventHandler(
     window.resizeEvent.push(resizeEventFunction);
 }
 
-document.onmouseup = function(
-    event)
+document.onmouseup = function(event)
 {
     clickup (event)
 };
-document.onmousemove = function(
-    event)
+document.onmousemove = function(event)
 {
     updatepos(event)
 };
 
-function addStartupHook(
-    startupFunction)
+function (startupFunction)
 {
     onPageLoadFinished.push(startupFunction);
 }
