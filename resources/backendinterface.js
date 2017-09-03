@@ -54,6 +54,7 @@ function login(){
     setWidgetSpace(
         loginWindow,
         widgets);
+//    centerWindow(loginWindow);
 }
 
 function performLogin(
