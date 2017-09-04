@@ -1,3 +1,36 @@
+var wallpaperRegistry = [
+    {
+        name: "bitCycles",
+        url: "resources/wall/bitcycles.png",
+        color: "black",
+        fill: true
+    },
+    {
+        name: "lineDisk",
+        url: "resources/wall/linedisk.png",
+        color: "black",
+        fill: true
+    },
+    {
+        name: "orbitals",
+        url: "resources/wall/orbitals.png",
+        color: "black",
+        fill: true
+    },
+    {
+        name: "logoTwo",
+        url: "resources/wall/cssite-wall2.png",
+        color: "black",
+        fill: true
+    },
+    {
+        name: "logo",
+        url: "resources/wall/fsulogo.png",
+        color: "grey",
+        fill: false
+    }
+];
+
 function menuButtonMouseHover()
 {
     document.getElementById("menubutton").src =
@@ -50,7 +83,7 @@ function maketestwindow()
     setWidgetSpace(
         testwindow,
         widgetSpace);
-    var button1     = makeButton(
+    var button1 = makeButton(
         widgetSpace,
         "button",
         "Test Button");
@@ -76,51 +109,30 @@ function settingswindow()
         wsp);
 }
 
-function themeSettingsTab(tabObject){
+function themeSettingsTab(tabObject)
+{
     makeLabel(
         tabObject.widgetSpace,
         "<b>Wallpaper</b>");
-    var oldwall = makeButton(
-        tabObject.widgetSpace,
-        "button",
-        "Grey Logo");
-    var lineDisk = makeButton(
-        tabObject.widgetSpace,
-        "button",
-        "Line Disk");
-    var bitcycle = makeButton(
-        tabObject.widgetSpace,
-        "button",
-        "BitCycles");
-    var orbitals = makeButton(
-        tabObject.widgetSpace,
-        "button",
-        "Orbitals");
-    
-    setClickAction(
-        oldwall.button,
-        function()
-        {
-            setWallpaper(0)
-        });
-    setClickAction(
-        lineDisk.button,
-        function()
-        {
-            setWallpaper(2)
-        });
-    setClickAction(
-        bitcycle.button,
-        function()
-        {
-            setWallpaper(1)
-        });
-    setClickAction(
-        orbitals.button,
-        function()
-        {
-            setWallpaper(3)
-        });
+    var wallbuttons = [];
+    for(
+        var wallpaperIndex = 0;
+        wallpaperIndex < wallpaperRegistry.length;
+        wallpaperIndex++)
+    {
+        (function(wallpaperIndex)
+         {
+             setClickAction(
+                 makeButton(
+                     tabObject.widgetSpace,
+                     "button",
+                     wallpaperRegistry[wallpaperIndex].name).button,
+                 function()
+                 {
+                     setWallpaper(wallpaperRegistry[wallpaperIndex]);
+                 });
+         })(wallpaperIndex);
+    }
     
     makeLabel(
         tabObject.widgetSpace,
@@ -147,7 +159,6 @@ function setCookie(
     document.cookie = cookieName +
         "=" +
         cookieValue +
-        
         ";";
 }
 
@@ -194,38 +205,24 @@ function getCookie(cookieName) {
 }
 
 //TODO: Centralize names, make it so that selections tie to buttons directly
-function setWallpaper(number){
-    if(number == 0)
+function setWallpaper(wallpaperSpec){
+    if(wallpaperSpec.fill == true)
     {
-	document.body.style.backgroundSize = "initial";
-	document.body.style.backgroundImage = "url('resources/fsulogo.png')"
-	document.body.style.backgroundColor = "grey"
+        document.body.style.backgroundSize = "contain";
     }
     else
     {
-	document.body.style.backgroundSize="contain"
-	document.body.style.backgroundColor="black"
+        document.body.style.backgroundSize = "initial";
     }
-    if(number == 1)
-    {
-	document.body.style.backgroundImage = "url('resources/bitcycles.png')"
-    }
-    if(number == 2)
-    {
-	document.body.style.backgroundImage = "url('resources/linedisk.png')"
-    }
-    if(number == 3)
-    {
-	document.body.style.backgroundImage = "url('resources/orbitals.png')"
-    }
+    document.body.style.backgroundImage =
+        "url('" +
+        wallpaperSpec.url +
+        "')";
+    document.body.style.backgroundColor = wallpaperSpec.color;
     storecookie(
         "wallpaper",
-        number,
+        wallpaperSpec.name,
         "8000");
-    /*console.log(
-        "Stored wallpaper "+
-            number+
-            ";");*/
 }
 
 function lastWallpaper(){
@@ -235,7 +232,14 @@ function lastWallpaper(){
             value+
             ", resetting.");*/
     if(value!= ""){
-	setWallpaper(value);
+        for(
+            var wallpaperIndex = 0;
+            wallpaperIndex < wallpaperRegistry.length;
+            wallpaperIndex++)
+        {
+            if(wallpaperRegistry[wallpaperIndex].name == value)
+                setWallpaper(wallpaperRegistry[wallpaperIndex]);
+	}
     }
 }
 
