@@ -204,7 +204,6 @@ function getCookie(cookieName) {
     return "";
 }
 
-//TODO: Centralize names, make it so that selections tie to buttons directly
 function setWallpaper(wallpaperSpec){
     if(wallpaperSpec.fill == true)
     {
