@@ -1,9 +1,11 @@
-function menuButtonMouseHover(){
+function menuButtonMouseHover()
+{
     document.getElementById("menubutton").src =
         "windowTools/beta-start-button-3-hover.png";
 }
 
-function menuButtonMouseLeave(){
+function menuButtonMouseLeave()
+{
     document.getElementById("menubutton").src =
         "windowTools/beta-start-button-3.png";
 }
@@ -14,14 +16,16 @@ function openmenu(){
     dom_menu = document.getElementById("menu");
     dom_mbackground = document.getElementById("menubackground");
     dom_mbutton = document.getElementById("menubutton");
-    if(menuopen == false){
+    if(menuopen == false)
+    {
 	dom_mbackground.style.display='block';
 	dom_menu.style.height='500px';
 	dom_menu.style.padding='5px';
 	menuopen = true;
 	dom_mbutton.style.transform='rotate(180deg)';
     }
-    else{
+    else
+    {
 	dom_mbackground.style.display='none';
 	menuopen = false
 	dom_menu.style.height='0px';
@@ -31,12 +35,14 @@ function openmenu(){
 }
 
 // Created so that when a menu item is clicked the menu will close
-function menuexec(funct){
+function menuexec(funct)
+{
     funct();
     openmenu();
 }
 
-function maketestwindow(){
+function maketestwindow()
+{
     var testwindow  = addWindow(
         "Test Window",
         400)
@@ -50,7 +56,8 @@ function maketestwindow(){
         "Test Button");
 }
 
-function settingswindow(){
+function settingswindow()
+{
     var toplevel = addWindow(
         "User Settings",
         400)
