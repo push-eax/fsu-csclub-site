@@ -151,17 +151,6 @@ function themeSettingsTab(tabObject)
         "Default Theme");
 }
 
-function setCookie(
-    cookieName,
-    cookieValue,
-    daysToExpiration)
-{
-    document.cookie = cookieName +
-        "=" +
-        cookieValue +
-        ";";
-}
-
 function introWindow(){
     var introwindow = addWindow(
         "Welcome!",
@@ -179,29 +168,6 @@ function introWindow(){
     makeLabel(
         widgets,
         "<b>Click the menu button at the bottom left of the page to get started!</b>");
-}
-
-function getCookie(cookieName) {
-    var name = cookieName + "=";
-    var allCookies = decodeURIComponent(document.cookie).split(';');
-    for(
-        var cookieIndex = 0;
-        cookieIndex < allCookies.length;
-        cookieIndex++)
-    {
-	var currentCookie = allCookies[cookieIndex];
-	while (currentCookie.charAt(0) == ' ')
-        {
-	    currentCookie = currentCookie.substring(1);
-	}
-	if (currentCookie.indexOf(name) == 0)
-        {
-	    return currentCookie.substring(
-                name.length,
-                currentCookie.length);
-	}
-    }
-    return "";
 }
 
 function setWallpaper(wallpaperSpec){
@@ -225,7 +191,7 @@ function setWallpaper(wallpaperSpec){
 }
 
 function lastWallpaper(){
-    var value = getCookie("wallpaper");
+    var value = readCookie("wallpaper");
     /*console.log(
         "Found wallpaper "+
             value+

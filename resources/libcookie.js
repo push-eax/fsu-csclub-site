@@ -38,17 +38,26 @@ function deletecookie(key)
     document.cookie = key+";"+expires;
 }
 
-function grabcookievalue(key)
+function readCookie(key)
 {
-    var ck = document.cookie;
-    var cks = ck.split(';');
+    var name = cookieName + "=";
+    var allCookies = decodeURIComponent(document.cookie).split(';');
     for(
-        var i = 0;
-        i<cks.length;
-        i++)
+        var cookieIndex = 0;
+        cookieIndex < allCookies.length;
+        cookieIndex++)
     {
-	var ckss = cks[i].split("=");
-	if(ckss[0] == key) {return ckss[1];}
+	var currentCookie = allCookies[cookieIndex];
+	while (currentCookie.charAt(0) == ' ')
+        {
+	    currentCookie = currentCookie.substring(1);
+	}
+	if (currentCookie.indexOf(name) == 0)
+        {
+	    return currentCookie.substring(
+                name.length,
+                currentCookie.length);
+	}
     }
     return null;
 }
