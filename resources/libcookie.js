@@ -38,7 +38,7 @@ function deletecookie(key)
     document.cookie = key+";"+expires;
 }
 
-function readCookie(key)
+function readCookie(cookieName)
 {
     var name = cookieName + "=";
     var allCookies = decodeURIComponent(document.cookie).split(';');
