@@ -28,6 +28,12 @@ var wallpaperRegistry = [
         url: "resources/wall/fsulogo.png",
         color: "grey",
         fill: false
+    },
+    {
+        name: "textWall",
+        url: "resources/wall/text.png",
+        color: "grey",
+        fill: false
     }
 ];
 
