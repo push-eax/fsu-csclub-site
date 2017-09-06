@@ -51,7 +51,8 @@ function menuButtonMouseLeave()
 
 var menuopen = false;
 
-function openmenu(){
+function openmenu()
+{
     dom_menu = document.getElementById("menu");
     dom_mbackground = document.getElementById("menubackground");
     dom_mbutton = document.getElementById("menubutton");
@@ -157,7 +158,8 @@ function themeSettingsTab(tabObject)
         "Default Theme");
 }
 
-function introWindow(){
+function introWindow()
+{
     var introwindow = addWindow(
         "Welcome!",
         400,
@@ -176,7 +178,8 @@ function introWindow(){
         "<b>Click the menu button at the bottom left of the page to get started!</b>");
 }
 
-function setWallpaper(wallpaperSpec){
+function setWallpaper(wallpaperSpec)
+{
     if(wallpaperSpec.fill == true)
     {
         document.body.style.backgroundSize = "contain";
@@ -196,7 +199,8 @@ function setWallpaper(wallpaperSpec){
         "8000");
 }
 
-function lastWallpaper(){
+function lastWallpaper()
+{
     var value = readCookie("wallpaper");
     /*console.log(
         "Found wallpaper "+
@@ -214,7 +218,8 @@ function lastWallpaper(){
     }
 }
 
-function siteSettingsTab(tab){
+function siteSettingsTab(tab)
+{
     var infolabel = makeLabel(
         tab.widgetSpace,
         "<b>Mobile Site</b>");
@@ -230,7 +235,8 @@ function siteSettingsTab(tab){
         });
 }
 
-function makeIconDescriptionDialog(iconName){
+function makeIconDescriptionDialog(iconName)
+{
     var dialogwindow = addDialogWindow(
         iconName +
             " icon",
@@ -247,7 +253,8 @@ function makeIconDescriptionDialog(iconName){
         widgetSpace);
 }
 
-function makeWidgetTestWindow(){
+function makeWidgetTestWindow()
+{
     var anotherwindow = addWindow(
         'Widget Toolkit Test Window',
         600);
@@ -427,7 +434,8 @@ function makeWidgetTestWindow(){
         widgetSpace);
 }
 
-if(ismobile == false){
+if(ismobile == false)
+{
     lastWallpaper();
 }
 addStartupHook(introWindow)
