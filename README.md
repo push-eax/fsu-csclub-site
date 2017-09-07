@@ -1,10 +1,5 @@
 <h1>Framingham State University Computer Science Club Wobsite</h1>
 
-<h2>Introduction</h2>
-
-The CS club at Framingham State had no webiste, and now we are making one.
-If you've followed what I'm saying this far, you understand what this project is.
-
 <h2>Technical information</h2>
 
 This site is currently a massive custom JavaScript windowing library with some skinning and example windows. For now, it includes custom art and an index page which sets it apart (mildly) from just the bare toolkit.
@@ -20,19 +15,28 @@ Implemented features include:
 - minimize/restore animations, menu animations
 - window maximize/restore
 - basic touch events
+- basic database interactions
+- basic CGI setup
+- Blog browsing
+- (untested!) blog creation (not editing)
 
 While this is not a complete feature set, it is most of the superficial ones which are easy to spot. Being as lightweight as it is, it executes very fast, even on older hardware.
 
-All that being said, there's no mobile site yet so please use a desktop browser for the time being.
+Our next step is polishing the mobile site, as it works but is not fabulous in the form it's in at the time of writing.
 
 <h2>Internal Information</h2>
 
 On a more internal level, the widget toolkit operates in the following way:
 - HTML code contains start menu, panel, background
-- CSS defines all stlying through central widgetTools.css file. This can be extended through other stylesheets loaded later, but the widgetTools.css page defines the basics.
-- widgetTools.js handles all windowing logic. A good name for this toolkit, following the example of the two major files, might be widget tools.
+- CSS defines all stlying through central widgetTools.css file. This can be extended through other stylesheets loaded later, but the widgetTools.css page defines the basics. windoTools.js includes defaults for window placement, animations, etc. This is where the lightweight and performence-centric side of the site comes from.
+- widgetTools.js handles all windowing logic.
+- windowTools.js handles windowing stuff.
 - Windows are NOT DOM nodes, but in fact they are their own object, containing all the elements the program needs to work with.
 - These objects are manipulated using functions that are built in and designed to allow some purpose-built HTML code to be a part of a window.
-- Each window initilizes itself with a single command (addWindow(title, width)) which returns such a window object.
+- Each window initilizes itself with a single command (addWindow(title, width, position)) which returns such a window object.
+
+There are many more features and niceities, but they are more dry implementation things. As an example, the wallpapering system.
+
+Note that the code for this site does use cookies to store wallpaper info
 
 <a href="https://binbashworks.blogspot.com/2017/02/web-programming-desktop-with-javascript.html">Post on CannonContraption's Blag about Creating the site</a>
