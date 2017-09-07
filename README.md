@@ -1,5 +1,11 @@
 <h1>Framingham State University Computer Science Club Wobsite</h1>
 
+## Introduction
+
+Hello, interweb user! You have found the source repository for the Framingham State University Computer Science club website. This site is undergoing heavy development still, but includes most of the basic intended features at this point.
+
+The site revolves around a desktop-in-a-browser. This means the site has a start menu, it has windows you can drag, open and close, and create multiple of. It also includes maxmize and minimize. The end goal is to have a site that allows a user to post and view blog posts written by students who are members of the club.
+
 <h2>Technical information</h2>
 
 This site is currently a massive custom JavaScript windowing library with some skinning and example windows. For now, it includes custom art and an index page which sets it apart (mildly) from just the bare toolkit.
