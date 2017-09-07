@@ -1,6 +1,7 @@
 var page;
 var topbar;
 var ismobile = true;
+var onPageLoadFinished = [];
 
 function initPageTools()
 {
@@ -22,7 +23,7 @@ function initPageTools()
         "logo");
     logo.setAttribute(
         "src",
-        "resources/fsulogo.png");
+        "resources/wall/fsulogo.png");
     realtopbar.appendChild(logo);
     
     var menu = document.createElement("img");
@@ -97,3 +98,22 @@ function setWidgetSpace(
 	window.appendChild(wspace);
     }
 }
+
+function addStartupHook(startupFunction)
+{
+    onPageLoadFinished.push(startupFunction);
+}
+
+document.onreadystatechange = function()
+{
+    if(document.readyState === "complete")
+    {
+        for(
+            var i = 0;
+            i<onPageLoadFinished.length;
+            i++)
+        {
+            onPageLoadFinished[i]();
+        }
+    }
+};
