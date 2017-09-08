@@ -1,4 +1,6 @@
 DEVELOPERS.TXT
+Please note that this document is slated to become an org-mode file soon!
+
 a general thought process document, designed to help fellow developers follow API logic
 and more effectively make use of the tools in the site. Note that lines end at 90
 characters, if your line length goes over that you should \n.
