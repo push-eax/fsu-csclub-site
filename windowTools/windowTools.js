@@ -265,8 +265,16 @@ function centerWindow(window)
     window.toplevel.style.top = (
         (screenBounds.bottom /
          2) -
-            (windowBounds.bottom +
-             windowBounds.top)
+            (windowBounds.bottom -
+             windowBounds.top) /
+            2
+    );
+    window.toplevel.style.left = (
+        (screenBounds.right /
+         2) -
+            (windowBounds.right -
+             windowBounds.left) /
+            2
     );
 }
 
