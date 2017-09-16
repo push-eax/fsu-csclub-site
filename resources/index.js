@@ -176,6 +176,7 @@ function introWindow()
     makeLabel(
         widgets,
         "<b>Click the menu button at the bottom left of the page to get started!</b>");
+    return introwindow;
 }
 
 function setWallpaper(wallpaperSpec)
